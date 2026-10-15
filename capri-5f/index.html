@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Capri 5F · Llegada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@300;400;500&family=Cormorant+Garamond:wght@300;400&family=Allura&family=Urbanist:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: una sola columna estrecha, pensada para el móvil del huésped que llega en coche. Logo arriba, idioma, vídeo y datos de llegada. */
+/* Colores y tipografías del brandbook de Bones Vacances (provisional, a la espera de la versión definitiva de la agencia). */
+:root {
+  --marfil: #d8c7b4;
+  --taupe: #b5a797;
+  --arena: #b89a7f;
+  --oliva: #454b46;
+  --bg: #f1ebe4;          /* marfil aclarado para el fondo */
+  --surface: #e7dccf;
+  --fg: #454b46;
+  --muted: #6f716a;
+  --line: #cbbba8;
+  --accent: #454b46;
+  --on-accent: #f1ebe4;
+  --chip: #b89a7f;
+  --display: "Cormorant Unicase", "Cormorant Garamond", Georgia, serif;
+  --title: "Cormorant Garamond", Georgia, serif;
+  --body: "Urbanist", "Gilroy", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #3a403b; --surface: #454b46; --fg: #ece2d6; --muted: #c2b6a7;
+    --line: #5c625c; --accent: #d8c7b4; --on-accent: #3a403b; --chip: #b89a7f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #3a403b; --surface: #454b46; --fg: #ece2d6; --muted: #c2b6a7;
+  --line: #5c625c; --accent: #d8c7b4; --on-accent: #3a403b; --chip: #b89a7f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-inline: 20px;
+  padding-block: 32px 48px;
+}
+.wrap { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+header { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.logo { width: 76px; height: 76px; color: var(--fg); }
+.brand { font-family: var(--display); font-weight: 500; font-size: 1.35rem; letter-spacing: .18em; line-height: 1.1; }
+.brand small { display: block; font-family: var(--body); font-weight: 400; font-size: .62rem; letter-spacing: .5em; margin-top: 6px; color: var(--muted); }
+.place { border-top: 1px solid var(--line); padding-top: 22px; display: flex; flex-direction: column; gap: 4px; }
+.eyebrow { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--title); font-weight: 300; font-size: 2.1rem; line-height: 1.1; text-transform: uppercase; letter-spacing: .14em; margin: 0; text-wrap: balance; }
+.intro { margin: 0; color: var(--muted); }
+
+.langs { display: flex; flex-direction: column; gap: 10px; }
+.lang-main {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--accent); color: var(--on-accent);
+  text-decoration: none; border-radius: 999px;
+  padding: 16px 22px; font-weight: 500; font-size: 1.05rem;
+}
+.lang-main svg { width: 22px; height: 22px; flex: none; }
+.lang-others { display: flex; gap: 8px; flex-wrap: wrap; }
+.lang-alt {
+  flex: 1 1 0; min-width: 0; text-align: center; text-decoration: none;
+  color: var(--fg); border: 1px solid var(--line); border-radius: 999px;
+  padding: 10px 12px; font-size: .92rem; background: transparent;
+}
+.lang-main:focus-visible, .lang-alt:focus-visible, .row a:focus-visible, button:focus-visible { outline: 2px solid var(--chip); outline-offset: 3px; }
+.lang-alt:hover { border-color: var(--chip); }
+
+.facts { background: var(--surface); border-radius: 18px; padding: 6px 20px; }
+.row { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--line); align-items: start; }
+.row:last-child { border-bottom: 0; }
+.row svg { width: 20px; height: 20px; margin-top: 3px; color: var(--chip); }
+.row div { min-width: 0; }
+.row .k { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.row .v { font-weight: 500; overflow-wrap: anywhere; }
+.row a { color: var(--fg); text-underline-offset: 3px; text-decoration-color: var(--chip); }
+.times { font-variant-numeric: tabular-nums; }
+.pass { color: var(--muted); }
+.pass .v { color: var(--fg); }
+
+footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
+.tagline { font-family: "Allura", "Segoe Script", cursive; font-size: 1.85rem; line-height: 1.2; color: var(--fg); }
+.wa { background: var(--surface); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.wa h2 { font-family: var(--title); font-weight: 400; font-size: 1.35rem; letter-spacing: .1em; text-transform: uppercase; margin: 0; }
+.wa p { margin: 0; color: var(--muted); }
+.wa label { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.wa input { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; width: 100%; }
+.wa input:focus-visible { outline: 2px solid var(--chip); outline-offset: 2px; }
+.wa-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--on-accent); text-decoration: none; border-radius: 999px; padding: 14px 20px; font-weight: 500; }
+.wa-btn svg { width: 22px; height: 22px; flex: none; }
+.wa-btn:focus-visible { outline: 2px solid var(--chip); outline-offset: 3px; }
+.demo { font-size: .78rem; color: var(--muted); border: 1px dashed var(--line); border-radius: 12px; padding: 10px 14px; }
+@media (prefers-reduced-motion: no-preference) {
+  .lang-main { transition: transform .15s ease; }
+  .lang-main:hover { transform: translateY(-1px); }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <text x="44" y="60" text-anchor="middle" font-family="Cormorant Unicase, Georgia, serif" font-size="44" fill="currentColor">B</text>
+      <text x="60" y="72" text-anchor="middle" font-family="Cormorant Unicase, Georgia, serif" font-size="40" fill="currentColor">V</text>
+    </svg>
+    <div class="brand">BONES<small>VACANCES · ANDORRA</small></div>
+  </header>
+
+  <section class="place">
+    <span class="eyebrow" data-t="eyebrow">Tu llegada</span>
+    <h1>Capri 5F</h1>
+    <p class="intro" data-t="intro">Mira el vídeo antes de llegar: en dos minutos verás la entrada, el parking y cómo funciona la cerradura.</p>
+  </section>
+
+  <section class="langs" aria-label="Idioma del vídeo">
+    <a class="lang-main" id="lang-main" href="https://youtube.com/shorts/plmp4un7D2k" target="_blank" rel="noopener">
+      <span id="lang-main-label">Ver el vídeo en español</span>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+    </a>
+    <div class="lang-others" id="lang-others"></div>
+  </section>
+
+  <section class="facts">
+    <div class="row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      <div><div class="k" data-t="address">Dirección</div><div class="v">Carrer de l'Aigüeta, 14 · 5.º F<br>Andorra la Vella, Andorra</div><a href="https://maps.app.goo.gl/Ydtk9XbHDeUcKdA36" target="_blank" rel="noopener" data-t="maps">Abrir en Google Maps</a></div>
+    </div>
+    <div class="row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+      <div><div class="k" data-t="hours">Horario</div><div class="v times"><span data-t="cin">Check-in: desde las 16:00</span><br><span data-t="cout">Check-out: hasta las 11:00</span></div></div>
+    </div>
+    <div class="row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 9a13 13 0 0 1 18 0M6 12.5a8.5 8.5 0 0 1 12 0M9.2 16a4 4 0 0 1 5.6 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+      <div><div class="k">Wifi</div><div class="v">BonesVacances</div><div class="pass"><span data-t="password">Contraseña</span>: <span class="v">andorra123</span></div></div>
+    </div>
+    <div class="row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+      <div><div class="k" data-t="offline">Para verlo sin cobertura</div><a id="dl-link" href="https://drive.usercontent.google.com/download?id=16mhygDot46gzwHQ-OUoTgRMuWDfkgpgF&export=download" target="_blank" rel="noopener" data-t="download">Descarga el vídeo antes de salir</a></div>
+    </div>
+  </section>
+
+  <section class="wa" aria-labelledby="wa-title">
+    <h2 id="wa-title" data-t="waTitle">¿Necesitas ayuda?</h2>
+    <p data-t="waText">Escríbenos por WhatsApp. Pon tu número de reserva y sabremos al momento quién eres.</p>
+    <label for="wa-res" data-t="waLabel">Número de reserva</label>
+    <input id="wa-res" type="text" autocomplete="off" inputmode="text" placeholder="HM4X2K9Z3P">
+    <a class="wa-btn" id="wa-btn" href="https://wa.me/376662217" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+      <span data-t="waBtn">Abrir WhatsApp</span>
+    </a>
+  </section>
+
+  <footer>
+    <span class="tagline">More than a stay, a place to belong</span>
+  </footer>
+</div>
+
+<script>
+// Un enlace por idioma. Cuando estén los vídeos nuevos, solo se cambian estas tres líneas.
+const VIDEOS = {
+  es: "https://youtube.com/shorts/plmp4un7D2k",
+  en: "https://youtube.com/shorts/xYuZlTiC3eA",
+  fr: "https://youtube.com/shorts/TVHkAsgnIng"
+};
+// Descarga directa del vídeo (carpeta pública de Drive de Capri 5F), por idioma
+const DOWNLOADS = {
+  es: "https://drive.usercontent.google.com/download?id=16mhygDot46gzwHQ-OUoTgRMuWDfkgpgF&export=download",
+  en: "https://drive.usercontent.google.com/download?id=1pbl0wLk_mer0b_V5o99n-GOTeBiE6z01&export=download",
+  fr: "https://drive.usercontent.google.com/download?id=19C7hMU35v6jXafNNu2Pyw-3gObEjGO0Y&export=download"
+};
+const T = {
+  es: { name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en dos minutos verás la entrada, el parking y cómo funciona la cerradura.", address: "Dirección", password: "Contraseña", maps: "Abrir en Google Maps", times: "Desde las 16:00 · Hasta las 11:00", offline: "Para verlo sin cobertura", download: "Descargar el vídeo (10 MB)", demo: "Ejemplo: de momento los tres idiomas abren el vídeo actual. Cuando estén grabados, cada botón abrirá su vídeo.", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva y sabremos al momento quién eres.", waLabel: "Número de reserva", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy el huésped de la reserva {r} en Capri 5F.", waMsgNo: "Hola, soy huésped de Capri 5F." },
+  en: { name: "English", watch: "Watch the video in English", eyebrow: "Your arrival", intro: "Watch the video before you arrive: in two minutes you'll see the entrance, the car park and how the lock works.", address: "Address", password: "Password", maps: "Open in Google Maps", times: "From 16:00 · Until 11:00", offline: "To watch it offline", download: "Download the video (10 MB)", demo: "Example: for now all three languages open the current video. Once recorded, each button will open its own video.", hours: "Times", cin: "Check-in: from 16:00", cout: "Check-out: by 11:00", waTitle: "Need help?", waText: "Message us on WhatsApp. Add your booking number and we will know straight away who you are.", waLabel: "Booking number", waBtn: "Open WhatsApp", waMsg: "Hi, I am the guest with booking {r} at Capri 5F.", waMsgNo: "Hi, I am a guest at Capri 5F." },
+  fr: { name: "Français", watch: "Voir la vidéo en français", eyebrow: "Votre arrivée", intro: "Regardez la vidéo avant d'arriver : en deux minutes, vous verrez l'entrée, le parking et le fonctionnement de la serrure.", address: "Adresse", password: "Mot de passe", maps: "Ouvrir dans Google Maps", times: "À partir de 16h00 · Jusqu'à 11h00", offline: "Pour la voir sans réseau", download: "Télécharger la vidéo (10 Mo)", demo: "Exemple : pour l'instant, les trois langues ouvrent la vidéo actuelle. Une fois enregistrées, chaque bouton ouvrira sa vidéo.", hours: "Horaires", cin: "Check-in : à partir de 16h00", cout: "Check-out : jusqu'à 11h00", waTitle: "Besoin d'aide ?", waText: "Écrivez-nous sur WhatsApp. Indiquez votre numéro de réservation et nous saurons tout de suite qui vous êtes.", waLabel: "Numéro de réservation", waBtn: "Ouvrir WhatsApp", waMsg: "Bonjour, je suis le client de la réservation {r} à Capri 5F.", waMsgNo: "Bonjour, je suis client de Capri 5F." }
+};
+function detect() {
+  const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "es"];
+  for (const l of langs) { const c = String(l).slice(0, 2).toLowerCase(); if (T[c]) return c; }
+  return "en";
+}
+function render(lang) {
+  currentLang = lang;
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(el => { const k = el.dataset.t; if (t[k]) el.textContent = t[k]; });
+  const main = document.getElementById("lang-main");
+  main.href = VIDEOS[lang];
+  document.getElementById("dl-link").href = DOWNLOADS[lang];
+  document.getElementById("lang-main-label").textContent = t.watch;
+  const others = document.getElementById("lang-others");
+  others.textContent = "";
+  Object.keys(T).filter(c => c !== lang).forEach(c => {
+    const a = document.createElement("a");
+    a.className = "lang-alt"; a.href = VIDEOS[c]; a.target = "_blank"; a.rel = "noopener";
+    a.textContent = T[c].name;
+    a.addEventListener("click", () => render(c));
+    others.appendChild(a);
+  });
+  updateWa();
+}
+// WhatsApp con el número de reserva. Llega en el enlace (#HM4X2K9Z3P) o lo escribe el huésped.
+const WA_PHONE = "376662217";
+let currentLang = "es";
+const resInput = document.getElementById("wa-res");
+const fromLink = (location.hash || "").replace("#", "").replace(/[^A-Za-z0-9-]/g, "");
+if (fromLink) resInput.value = fromLink;
+function updateWa() {
+  const t = T[currentLang];
+  const r = resInput.value.trim();
+  const msg = r ? t.waMsg.replace("{r}", r) : t.waMsgNo;
+  document.getElementById("wa-btn").href = "https://wa.me/" + WA_PHONE + "?text=" + encodeURIComponent(msg);
+}
+resInput.addEventListener("input", updateWa);
+render(detect());
+</script>
+</body>
+</html>
