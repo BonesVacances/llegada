@@ -4,12 +4,12 @@
 // La respuesta va a un script de Google (Apps Script) que la apunta en BV Reservas,
 // columnas "Horario de llegada" y "Horario de salida" de la reserva (piso + día de llegada).
 (function () {
-  const ENDPOINT = "PENDIENTE_URL_APPS_SCRIPT";
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbz-8TukPJj1clYERayT6esupg_jI-TA56l39GdDeF-loET8Jekjx0GyWk5vrwtgdx0y/exec";
   const me = document.currentScript;
   const PISO = me.dataset.piso;
 
-  const LLEGADAS = ["16h00-17h00", "17h00-18h00", "18h00-19h00", "19h00-20h00", "20h00-21h00", "21h00-22h00", "22h00-23h00", "+23h00"];
-  const SALIDAS = ["-08h00", "08h00-09h00", "09h00-10h00", "10h00-11h00"];
+  const LLEGADAS = ["16h00-17h00", "17h00-18h00", "18h00-19h00", "19h00-20h00", "20h00-21h00", "21h00-22h00", "22h00-23h00", "después de 23h00"];
+  const SALIDAS = ["antes de 08h00", "08h00-09h00", "09h00-10h00", "10h00-11h00"];
 
   const T = {
     es: { title: "Tu horario", text: "Check-in a partir de las 16:00, check-out hasta las 11:00. ¿A qué hora más o menos llegarás y te irás?", day: "Día de llegada", arrive: "Llegaré", leave: "Me iré", choose: "Elige", unknown: "Aún no lo sé", after: "Después de las 23:00", before: "Antes de las 8:00", send: "Enviar", sending: "Enviando…", ok: "¡Gracias! Lo hemos apuntado.", err: "No se ha podido enviar. Inténtalo otra vez o escríbenos por WhatsApp.", missing: "Indica el día de llegada y al menos una hora.", other: "¿Necesitas llegar antes o irte más tarde? Escríbenos por WhatsApp." },
@@ -18,8 +18,8 @@
   };
 
   function label(v, t) {
-    if (v === "+23h00") return t.after;
-    if (v === "-08h00") return t.before;
+    if (v === "después de 23h00") return t.after;
+    if (v === "antes de 08h00") return t.before;
     return v.replace(/h/g, ":").replace("-", " – ");
   }
 
@@ -77,6 +77,8 @@
   render();
 
   $("hor-btn").addEventListener("click", async () => {
+    const l = (document.documentElement.lang || "es").slice(0, 2);
+    lang = T[l] ? l : "en";
     const t = T[lang];
     const msg = $("hor-msg");
     const data = {
