@@ -15,9 +15,9 @@
   const SALIDAS = ["antes de 08h00", "08h00-09h00", "09h00-10h00", "10h00-11h00"];
 
   const T = {
-    es: { title: "Tu horario", text: "Check-in a partir de las 16:00, check-out hasta las 11:00. ¿A qué hora más o menos llegarás y te irás?", day: "Día de llegada", arrive: "Llegaré", leave: "Me iré", choose: "Elige", unknown: "Aún no lo sé", early: "Lo antes posible: avisadme si el piso está listo antes de las 16:00", late: "Más tarde de las 22:00", before: "Antes de las 8:00", send: "Enviar", sending: "Enviando…", ok: "¡Gracias! Lo hemos apuntado.", err: "No se ha podido enviar. Inténtalo otra vez o escríbenos por WhatsApp.", missing: "Indica el día de llegada y al menos una hora.", earlyNote: "Si el piso está listo antes, te avisaremos. Si no, la entrada es a partir de las 16:00.", lateNote: "Puedes llegar más tarde sin problema, pero a partir de las 22:00 no atendemos WhatsApp ni llamadas. Mira bien el vídeo antes de llegar.", other: "¿Necesitas irte después de las 11:00? Escríbenos por WhatsApp." },
-    en: { title: "Your times", text: "Check-in from 16:00, check-out by 11:00. Roughly what time will you arrive and leave?", day: "Arrival day", arrive: "I'll arrive", leave: "I'll leave", choose: "Choose", unknown: "Not sure yet", early: "As early as possible: let me know if the flat is ready before 16:00", late: "Later than 22:00", before: "Before 8:00", send: "Send", sending: "Sending…", ok: "Thank you! We've noted it down.", err: "It couldn't be sent. Please try again or message us on WhatsApp.", missing: "Please add your arrival day and at least one time.", earlyNote: "If the flat is ready earlier, we'll let you know. If not, check-in is from 16:00.", lateNote: "You can arrive later, no problem, but from 22:00 we don't answer WhatsApp or calls. Please watch the video carefully before you arrive.", other: "Need to leave after 11:00? Message us on WhatsApp." },
-    fr: { title: "Vos horaires", text: "Check-in à partir de 16h00, check-out jusqu'à 11h00. Vers quelle heure pensez-vous arriver et repartir ?", day: "Jour d'arrivée", arrive: "J'arriverai", leave: "Je partirai", choose: "Choisir", unknown: "Je ne sais pas encore", early: "Le plus tôt possible : prévenez-moi si le logement est prêt avant 16h00", late: "Après 22h00", before: "Avant 8h00", send: "Envoyer", sending: "Envoi…", ok: "Merci ! C'est noté.", err: "L'envoi n'a pas abouti. Réessayez ou écrivez-nous sur WhatsApp.", missing: "Indiquez le jour d'arrivée et au moins une heure.", earlyNote: "Si le logement est prêt plus tôt, nous vous préviendrons. Sinon, l'arrivée se fait à partir de 16h00.", lateNote: "Vous pouvez arriver plus tard sans problème, mais à partir de 22h00 nous ne répondons ni sur WhatsApp ni au téléphone. Regardez bien la vidéo avant d'arriver.", other: "Besoin de partir après 11h00 ? Écrivez-nous sur WhatsApp." }
+    es: { title: "Tu horario", text: "Check-in a partir de las 16:00, check-out hasta las 11:00. ¿A qué hora más o menos llegarás y te irás?", day: "Día de llegada", arrive: "Llegaré", leave: "Me iré", choose: "Elige", unknown: "Aún no lo sé", early: "Lo antes posible: avisadme si el piso está listo antes de las 16:00", late: "Más tarde de las 22:00", before: "Antes de las 8:00", send: "Enviar", sending: "Enviando…", ok: "¡Gracias! Lo hemos apuntado.", err: "No se ha podido enviar. Inténtalo otra vez o escríbenos por WhatsApp.", missing: "Indica el día de llegada y al menos una hora.", earlyNote: "Si el piso está listo antes, te avisaremos. Si no, la entrada es a partir de las 16:00.", lateNote: "Puedes llegar más tarde sin problema, pero a partir de las 22:00 no atendemos WhatsApp ni llamadas. Mira bien el vídeo antes de llegar." },
+    en: { title: "Your times", text: "Check-in from 16:00, check-out by 11:00. Roughly what time will you arrive and leave?", day: "Arrival day", arrive: "I'll arrive", leave: "I'll leave", choose: "Choose", unknown: "Not sure yet", early: "As early as possible: let me know if the flat is ready before 16:00", late: "Later than 22:00", before: "Before 8:00", send: "Send", sending: "Sending…", ok: "Thank you! We've noted it down.", err: "It couldn't be sent. Please try again or message us on WhatsApp.", missing: "Please add your arrival day and at least one time.", earlyNote: "If the flat is ready earlier, we'll let you know. If not, check-in is from 16:00.", lateNote: "You can arrive later, no problem, but from 22:00 we don't answer WhatsApp or calls. Please watch the video carefully before you arrive." },
+    fr: { title: "Vos horaires", text: "Check-in à partir de 16h00, check-out jusqu'à 11h00. Vers quelle heure pensez-vous arriver et repartir ?", day: "Jour d'arrivée", arrive: "J'arriverai", leave: "Je partirai", choose: "Choisir", unknown: "Je ne sais pas encore", early: "Le plus tôt possible : prévenez-moi si le logement est prêt avant 16h00", late: "Après 22h00", before: "Avant 8h00", send: "Envoyer", sending: "Envoi…", ok: "Merci ! C'est noté.", err: "L'envoi n'a pas abouti. Réessayez ou écrivez-nous sur WhatsApp.", missing: "Indiquez le jour d'arrivée et au moins une heure.", earlyNote: "Si le logement est prêt plus tôt, nous vous préviendrons. Sinon, l'arrivée se fait à partir de 16h00.", lateNote: "Vous pouvez arriver plus tard sans problème, mais à partir de 22h00 nous ne répondons ni sur WhatsApp ni au téléphone. Regardez bien la vidéo avant d'arriver." }
   };
 
   function label(v, t) {
@@ -37,7 +37,7 @@
     '<p class="hor-note" id="hor-note"></p>' +
     '<label for="hor-out" class="hor-l-out"></label><select id="hor-out"></select>' +
     '<button type="button" class="wa-btn hor-btn" id="hor-btn"></button>' +
-    '<p class="hor-msg" id="hor-msg" role="status" aria-live="polite"></p><p class="hor-other"></p>';
+    '<p class="hor-msg" id="hor-msg" role="status" aria-live="polite"></p>';
   const wa = document.querySelector("section.wa");
   wa.parentNode.insertBefore(sec, wa);
 
@@ -48,7 +48,7 @@
     ".hor select:focus-visible{outline:2px solid var(--chip);outline-offset:2px;}" +
     ".hor-btn{border:0;font:inherit;font-weight:500;cursor:pointer;}.hor-btn[disabled]{opacity:.6;cursor:default;}" +
     ".hor-note:empty,.hor-msg:empty{display:none;}.hor-note{font-size:.9rem;border-left:3px solid var(--chip);padding-left:12px;}" +
-    ".hor-msg{color:var(--fg)!important;font-weight:500;}.hor-other{font-size:.85rem;}";
+    ".hor-msg{color:var(--fg)!important;font-weight:500;}";
   document.head.appendChild(css);
 
   const $ = id => document.getElementById(id);
@@ -80,7 +80,6 @@
     sec.querySelector(".hor-l-day").textContent = t.day;
     sec.querySelector(".hor-l-in").textContent = t.arrive;
     sec.querySelector(".hor-l-out").textContent = t.leave;
-    sec.querySelector(".hor-other").textContent = t.other;
     if (!$("hor-btn").disabled) $("hor-btn").textContent = t.send;
     fill($("hor-in"), LLEGADAS, t);
     fill($("hor-out"), SALIDAS, t);
