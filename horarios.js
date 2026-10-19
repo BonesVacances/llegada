@@ -1,8 +1,8 @@
 // Apartado "¿A qué hora llegarás y te irás?" de las páginas de llegada.
 // Cada página lo carga con: <script src="../horarios.js" data-piso="CAPRI-5F"></script>
 // data-piso = nombre del piso tal cual en la columna PISO de BV Reservas.
-// La respuesta va a un script de Google (Apps Script) que busca la próxima reserva de ese piso
-// en BV Reservas y la apunta en "Horario de llegada" y "Horario de salida".
+// La respuesta va a un script de Google (Apps Script) que busca en BV Reservas la reserva de ese piso
+// con ese día de llegada y la apunta en "Horario de llegada" y "Horario de salida".
 (function () {
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbz-8TukPJj1clYERayT6esupg_jI-TA56l39GdDeF-loET8Jekjx0GyWk5vrwtgdx0y/exec";
   const me = document.currentScript;
@@ -15,9 +15,9 @@
   const SALIDAS = ["antes de 08h00", "08h00-09h00", "09h00-10h00", "10h00-11h00"];
 
   const T = {
-    es: { title: "Tu horario", text: "Check-in a partir de las 16:00, check-out hasta las 11:00. ¿A qué hora más o menos llegarás y te irás?", arrive: "Llegaré", leave: "Me iré", choose: "Elige", unknown: "Aún no lo sé", early: "Lo antes posible: avisadme si el piso está listo antes de las 16:00", late: "Más tarde de las 22:00", before: "Antes de las 8:00", send: "Enviar", sending: "Enviando…", ok: "¡Gracias! Lo hemos apuntado.", err: "No se ha podido enviar. Inténtalo otra vez o escríbenos por WhatsApp.", missing: "Elige al menos una hora.", earlyNote: "Si el piso está listo antes, te avisaremos. Si no, la entrada es a partir de las 16:00.", lateNote: "Puedes llegar más tarde sin problema, pero a partir de las 22:00 no atendemos WhatsApp ni llamadas. Mira bien el vídeo antes de llegar.", other: "¿Necesitas irte después de las 11:00? Escríbenos por WhatsApp." },
-    en: { title: "Your times", text: "Check-in from 16:00, check-out by 11:00. Roughly what time will you arrive and leave?", arrive: "I'll arrive", leave: "I'll leave", choose: "Choose", unknown: "Not sure yet", early: "As early as possible: let me know if the flat is ready before 16:00", late: "Later than 22:00", before: "Before 8:00", send: "Send", sending: "Sending…", ok: "Thank you! We've noted it down.", err: "It couldn't be sent. Please try again or message us on WhatsApp.", missing: "Please choose at least one time.", earlyNote: "If the flat is ready earlier, we'll let you know. If not, check-in is from 16:00.", lateNote: "You can arrive later, no problem, but from 22:00 we don't answer WhatsApp or calls. Please watch the video carefully before you arrive.", other: "Need to leave after 11:00? Message us on WhatsApp." },
-    fr: { title: "Vos horaires", text: "Check-in à partir de 16h00, check-out jusqu'à 11h00. Vers quelle heure pensez-vous arriver et repartir ?", arrive: "J'arriverai", leave: "Je partirai", choose: "Choisir", unknown: "Je ne sais pas encore", early: "Le plus tôt possible : prévenez-moi si le logement est prêt avant 16h00", late: "Après 22h00", before: "Avant 8h00", send: "Envoyer", sending: "Envoi…", ok: "Merci ! C'est noté.", err: "L'envoi n'a pas abouti. Réessayez ou écrivez-nous sur WhatsApp.", missing: "Choisissez au moins une heure.", earlyNote: "Si le logement est prêt plus tôt, nous vous préviendrons. Sinon, l'arrivée se fait à partir de 16h00.", lateNote: "Vous pouvez arriver plus tard sans problème, mais à partir de 22h00 nous ne répondons ni sur WhatsApp ni au téléphone. Regardez bien la vidéo avant d'arriver.", other: "Besoin de partir après 11h00 ? Écrivez-nous sur WhatsApp." }
+    es: { title: "Tu horario", text: "Check-in a partir de las 16:00, check-out hasta las 11:00. ¿A qué hora más o menos llegarás y te irás?", day: "Día de llegada", arrive: "Llegaré", leave: "Me iré", choose: "Elige", unknown: "Aún no lo sé", early: "Lo antes posible: avisadme si el piso está listo antes de las 16:00", late: "Más tarde de las 22:00", before: "Antes de las 8:00", send: "Enviar", sending: "Enviando…", ok: "¡Gracias! Lo hemos apuntado.", err: "No se ha podido enviar. Inténtalo otra vez o escríbenos por WhatsApp.", missing: "Indica el día de llegada y al menos una hora.", earlyNote: "Si el piso está listo antes, te avisaremos. Si no, la entrada es a partir de las 16:00.", lateNote: "Puedes llegar más tarde sin problema, pero a partir de las 22:00 no atendemos WhatsApp ni llamadas. Mira bien el vídeo antes de llegar.", other: "¿Necesitas irte después de las 11:00? Escríbenos por WhatsApp." },
+    en: { title: "Your times", text: "Check-in from 16:00, check-out by 11:00. Roughly what time will you arrive and leave?", day: "Arrival day", arrive: "I'll arrive", leave: "I'll leave", choose: "Choose", unknown: "Not sure yet", early: "As early as possible: let me know if the flat is ready before 16:00", late: "Later than 22:00", before: "Before 8:00", send: "Send", sending: "Sending…", ok: "Thank you! We've noted it down.", err: "It couldn't be sent. Please try again or message us on WhatsApp.", missing: "Please add your arrival day and at least one time.", earlyNote: "If the flat is ready earlier, we'll let you know. If not, check-in is from 16:00.", lateNote: "You can arrive later, no problem, but from 22:00 we don't answer WhatsApp or calls. Please watch the video carefully before you arrive.", other: "Need to leave after 11:00? Message us on WhatsApp." },
+    fr: { title: "Vos horaires", text: "Check-in à partir de 16h00, check-out jusqu'à 11h00. Vers quelle heure pensez-vous arriver et repartir ?", day: "Jour d'arrivée", arrive: "J'arriverai", leave: "Je partirai", choose: "Choisir", unknown: "Je ne sais pas encore", early: "Le plus tôt possible : prévenez-moi si le logement est prêt avant 16h00", late: "Après 22h00", before: "Avant 8h00", send: "Envoyer", sending: "Envoi…", ok: "Merci ! C'est noté.", err: "L'envoi n'a pas abouti. Réessayez ou écrivez-nous sur WhatsApp.", missing: "Indiquez le jour d'arrivée et au moins une heure.", earlyNote: "Si le logement est prêt plus tôt, nous vous préviendrons. Sinon, l'arrivée se fait à partir de 16h00.", lateNote: "Vous pouvez arriver plus tard sans problème, mais à partir de 22h00 nous ne répondons ni sur WhatsApp ni au téléphone. Regardez bien la vidéo avant d'arriver.", other: "Besoin de partir après 11h00 ? Écrivez-nous sur WhatsApp." }
   };
 
   function label(v, t) {
@@ -32,6 +32,7 @@
   sec.setAttribute("aria-labelledby", "hor-title");
   sec.innerHTML =
     '<h2 id="hor-title"></h2><p class="hor-text"></p>' +
+    '<label for="hor-day" class="hor-l-day"></label><input id="hor-day" type="date">' +
     '<label for="hor-in" class="hor-l-in"></label><select id="hor-in"></select>' +
     '<p class="hor-note" id="hor-note"></p>' +
     '<label for="hor-out" class="hor-l-out"></label><select id="hor-out"></select>' +
@@ -42,6 +43,7 @@
 
   const css = document.createElement("style");
   css.textContent =
+    ".hor input[type=date]{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;}" +
     ".hor select{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;}" +
     ".hor select:focus-visible{outline:2px solid var(--chip);outline-offset:2px;}" +
     ".hor-btn{border:0;font:inherit;font-weight:500;cursor:pointer;}.hor-btn[disabled]{opacity:.6;cursor:default;}" +
@@ -51,6 +53,7 @@
 
   const $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(params.get("entrada") || "")) $("hor-day").value = params.get("entrada");
 
   let lang = "es";
   function currentLang() {
@@ -74,6 +77,7 @@
     const t = T[lang];
     $("hor-title").textContent = t.title;
     sec.querySelector(".hor-text").textContent = t.text;
+    sec.querySelector(".hor-l-day").textContent = t.day;
     sec.querySelector(".hor-l-in").textContent = t.arrive;
     sec.querySelector(".hor-l-out").textContent = t.leave;
     sec.querySelector(".hor-other").textContent = t.other;
@@ -91,15 +95,13 @@
     lang = currentLang();
     const t = T[lang];
     const msg = $("hor-msg");
-    // Sin día de llegada: el script busca la próxima reserva de este piso.
-    // Un enlace con ?entrada=AAAA-MM-DD fija la reserva (lo usamos para pruebas).
+    // Piso + día de llegada identifican la reserva (Aida, 19 oct 2026).
     const data = {
-      piso: PISO, llegada: $("hor-in").value, salida: $("hor-out").value,
-      entrada: /^\d{4}-\d{2}-\d{2}$/.test(params.get("entrada") || "") ? params.get("entrada") : "",
+      piso: PISO, entrada: $("hor-day").value, llegada: $("hor-in").value, salida: $("hor-out").value,
       reserva: ($("wa-res") || {}).value || "", idioma: lang,
       prueba: params.get("prueba") === "1"
     };
-    if (!data.llegada && !data.salida) { msg.textContent = t.missing; return; }
+    if (!data.entrada || (!data.llegada && !data.salida)) { msg.textContent = t.missing; return; }
     $("hor-btn").disabled = true; $("hor-btn").textContent = t.sending; msg.textContent = "";
     try {
       const r = await fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });
