@@ -105,6 +105,9 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
   .lang-main { transition: transform .15s ease; }
   .lang-main:hover { transform: translateY(-1px); }
 }
+[hidden] { display: none !important; }
+.reg .reg-done { border: 0; font: inherit; cursor: pointer; width: 100%; }
+.reg .reg-msg:empty { display: none; }
 </style>
 </head>
 <body>
@@ -125,8 +128,8 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
     <p class="intro" data-t="intro">Mira el vídeo antes de llegar: en dos minutos verás la entrada, el parking y cómo funciona la cerradura.</p>
   </section>
 
-  <section class="langs" aria-label="Idioma del vídeo">
-    <a class="lang-main" id="lang-main" href="https://youtube.com/shorts/plmp4un7D2k" target="_blank" rel="noopener">
+  <section class="langs" aria-label="Idioma del vídeo" data-privado>
+    <a class="lang-main" id="lang-main" href="#" target="_blank" rel="noopener">
       <span id="lang-main-label">Ver el vídeo en español</span>
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
     </a>
@@ -142,13 +145,17 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
       <div><div class="k" data-t="hours">Horario</div><div class="v times"><span data-t="cin">Check-in: desde las 16:00</span><br><span data-t="cout">Check-out: hasta las 11:00</span></div></div>
     </div>
-    <div class="row">
+    <div class="row" data-privado>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 9a13 13 0 0 1 18 0M6 12.5a8.5 8.5 0 0 1 12 0M9.2 16a4 4 0 0 1 5.6 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
-      <div><div class="k">Wifi</div><div class="v">BonesVacances</div><div class="pass"><span data-t="password">Contraseña</span>: <span class="v">andorra123</span></div></div>
+      <div><div class="k">Wifi</div><div class="v" id="wifi-red"></div><div class="pass"><span data-t="password">Contraseña</span>: <span class="v" id="wifi-pass"></span></div></div>
     </div>
-    <div class="row">
+    <div class="row" data-privado>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
-      <div><div class="k" data-t="offline">Para verlo sin cobertura</div><a id="dl-link" href="https://drive.usercontent.google.com/download?id=16mhygDot46gzwHQ-OUoTgRMuWDfkgpgF&export=download" target="_blank" rel="noopener" data-t="download">Descarga el vídeo antes de salir</a></div>
+      <div><div class="k" data-t="offline">Para verlo sin cobertura</div><a id="dl-link" href="#" target="_blank" rel="noopener" data-t="download">Descarga el vídeo antes de salir</a></div>
+    </div>
+    <div class="row" id="otros-row" data-privado>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
+      <div><div class="k" id="otros-k">Otros códigos</div><div class="v" id="otros-v" style="white-space:pre-line"></div></div>
     </div>
   </section>
 
@@ -170,17 +177,10 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
 
 <script>
 // Un enlace por idioma. Cuando estén los vídeos nuevos, solo se cambian estas tres líneas.
-const VIDEOS = {
-  es: "https://youtube.com/shorts/plmp4un7D2k",
-  en: "https://youtube.com/shorts/xYuZlTiC3eA",
-  fr: "https://youtube.com/shorts/TVHkAsgnIng"
-};
+// Versión bloqueada: los enlaces los manda el script de Google con el registro completo (reserva.js).
+const VIDEOS = { es: "", en: "", fr: "" };
 // Descarga directa del vídeo (carpeta pública de Drive de Capri 5F), por idioma
-const DOWNLOADS = {
-  es: "https://drive.usercontent.google.com/download?id=16mhygDot46gzwHQ-OUoTgRMuWDfkgpgF&export=download",
-  en: "https://drive.usercontent.google.com/download?id=1pbl0wLk_mer0b_V5o99n-GOTeBiE6z01&export=download",
-  fr: "https://drive.usercontent.google.com/download?id=19C7hMU35v6jXafNNu2Pyw-3gObEjGO0Y&export=download"
-};
+const DOWNLOADS = { es: "", en: "", fr: "" };
 const T = {
   es: { name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en dos minutos verás la entrada, el parking y cómo funciona la cerradura.", address: "Dirección", password: "Contraseña", maps: "Abrir en Google Maps", times: "Desde las 16:00 · Hasta las 11:00", offline: "Para verlo sin cobertura", download: "Descargar el vídeo (10 MB)", demo: "Ejemplo: de momento los tres idiomas abren el vídeo actual. Cuando estén grabados, cada botón abrirá su vídeo.", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva o tu nombre y sabremos al momento quién eres.", waLabel: "Número de reserva o nombre", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy huésped de Capri 5F. Reserva o nombre: {r}.", waMsgNo: "Hola, soy huésped de Capri 5F." },
   en: { name: "English", watch: "Watch the video in English", eyebrow: "Your arrival", intro: "Watch the video before you arrive: in two minutes you'll see the entrance, the car park and how the lock works.", address: "Address", password: "Password", maps: "Open in Google Maps", times: "From 16:00 · Until 11:00", offline: "To watch it offline", download: "Download the video (10 MB)", demo: "Example: for now all three languages open the current video. Once recorded, each button will open its own video.", hours: "Times", cin: "Check-in: from 16:00", cout: "Check-out: by 11:00", waTitle: "Need help?", waText: "Message us on WhatsApp. Add your booking number or your name and we will know straight away who you are.", waLabel: "Booking number or name", waBtn: "Open WhatsApp", waMsg: "Hi, I am a guest at Capri 5F. Booking or name: {r}.", waMsgNo: "Hi, I am a guest at Capri 5F." },
@@ -197,8 +197,8 @@ function render(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-t]").forEach(el => { const k = el.dataset.t; if (t[k]) el.textContent = t[k]; });
   const main = document.getElementById("lang-main");
-  main.href = VIDEOS[lang];
-  document.getElementById("dl-link").href = DOWNLOADS[lang];
+  main.href = VIDEOS[lang] || "#";
+  document.getElementById("dl-link").href = DOWNLOADS[lang] || "#";
   document.getElementById("lang-main-label").textContent = t.watch;
   const others = document.getElementById("lang-others");
   others.textContent = "";
@@ -226,6 +226,7 @@ function updateWa() {
 resInput.addEventListener("input", updateWa);
 render(detect());
 </script>
+<script src="../reserva.js"></script>
 <script src="../horarios.js" data-piso="CAPRI-5F"></script>
 </body>
 </html>
