@@ -67,6 +67,7 @@ textarea{min-height:70px;resize:vertical}
 .aviso{display:grid;gap:4px;background:var(--accent);color:var(--on-accent);border-radius:12px;padding:14px 16px;text-align:center}
 .aviso b{font-family:var(--title);font-size:1.35rem;font-weight:600;line-height:1.2}
 .aviso span{font-size:.9rem;opacity:.9}
+.info.dest{background:var(--warn-bg);color:var(--fg);border-left:4px solid var(--warn);font-size:.92rem;font-weight:500;padding:10px 14px}
 .trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--chip);outline-offset:2px}
@@ -93,23 +94,18 @@ a{color:inherit}
       <div class="op" data-check="servicios" data-ops="forfait,clases,alquiler,comida,actividades,aconsejar"></div>
     </section>
 
-    <section aria-labelledby="h-gr">
-      <h2 id="h-gr" data-t="s_grupo">¿Cuántos sois?</h2>
-      <p class="hint" data-t="grupo_hint">Solo necesitamos saber cuántos hay de cada edad. Cuenta la edad del primer día de esquí.</p>
-      <div class="cnt" data-cnt="g" data-cats="adultos,junior,ninos"></div>
-      <p class="info" data-t="edades_info">Edades del forfait (temporada 2026-27)</p>
-    </section>
 
     <section aria-labelledby="h-ff" id="s-forfait" hidden>
       <h2 id="h-ff" data-t="s_forfait">Forfaits</h2>
       <!-- Aviso destacado arriba (Aida, 16 nov 2026) -->
       <div class="aviso"><b data-t="ff_aviso">Gestionamos forfaits a partir de 2 días de esquí</b><span data-t="ff_precio">El precio cambia según la fecha: cuanto antes se compra, mejor.</span></div>
       <div class="q"><b data-t="estacion">¿Dónde queréis esquiar?</b><div class="op" data-radio="ff_estacion" data-ops="grandvalira,pal,ordino,varias,aconsejar"></div></div>
+      <!-- Edades: por eso en el desplegable solo hay adultos, júnior y niños (Aida, 16 nov 2026) -->
+      <p class="info dest" data-t="edades_info">Edades</p>
       <!-- Un forfait por persona, como en la web de la estación: se puede cambiar, quitar o añadir (Aida, 16 nov 2026) -->
       <div class="q"><b data-t="ff_por_persona">Un forfait por persona</b>
         <div id="ff-lista" style="display:grid;gap:10px"></div>
         <button type="button" class="btn2" id="add-ff" data-t="anadir_ff">+ Añadir otro forfait</button></div>
-      <p class="hint" data-t="ff_taquilla">Los menores de 6 años y los de 65 o más sacan el forfait en taquilla.</p>
       <label class="f"><span data-t="notas_ff">Comentarios</span><textarea name="ff_notas" maxlength="600"></textarea></label>
     </section>
 
@@ -365,7 +361,7 @@ const FF_TIPOS={grandvalira:["f_multi_gv"],pal:["f_multi_pal"],ordino:["f_multi_
 let ffFilas=[];
 function ffDefecto(cat){const n=ent&&sal?Math.round((new Date(sal)-new Date(ent))/864e5):0,ult=ffFilas[ffFilas.length-1];
   return ult?{cat:cat||ult.cat,primer:ult.primer,dias:ult.dias,seguidos:ult.seguidos}:{cat:cat||"adultos",primer:ent?new Date(new Date(ent).getTime()+864e5).toISOString().slice(0,10):"",dias:n>=2?String(n):"2",seguidos:"si"}}
-function ffDesdeGrupo(){if(ffFilas.length)return;["adultos","junior","ninos"].forEach(c=>{const n=parseInt((document.querySelector('[name=g_'+c+']')||{}).value)||0;for(let i=0;i<Math.min(n,20);i++)ffFilas.push(ffDefecto(c))});if(!ffFilas.length)ffFilas.push(ffDefecto("adultos"));pintarFF()}
+function ffDesdeGrupo(){if(ffFilas.length)return;const n=Math.min(Math.max(parseInt(P.get("n"))||1,1),20);for(let i=0;i<n;i++)ffFilas.push(ffDefecto("adultos"));pintarFF()}
 function pintarFF(){const box=$("ff-lista");box.innerHTML="";
   ffFilas.forEach((f,i)=>{const d=document.createElement("div");d.className="persona ff";
     const sel=(opts,v)=>'<select>'+opts.map(([k,l])=>'<option value="'+k+'"'+(k===v?" selected":"")+'>'+l+'</option>').join("")+'</select>';
@@ -384,7 +380,7 @@ function abrirServicios(){const sv=servicios();["forfait","clases","alquiler","c
   $("s-seguro").hidden=!(sv.includes("forfait")||sv.includes("actividades"))}
 /* al abrir un servicio, se proponen los mismos números del grupo (se pueden cambiar) */
 function copiarGrupo(k){if(k==="forfait"){ffDesdeGrupo();return}const pre={clases:"cl",alquiler:"al"}[k];if(!pre)return;
-  document.querySelectorAll('[data-cnt="'+pre+'"] input').forEach(i=>{if(!i.value){const g=document.querySelector('[name=g_'+i.name.split("_")[1]+']');if(g&&g.value)i.value=g.value}})}
+  }
 function abrirSeguro(){const v=(document.querySelector('[name=seguro]:checked')||{}).value;$("sub-seg").hidden=v!=="si";if(v==="si"&&!document.querySelector(".aseg"))asegurado()}
 /* personas aseguradas: solo para el seguro hace falta nombre como en el pasaporte y fecha de nacimiento */
 function asegurado(){const d=document.createElement("div");d.className="persona aseg";
@@ -401,7 +397,6 @@ document.addEventListener("change",e=>{if(e.target.name==="ff_estacion"||e.targe
 $("add-ff").onclick=()=>{ffFilas.push(ffDefecto());pintarFF()};
 $("add-aseg").onclick=()=>{asegurado();document.querySelector(".aseg:last-child [name=a_nombre]").focus()};
 textos();
-{const n=parseInt(P.get("n"));if(n>0)document.querySelector('[name=g_adultos]').value=Math.min(n,40)}
 /* envío */
 const val=n=>{const e=document.querySelector('[name="'+n+'"]:checked')||document.querySelector('[name="'+n+'"]');return e?((e.type==="radio"||e.type==="checkbox")?(e.checked?e.value:""):e.value.trim()):""};
 const es=v=>T.es.o[v]||v;
@@ -410,13 +405,12 @@ const cuenta=pre=>{const r={};document.querySelectorAll('[data-cnt="'+pre+'"] in
 $("f").addEventListener("submit",async ev=>{ev.preventDefault();const er=$("err");er.hidden=true;
   const fallo=m=>{er.textContent=t(m);er.hidden=false;er.scrollIntoView({behavior:"smooth",block:"center"})};
   const sv=servicios();if(!sv.length)return fallo("e_servicio");
-  const grupo=cuenta("g");if(!Object.keys(grupo).length)return fallo("e_grupo");
   const segQ=ver("s-seguro")?val("seguro"):"",aseg=segQ==="si"?[...document.querySelectorAll(".aseg")].map(d=>({nombre:d.querySelector('[name=a_nombre]').value.trim(),nacimiento:d.querySelector('[name=a_nac]').value})):[];
   if(aseg.some(a=>!a.nombre||!a.nacimiento))return fallo("e_aseg");
   if(ver("s-forfait")){if(!ffFilas.length)return fallo("e_ff");if(ffFilas.some(f=>(parseInt(f.dias)||0)<2))return fallo("e_ff_dias")}
   if(!document.querySelector('[name=acepto]').checked)return fallo("e_acepto");
   if(!ENDPOINT)return fallo("e_off");
-  const r={servicios:sv.map(es),grupo,
+  const r={servicios:sv.map(es),
     forfait:ver("s-forfait")?{quiere:"si",estacion:es(val("ff_estacion")),personas:ffFilas.map(f=>({categoria:f.cat,primer_dia:f.primer,dias:f.dias,consecutivos:f.seguidos})),cuantos:ffFilas.reduce((a,f)=>(a[f.cat]=(a[f.cat]||0)+1,a),{}),notas:val("ff_notas")}:{},
     seguro:{quiere:segQ,asegurados:aseg},
     clases:ver("s-clases")?{quiere:"si",cuantos:cuenta("cl"),tipo:lista("cl_tipo").join(", "),disciplina:lista("cl_disc").join(", "),dias:val("cl_dias"),horario:es(val("cl_horario")),sector:val("cl_sector"),idioma:val("cl_idioma"),notas:val("cl_notas")}:{},
