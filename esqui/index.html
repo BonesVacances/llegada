@@ -53,6 +53,9 @@ textarea{min-height:70px;resize:vertical}
 .lnk{font:inherit;font-size:.88rem;background:none;border:0;color:var(--chip);text-decoration:underline;cursor:pointer;padding:0;justify-self:start}
 .btn{font:inherit;font-weight:500;font-size:1rem;border:0;border-radius:12px;padding:14px 18px;background:var(--accent);color:var(--on-accent);cursor:pointer;width:100%}
 .btn:disabled{opacity:.5}
+/* botón para añadir forfait o persona asegurada: bien visible (Aida, 16 nov 2026) */
+.btn2{font:inherit;font-weight:500;font-size:.98rem;width:100%;padding:12px 16px;border-radius:12px;border:2px dashed var(--chip);background:var(--soft);color:var(--fg);cursor:pointer}
+.btn2:hover{border-style:solid}
 .err{background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:10px 14px;font-weight:500;margin:0}
 .ok{background:var(--ok-bg);color:var(--ok);border-radius:14px;padding:22px;text-align:center;display:grid;gap:8px}
 .ok h2{color:var(--ok)}
@@ -105,7 +108,7 @@ a{color:inherit}
       <!-- Un forfait por persona, como en la web de la estación: se puede cambiar, quitar o añadir (Aida, 16 nov 2026) -->
       <div class="q"><b data-t="ff_por_persona">Un forfait por persona</b>
         <div id="ff-lista" style="display:grid;gap:10px"></div>
-        <button type="button" class="lnk" id="add-ff" data-t="anadir_ff">+ Añadir otro forfait</button></div>
+        <button type="button" class="btn2" id="add-ff" data-t="anadir_ff">+ Añadir otro forfait</button></div>
       <p class="hint" data-t="ff_taquilla">Los menores de 6 años y los de 65 o más sacan el forfait en taquilla.</p>
       <label class="f"><span data-t="notas_ff">Comentarios</span><textarea name="ff_notas" maxlength="600"></textarea></label>
     </section>
@@ -119,7 +122,7 @@ a{color:inherit}
       <div class="sub" id="sub-seg" hidden>
         <p class="hint" data-t="seguro_datos">Datos del seguro</p>
         <div id="asegurados" style="display:grid;gap:10px"></div>
-        <button type="button" class="lnk" id="add-aseg" data-t="anadir_aseg">+ Añadir otra persona asegurada</button>
+        <button type="button" class="btn2" id="add-aseg" data-t="anadir_aseg">+ Añadir otra persona asegurada</button>
       </div>
     </section>
 
