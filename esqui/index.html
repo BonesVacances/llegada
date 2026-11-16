@@ -359,9 +359,9 @@ const ver=id=>{const e=$(id);return e&&!e.hidden};
 /* Solo vendemos forfaits de 2 días de esquí o más; ni 1 día, ni medio día, debutante, peatón o nocturno, y no se menciona en la web: si preguntan, contesta Antonella (Aida, 16 nov 2026) */
 const FF_TIPOS={grandvalira:["f_multi_gv"],pal:["f_multi_pal"],ordino:["f_multi_ord"]};
 function tiposFF(){const est=(document.querySelector('[name=ff_estacion]:checked')||{}).value,c=(document.querySelector('[name=ff_consec]:checked')||{}).value,w=$("w-tipo"),box=$("ff-tipos");
-  if(!c||c==="nose"){w.hidden=true;box.dataset.ops="";return}
-  const k=est==="pal"||est==="ordino"?est:"grandvalira";box.dataset.ops=(c==="no"?["f_plus","aconsejar"]:FF_TIPOS[k]).join(",");
-  $("ff-info").textContent=t(c==="no"?"info_no":"info_si");w.hidden=false;pintarOps()}
+  if(c!=="si"){w.hidden=true;box.dataset.ops="";return} /* sin Forfait Plus+: no lo vendemos (Aida, 16 nov 2026) */
+  const k=est==="pal"||est==="ordino"?est:"grandvalira";box.dataset.ops=FF_TIPOS[k].join(",");
+  $("ff-info").textContent=t("info_si");w.hidden=false;pintarOps()}
 function servicios(){return [...document.querySelectorAll('[name=servicios]:checked')].map(i=>i.value)}
 /* cada servicio se abre solo si lo marcan; el seguro sale con forfaits o actividades (Aida, 16 nov 2026) */
 function abrirServicios(){const sv=servicios();["forfait","clases","alquiler","comida","actividades"].forEach(k=>{const e=$("s-"+k),antes=e.hidden;e.hidden=!sv.includes(k);if(antes&&!e.hidden)copiarGrupo(k)});
