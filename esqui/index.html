@@ -166,7 +166,6 @@ a{color:inherit}
 
     <section aria-labelledby="h-otr">
       <h2 id="h-otr" data-t="s_otros">Para terminar</h2>
-      <label class="chk"><input type="checkbox" name="residente"><span data-t="residente">Residente</span></label>
       <label class="f"><span data-t="comentarios">Cualquier otra cosa que debamos saber</span><textarea name="comentarios" maxlength="1500"></textarea></label>
       <label class="chk"><input type="checkbox" name="acepto" required><span data-t="privacidad">Privacidad *</span></label>
       <div class="trampa" aria-hidden="true"><label>Web<input name="web" tabindex="-1" autocomplete="off"></label></div>
@@ -424,8 +423,7 @@ $("f").addEventListener("submit",async ev=>{ev.preventDefault();const er=$("err"
     alquiler:ver("s-alquiler")?{quiere:"si",cuantos:cuenta("al"),material:lista("al_material").join(", "),gama:es(val("al_gama")),casco:document.querySelector('[name=al_material][value=casco]:checked')?"si":"",dias:val("al_dias"),notas:val("al_notas")}:{},
     comida:ver("s-comida")?{quiere:"si",tipo:es(val("co_tipo")),dias:val("co_dias")}:{},
     actividades:ver("s-actividades")?lista("actividades"):[],actividades_notas:ver("s-actividades")?val("act_notas"):"",
-    residente_o_discapacidad:document.querySelector('[name=residente]').checked?"si":"",comentarios:val("comentarios")};
-  if(r.residente_o_discapacidad)r.comentarios=["Residente en Andorra o discapacidad ≥33 %",r.comentarios].filter(Boolean).join(" · ");
+    comentarios:val("comentarios")};
   const b=$("enviar");b.disabled=true;b.textContent=t("enviando");
   try{const res=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({ref,piso,entrada:ent,salida:sal,idioma:lg,nombre:val("c_nombre"),telefono:val("c_tel"),email:"",prueba:P.get("prueba")==="1",web:val("web"),respuestas:r})});
     const j=await res.json();if(!j.ok)throw 0;$("f").hidden=true;$("ok").hidden=false;window.scrollTo({top:0,behavior:"smooth"})}
