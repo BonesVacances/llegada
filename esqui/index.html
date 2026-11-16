@@ -124,7 +124,6 @@ a{color:inherit}
 
     <section aria-labelledby="h-cla" id="s-clases" hidden>
       <h2 id="h-cla" data-t="s_clases">Clases y escuela</h2>
-      <div class="q"><b data-t="cuantos">¿Cuántos de cada edad?</b><div class="cnt" data-cnt="cl" data-cats="adultos,junior,ninos"></div></div>
       <div class="q"><b data-t="tipo_clase">Tipo de clase</b><div class="op" data-check="cl_tipo" data-ops="particular,colectiva,finde,jardin,kids,guarderia,freeride,adaptado"></div></div>
       <p class="info" data-t="clases_info">Clases</p>
       <div class="q"><b data-t="disciplina">Disciplina</b><div class="op" data-check="cl_disc" data-ops="esqui,snow"></div></div>
@@ -140,7 +139,6 @@ a{color:inherit}
 
     <section aria-labelledby="h-alq" id="s-alquiler" hidden>
       <h2 id="h-alq" data-t="s_alquiler">Alquiler de material</h2>
-      <div class="q"><b data-t="cuantos">¿Cuántos de cada edad?</b><div class="cnt" data-cnt="al" data-cats="adultos,junior,ninos"></div></div>
       <div class="q"><b data-t="material">Qué material</b><div class="op" data-check="al_material" data-ops="esquis,snowboard,botas,casco,raquetas"></div></div>
       <div class="q"><b data-t="gama">Gama</b><div class="op" data-radio="al_gama" data-ops="basica,media,alta,aconsejar"></div></div>
       <label class="f"><span data-t="al_dias">Cuántos días</span><input name="al_dias" type="number" min="1" max="20" inputmode="numeric"></label>
@@ -377,7 +375,7 @@ function tiposFF(){if(ffFilas.length)pintarFF()}
 function servicios(){return [...document.querySelectorAll('[name=servicios]:checked')].map(i=>i.value)}
 /* cada servicio se abre solo si lo marcan; el seguro sale con forfaits o actividades (Aida, 16 nov 2026) */
 function abrirServicios(){const sv=servicios();["forfait","clases","alquiler","comida","actividades"].forEach(k=>{const e=$("s-"+k),antes=e.hidden;e.hidden=!sv.includes(k);if(antes&&!e.hidden)copiarGrupo(k)});
-  $("s-seguro").hidden=!(sv.includes("forfait")||sv.includes("actividades"))}
+  $("s-seguro").hidden=!sv.includes("forfait") /* el seguro solo con forfaits (Aida, 16 nov 2026) */}
 /* al abrir un servicio, se proponen los mismos números del grupo (se pueden cambiar) */
 function copiarGrupo(k){if(k==="forfait"){ffDesdeGrupo();return}const pre={clases:"cl",alquiler:"al"}[k];if(!pre)return;
   }
@@ -413,8 +411,8 @@ $("f").addEventListener("submit",async ev=>{ev.preventDefault();const er=$("err"
   const r={servicios:sv.map(es),
     forfait:ver("s-forfait")?{quiere:"si",estacion:es(val("ff_estacion")),personas:ffFilas.map(f=>({categoria:f.cat,primer_dia:f.primer,dias:f.dias,consecutivos:f.seguidos})),cuantos:ffFilas.reduce((a,f)=>(a[f.cat]=(a[f.cat]||0)+1,a),{}),notas:val("ff_notas")}:{},
     seguro:{quiere:segQ,asegurados:aseg},
-    clases:ver("s-clases")?{quiere:"si",cuantos:cuenta("cl"),tipo:lista("cl_tipo").join(", "),disciplina:lista("cl_disc").join(", "),dias:val("cl_dias"),horario:es(val("cl_horario")),sector:val("cl_sector"),idioma:val("cl_idioma"),notas:val("cl_notas")}:{},
-    alquiler:ver("s-alquiler")?{quiere:"si",cuantos:cuenta("al"),material:lista("al_material").join(", "),gama:es(val("al_gama")),casco:document.querySelector('[name=al_material][value=casco]:checked')?"si":"",dias:val("al_dias"),notas:val("al_notas")}:{},
+    clases:ver("s-clases")?{quiere:"si",tipo:lista("cl_tipo").join(", "),disciplina:lista("cl_disc").join(", "),dias:val("cl_dias"),horario:es(val("cl_horario")),sector:val("cl_sector"),idioma:val("cl_idioma"),notas:val("cl_notas")}:{},
+    alquiler:ver("s-alquiler")?{quiere:"si",material:lista("al_material").join(", "),gama:es(val("al_gama")),casco:document.querySelector('[name=al_material][value=casco]:checked')?"si":"",dias:val("al_dias"),notas:val("al_notas")}:{},
     comida:ver("s-comida")?{quiere:"si",tipo:es(val("co_tipo")),dias:val("co_dias")}:{},
     actividades:ver("s-actividades")?lista("actividades"):[],actividades_notas:ver("s-actividades")?val("act_notas"):"",
     comentarios:val("comentarios")};
