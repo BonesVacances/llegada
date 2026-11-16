@@ -57,6 +57,9 @@ textarea{min-height:70px;resize:vertical}
 .ok h2{color:var(--ok)}
 .chk{display:flex;gap:10px;align-items:flex-start;font-size:.88rem}
 .chk input{width:auto;margin-top:4px}
+.cnt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,110px),1fr));gap:8px}
+.cn span{font-size:.8rem}
+.cn input{text-align:center}
 .trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--chip);outline-offset:2px}
@@ -82,77 +85,78 @@ a{color:inherit}
       <label class="f"><span data-t="telefono">Teléfono / WhatsApp *</span><input name="c_tel" type="tel" autocomplete="tel" required maxlength="40" placeholder="+34 600 000 000"></label>
     </section>
 
-    <section aria-labelledby="h-per">
-      <h2 id="h-per" data-t="s_personas">¿Quiénes sois?</h2>
-      <p class="hint" data-t="personas_hint">Una ficha por persona, también quien no esquía. La fecha de nacimiento sirve para el precio del forfait: va por edad el primer día de esquí.</p>
-      <div id="personas" style="display:grid;gap:10px"></div>
-      <button type="button" class="lnk" id="add" data-t="anadir">+ Añadir otra persona</button>
-      <p class="info" data-t="edades_info">Edades del forfait (temporada 2026-27): menores de 6 años, gratis · 6-11 infantil · 12-17 júnior · 18-64 adulto · 65 o más, sénior (desde 75, gratis). Los forfaits gratuitos (menores de 6 años y desde 75) y los de sénior (65-74) no los podemos gestionar nosotros: se sacan en taquilla, en persona, con el documento de identidad. Para los niños y júnior hay que llevar también un documento que acredite la edad.</p>
+    <!-- Orden (Aida, 16 nov 2026): primero qué servicios quieren; los datos personales solo para el seguro -->
+    <section aria-labelledby="h-sv">
+      <h2 id="h-sv" data-t="s_servicios">¿Qué servicios os interesan?</h2>
+      <p class="hint" data-t="servicios_hint">Marca todo lo que os pueda interesar. Después te preguntamos solo lo necesario.</p>
+      <div class="op" data-check="servicios" data-ops="forfait,clases,alquiler,comida,actividades,aconsejar"></div>
     </section>
 
-    <section aria-labelledby="h-ff">
+    <section aria-labelledby="h-gr">
+      <h2 id="h-gr" data-t="s_grupo">¿Cuántos sois?</h2>
+      <p class="hint" data-t="grupo_hint">Solo necesitamos saber cuántos hay de cada edad. Cuenta la edad del primer día de esquí.</p>
+      <div class="cnt" data-cnt="g" data-cats="adultos,junior,ninos,bebes,senior"></div>
+      <p class="info" data-t="edades_info">Edades del forfait (temporada 2026-27)</p>
+    </section>
+
+    <section aria-labelledby="h-ff" id="s-forfait" hidden>
       <h2 id="h-ff" data-t="s_forfait">Forfaits</h2>
-      <div class="q"><b data-t="quiere_forfait">¿Necesitáis forfaits?</b><div class="op" data-radio="ff_quiere" data-ops="si,no,nose" data-abre="sub-ff"></div></div>
-      <div class="sub" id="sub-ff" hidden>
-        <div class="q"><b data-t="estacion">¿Dónde queréis esquiar?</b><div class="op" data-radio="ff_estacion" data-ops="grandvalira,pal,ordino,varias,aconsejar"></div></div>
-        <p class="info" data-t="estacion_info">Grandvalira es el dominio más grande de Andorra. Pal Arinsal y Ordino Arcalís son más tranquilas. Con forfaits de varios días suele poder esquiarse también en las otras: te lo explicamos en el presupuesto.</p>
-        <div class="g2">
-          <label class="f"><span data-t="primer_dia">Primer día de esquí</span><input name="ff_primer" type="date"></label>
-          <label class="f"><span data-t="dias">Número de días</span><input name="ff_dias" type="number" min="1" max="20" inputmode="numeric"></label>
-        </div>
-        <div class="q"><b data-t="consecutivos">¿Días seguidos?</b><div class="op" data-radio="ff_consec" data-ops="si,no,nose"></div></div>
-        <div class="q"><b data-t="tipo_forfait">Tipo de forfait</b><div class="op" data-check="ff_tipo" data-ops="completo,medio,debutante,peaton,nocturno"></div></div>
-        <p class="info" data-t="tipo_info">Medio día: desde las 13:00. Debutante: solo las zonas de principiantes. Peatón: telecabina para subir y bajar, sin esquiar. Nocturno: solo en Grandvalira.</p>
-        <label class="f"><span data-t="notas_ff">¿Algo más sobre los forfaits?</span><textarea name="ff_notas" maxlength="600"></textarea></label>
+      <div class="q"><b data-t="estacion">¿Dónde queréis esquiar?</b><div class="op" data-radio="ff_estacion" data-ops="grandvalira,pal,ordino,varias,aconsejar"></div></div>
+      <p class="info" data-t="estacion_info">Grandvalira es el dominio más grande de Andorra.</p>
+      <div class="g2">
+        <label class="f"><span data-t="primer_dia">Primer día de esquí</span><input name="ff_primer" type="date"></label>
+        <label class="f"><span data-t="dias">Número de días</span><input name="ff_dias" type="number" min="1" max="20" inputmode="numeric"></label>
       </div>
+      <div class="q"><b data-t="consecutivos">¿Días seguidos?</b><div class="op" data-radio="ff_consec" data-ops="si,no,nose"></div></div>
+      <div class="q"><b data-t="tipo_forfait">Tipo de forfait</b><div class="op" data-check="ff_tipo" data-ops="completo,medio,debutante,peaton,nocturno"></div></div>
+      <p class="info" data-t="tipo_info">Medio día: desde las 13:00.</p>
+      <div class="q"><b data-t="cuantos_ff">¿Cuántos necesitan forfait?</b><div class="cnt" data-cnt="ff" data-cats="adultos,junior,ninos"></div></div>
+      <p class="hint" data-t="ff_taquilla">Los menores de 6 años y los de 65 o más sacan el forfait en taquilla.</p>
+      <label class="f"><span data-t="notas_ff">¿Algo más sobre los forfaits?</span><textarea name="ff_notas" maxlength="600"></textarea></label>
     </section>
 
-    <section aria-labelledby="h-seg">
+    <section aria-labelledby="h-seg" id="s-seguro" hidden>
       <h2 id="h-seg" data-t="s_seguro">Seguro de esquí</h2>
-      <p class="info" data-t="seguro_info">Cubre los accidentes en pista (rescate y gastos médicos) y la pérdida del forfait. Se contrata con el forfait, antes del primer día. Si lo queréis, os pediremos después una foto del documento de identidad de cada persona.</p>
-      <div class="q"><b data-t="quiere_seguro">¿Queréis el seguro?</b><div class="op" data-radio="seguro" data-ops="si,no,nose"></div></div>
+      <p class="info" data-t="seguro_txt">Seguro</p>
+      <div class="q"><b data-t="quiere_seguro">¿Queréis el seguro?</b><div class="op" data-radio="seguro" data-ops="si,no,nose" data-abre="sub-seg"></div></div>
+      <div class="sub" id="sub-seg" hidden>
+        <p class="hint" data-t="seguro_datos">Datos del seguro</p>
+        <div id="asegurados" style="display:grid;gap:10px"></div>
+        <button type="button" class="lnk" id="add-aseg" data-t="anadir_aseg">+ Añadir otra persona asegurada</button>
+      </div>
     </section>
 
-    <section aria-labelledby="h-cla">
+    <section aria-labelledby="h-cla" id="s-clases" hidden>
       <h2 id="h-cla" data-t="s_clases">Clases y escuela</h2>
-      <div class="q"><b data-t="quiere_clases">¿Queréis clases?</b><div class="op" data-radio="cl_quiere" data-ops="si,no,nose" data-abre="sub-cl"></div></div>
-      <div class="sub" id="sub-cl" hidden>
-        <div class="q"><b data-t="para_quien">¿Para quién?</b><div class="op quienes" data-quienes="cl_quienes"></div></div>
-        <div class="q"><b data-t="tipo_clase">Tipo de clase</b><div class="op" data-check="cl_tipo" data-ops="particular,colectiva,finde,jardin,kids,guarderia,freeride,adaptado"></div></div>
-        <p class="info" data-t="clases_info">Particular: 2, 3 o 4 horas, hasta 6 personas. Colectiva: 3 horas al día, de 3 a 5 días, desde los 12 años (niños de 6 a 11, en su grupo). Jardín de nieve: de 3 a 5 años. Kids Program: de 3 a 11 años, con comida. Guardería: de 1 a 3 años.</p>
-        <div class="q"><b data-t="disciplina">Disciplina</b><div class="op" data-radio="cl_disc" data-ops="esqui,snow"></div></div>
-        <div class="g2">
-          <label class="f"><span data-t="cl_dias">Qué días</span><input name="cl_dias" maxlength="120"></label>
-          <div class="q"><b data-t="horario">Horario</b><div class="op" data-radio="cl_horario" data-ops="manana,tarde,igual"></div></div>
-        </div>
-        <label class="f"><span data-t="idioma_clase">Idioma de la clase</span><input name="cl_idioma" maxlength="60"></label>
-        <label class="f"><span data-t="notas_cl">¿Algo más? (nivel, objetivos, si es la primera vez…)</span><textarea name="cl_notas" maxlength="600"></textarea></label>
+      <div class="q"><b data-t="cuantos">¿Cuántos de cada edad?</b><div class="cnt" data-cnt="cl" data-cats="adultos,junior,ninos,bebes,senior"></div></div>
+      <div class="q"><b data-t="tipo_clase">Tipo de clase</b><div class="op" data-check="cl_tipo" data-ops="particular,colectiva,finde,jardin,kids,guarderia,freeride,adaptado"></div></div>
+      <p class="info" data-t="clases_info">Clases</p>
+      <div class="q"><b data-t="disciplina">Disciplina</b><div class="op" data-check="cl_disc" data-ops="esqui,snow"></div></div>
+      <div class="g2">
+        <label class="f"><span data-t="cl_dias">Qué días</span><input name="cl_dias" maxlength="120"></label>
+        <div class="q"><b data-t="horario">Horario</b><div class="op" data-radio="cl_horario" data-ops="manana,tarde,igual"></div></div>
       </div>
+      <label class="f"><span data-t="idioma_clase">Idioma de la clase</span><input name="cl_idioma" maxlength="60"></label>
+      <label class="f"><span data-t="notas_cl2">¿Algo más?</span><textarea name="cl_notas" maxlength="600"></textarea></label>
     </section>
 
-    <section aria-labelledby="h-alq">
+    <section aria-labelledby="h-alq" id="s-alquiler" hidden>
       <h2 id="h-alq" data-t="s_alquiler">Alquiler de material</h2>
-      <div class="q"><b data-t="quiere_alquiler">¿Necesitáis material?</b><div class="op" data-radio="al_quiere" data-ops="si,no,nose" data-abre="sub-al"></div></div>
-      <div class="sub" id="sub-al" hidden>
-        <div class="q"><b data-t="para_quien">¿Para quién?</b><div class="op quienes" data-quienes="al_quienes"></div></div>
-        <div class="q"><b data-t="material">Qué material</b><div class="op" data-check="al_material" data-ops="esquis,snowboard,botas,casco,raquetas"></div></div>
-        <div class="q"><b data-t="gama">Gama</b><div class="op" data-radio="al_gama" data-ops="basica,media,alta,aconsejar"></div></div>
-        <label class="f"><span data-t="al_dias">Cuántos días</span><input name="al_dias" type="number" min="1" max="20" inputmode="numeric"></label>
-        <label class="f"><span data-t="notas_al">Si ya lo sabes: altura, peso y número de pie de cada persona</span><textarea name="al_notas" maxlength="600"></textarea></label>
-      </div>
+      <div class="q"><b data-t="cuantos">¿Cuántos de cada edad?</b><div class="cnt" data-cnt="al" data-cats="adultos,junior,ninos,bebes,senior"></div></div>
+      <div class="q"><b data-t="material">Qué material</b><div class="op" data-check="al_material" data-ops="esquis,snowboard,botas,casco,raquetas"></div></div>
+      <div class="q"><b data-t="gama">Gama</b><div class="op" data-radio="al_gama" data-ops="basica,media,alta,aconsejar"></div></div>
+      <label class="f"><span data-t="al_dias">Cuántos días</span><input name="al_dias" type="number" min="1" max="20" inputmode="numeric"></label>
+      <label class="f"><span data-t="notas_al2">Altura, peso y pie</span><textarea name="al_notas" maxlength="600"></textarea></label>
     </section>
 
-    <section aria-labelledby="h-com">
+    <section aria-labelledby="h-com" id="s-comida" hidden>
       <h2 id="h-com" data-t="s_comida">Comida en pistas</h2>
-      <div class="q"><b data-t="quiere_comida">¿Os interesa comer en pistas?</b><div class="op" data-radio="co_quiere" data-ops="si,no,nose" data-abre="sub-co"></div></div>
-      <div class="sub" id="sub-co" hidden>
-        <div class="q"><b data-t="tipo_comida">Qué preferís</b><div class="op" data-radio="co_tipo" data-ops="menu,bufe,igual"></div></div>
-        <label class="f"><span data-t="co_dias">Qué días y cuántas personas</span><input name="co_dias" maxlength="160"></label>
-        <p class="info" data-t="comida_info">Te confirmamos las opciones y la disponibilidad en el presupuesto.</p>
-      </div>
+      <div class="q"><b data-t="tipo_comida">Qué preferís</b><div class="op" data-radio="co_tipo" data-ops="menu,bufe,igual"></div></div>
+      <label class="f"><span data-t="co_dias">Qué días y cuántas personas</span><input name="co_dias" maxlength="160"></label>
+      <p class="info" data-t="comida_info">Te confirmamos las opciones y la disponibilidad en el presupuesto.</p>
     </section>
 
-    <section aria-labelledby="h-act">
+    <section aria-labelledby="h-act" id="s-actividades" hidden>
       <h2 id="h-act" data-t="s_actividades">Actividades en la nieve</h2>
       <div class="op" data-check="actividades" data-ops="motos,mushing,raquetas,tirolina,primera,trineo,nocturno"></div>
       <label class="f"><span data-t="notas_act">¿Otra actividad o detalles?</span><textarea name="act_notas" maxlength="600"></textarea></label>
@@ -160,13 +164,13 @@ a{color:inherit}
 
     <section aria-labelledby="h-otr">
       <h2 id="h-otr" data-t="s_otros">Para terminar</h2>
-      <label class="chk"><input type="checkbox" name="residente"><span data-t="residente">Alguien es residente en Andorra o tiene una discapacidad del 33 % o más (puede cambiar el precio)</span></label>
+      <label class="chk"><input type="checkbox" name="residente"><span data-t="residente">Residente</span></label>
       <label class="f"><span data-t="comentarios">Cualquier otra cosa que debamos saber</span><textarea name="comentarios" maxlength="1500"></textarea></label>
-      <label class="chk"><input type="checkbox" name="acepto" required><span data-t="privacidad">Acepto que Bones Vacances use estos datos solo para preparar y gestionar mi pedido de servicios de esquí. *</span></label>
+      <label class="chk"><input type="checkbox" name="acepto" required><span data-t="privacidad">Privacidad *</span></label>
       <div class="trampa" aria-hidden="true"><label>Web<input name="web" tabindex="-1" autocomplete="off"></label></div>
       <p class="err" id="err" hidden></p>
       <button class="btn" type="submit" id="enviar" data-t="enviar">Enviar</button>
-      <p class="hint" data-t="despues">Antonella, de Bones Vacances, te preparará el presupuesto y te escribirá.</p>
+      <p class="hint" data-t="despues">Antonella te preparará el presupuesto.</p>
     </section>
     </div>
   </form>
@@ -182,7 +186,7 @@ a{color:inherit}
 const ENDPOINT="";
 const LGS=["es","en","fr","ca","pt","it"];
 const T={
-es:{taquilla:"en taquilla",titulo:"Tus servicios de esquí",intro:"Cuéntanos qué necesitáis y te preparamos un presupuesto a medida. Son unos minutos y todo es opcional salvo lo marcado con *.",s_contacto:"Contacto",nombre:"Nombre y apellidos *",telefono:"Teléfono / WhatsApp *",email:"Email",prefiere:"¿Cómo prefieres que te contactemos?",
+es:{s_servicios:"¿Qué servicios os interesan?",servicios_hint:"Marca todo lo que os pueda interesar. Después te preguntamos solo lo necesario.",s_grupo:"¿Cuántos sois?",grupo_hint:"Solo necesitamos saber cuántos hay de cada edad. Cuenta la edad del primer día de esquí.",c_adultos:"Adultos (18-64)",c_junior:"Júnior (12-17)",c_ninos:"Niños (6-11)",c_bebes:"Menores de 6",c_senior:"65 o más",cuantos:"¿Cuántos de cada edad?",cuantos_ff:"¿Cuántos necesitan forfait?",ff_taquilla:"Los menores de 6 años y los de 65 o más sacan el forfait en taquilla, en persona y con su documento de identidad.",seguro_txt:"Cubre los accidentes en pista (rescate y gastos médicos) y la pérdida del forfait. Precio: 6,60 € por persona y día, con un máximo de 66 € por persona. Es el precio de la estación, sin recargo. Se contrata antes del primer día de esquí.",seguro_datos:"Para el seguro necesitamos el nombre y apellidos tal como aparecen en el pasaporte o documento de identidad, y la fecha de nacimiento de cada persona asegurada. Antonella te pedirá después una foto del documento para comprobarlo.",aseg:"Persona asegurada",aseg_nombre:"Nombre y apellidos (como en el pasaporte)",aseg_nac:"Fecha de nacimiento",anadir_aseg:"+ Añadir otra persona asegurada",e_servicio:"Marca al menos un servicio.",e_grupo:"Indica cuántos sois.",e_aseg:"Falta el nombre o la fecha de nacimiento de alguna persona asegurada.",notas_cl2:"¿Algo más? (nivel de cada uno, objetivos, si es la primera vez…)",notas_al2:"Si ya lo sabes: altura, peso y número de pie de cada persona",taquilla:"en taquilla",titulo:"Tus servicios de esquí",intro:"Cuéntanos qué necesitáis y te preparamos un presupuesto a medida. Son unos minutos y todo es opcional salvo lo marcado con *.",s_contacto:"Contacto",nombre:"Nombre y apellidos *",telefono:"Teléfono / WhatsApp *",email:"Email",prefiere:"¿Cómo prefieres que te contactemos?",
  s_personas:"¿Quiénes sois?",personas_hint:"Una ficha por persona, también quien no esquía. La fecha de nacimiento sirve para el precio del forfait: va por edad el primer día de esquí.",anadir:"+ Añadir otra persona",
  edades_info:"Edades del forfait (temporada 2026-27): menores de 6 años, gratis · 6-11 infantil · 12-17 júnior · 18-64 adulto · 65 o más, sénior (desde 75, gratis). Los forfaits gratuitos (menores de 6 años y desde 75) y los de sénior (65-74) no los podemos gestionar nosotros: se sacan en taquilla, en persona, con el documento de identidad. Para los niños y júnior hay que llevar también un documento que acredite la edad.",
  persona:"Persona",p_nombre:"Nombre",p_nac:"Fecha de nacimiento *",p_act:"¿Qué hará?",p_nivel:"Nivel",quitar:"Quitar",
@@ -201,14 +205,14 @@ es:{taquilla:"en taquilla",titulo:"Tus servicios de esquí",intro:"Cuéntanos qu
  gracias:"¡Gracias!",gracias_txt:"Hemos recibido tus respuestas. Te escribiremos con el presupuesto muy pronto.",
  e_nombre:"Escribe tu nombre.",e_tel:"Escribe tu teléfono con el prefijo del país.",e_nac:"Falta la fecha de nacimiento de alguna persona.",e_acepto:"Marca la casilla de la privacidad para poder enviarlo.",e_red:"No se ha podido enviar. Revisa la conexión y vuelve a probar.",e_off:"El formulario aún no está activo. Escríbenos por WhatsApp, por favor.",
  reserva:"Tu reserva",del:"del",al:"al",
- o:{whatsapp:"WhatsApp",llamada:"Llamada",email:"Email",si:"Sí",no:"No",nose:"No lo sé / aconsejadme",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Toda Andorra",aconsejar:"Aconsejadme",
+ o:{forfait:"Forfaits",clases:"Clases",alquiler:"Alquiler de material",comida:"Comida en pistas",actividades:"Actividades",aconsejar:"No lo sé, aconsejadme",whatsapp:"WhatsApp",llamada:"Llamada",email:"Email",si:"Sí",no:"No",nose:"No lo sé / aconsejadme",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Toda Andorra",aconsejar:"Aconsejadme",
   completo:"Día completo",medio:"Medio día",debutante:"Debutante",peaton:"Peatón",nocturno:"Nocturno",
   particular:"Particular",colectiva:"Colectiva",finde:"Fin de semana",jardin:"Jardín de nieve",kids:"Kids Program",guarderia:"Guardería",freeride:"Freeride / freestyle",adaptado:"Esquí adaptado",
   esqui:"Esquí",snow:"Snowboard",manana:"Mañana",tarde:"Tarde",igual:"Me da igual",esquis:"Esquís",snowboard:"Snowboard",botas:"Solo botas",casco:"Casco",raquetas:"Raquetas",
   basica:"Básica",media:"Media",alta:"Alta",menu:"Menú",bufe:"Bufé libre",
   motos:"Motos de nieve",mushing:"Trineo con perros (mushing)",primera:"Primera nieve (niños)",tirolina:"Tirolina",trineo:"Trineo / tubing",
   act_esqui:"Esquí",act_snow:"Snowboard",act_no:"No esquía",n_nunca:"Nunca ha esquiado",n_deb:"Debutante",n_int:"Intermedio",n_av:"Avanzado",n_exp:"Experto"}},
-en:{taquilla:"at the ticket office",titulo:"Your ski services",intro:"Tell us what you need and we'll prepare a tailor-made quote. It only takes a few minutes and everything is optional except what is marked *.",s_contacto:"Contact",nombre:"Full name *",telefono:"Phone / WhatsApp *",email:"Email",prefiere:"How would you like us to contact you?",
+en:{s_servicios:"Which services are you interested in?",servicios_hint:"Tick everything that might interest you. Then we'll only ask what we need.",s_grupo:"How many of you?",grupo_hint:"We only need to know how many people of each age. Age on the first ski day counts.",c_adultos:"Adults (18-64)",c_junior:"Juniors (12-17)",c_ninos:"Children (6-11)",c_bebes:"Under 6",c_senior:"65 and over",cuantos:"How many of each age?",cuantos_ff:"How many need a ski pass?",ff_taquilla:"Children under 6 and people aged 65 or over get their pass at the ticket office, in person, with their ID.",seguro_txt:"Covers accidents on the slopes (rescue and medical costs) and loss of the pass. Price: €6.60 per person per day, up to €66 per person. It's the resort's price, with no mark-up. It must be bought before the first ski day.",seguro_datos:"For the insurance we need each insured person's full name exactly as on their passport or ID, and their date of birth. Antonella will ask you later for a photo of the document to check it.",aseg:"Insured person",aseg_nombre:"Full name (as on the passport)",aseg_nac:"Date of birth",anadir_aseg:"+ Add another insured person",e_servicio:"Please tick at least one service.",e_grupo:"Please tell us how many of you there are.",e_aseg:"An insured person's name or date of birth is missing.",notas_cl2:"Anything else? (each person's level, goals, first time…)",notas_al2:"If you know it: height, weight and shoe size of each person",taquilla:"at the ticket office",titulo:"Your ski services",intro:"Tell us what you need and we'll prepare a tailor-made quote. It only takes a few minutes and everything is optional except what is marked *.",s_contacto:"Contact",nombre:"Full name *",telefono:"Phone / WhatsApp *",email:"Email",prefiere:"How would you like us to contact you?",
  s_personas:"Who's coming?",personas_hint:"One card per person, including anyone who won't ski. The date of birth sets the ski pass price: it depends on age on the first ski day.",anadir:"+ Add another person",
  edades_info:"Ski pass ages (2026-27 season): under 6, free · 6-11 child · 12-17 junior · 18-64 adult · 65 and over, senior (75+, free). Free passes (under 6 and 75+) and senior passes (65-74) cannot be arranged by us: they must be bought in person at the ticket office with an ID document. Children and juniors must also carry proof of age.",
  persona:"Person",p_nombre:"Name",p_nac:"Date of birth *",p_act:"What will they do?",p_nivel:"Level",quitar:"Remove",
@@ -227,14 +231,14 @@ en:{taquilla:"at the ticket office",titulo:"Your ski services",intro:"Tell us wh
  gracias:"Thank you!",gracias_txt:"We've received your answers. We'll be in touch with your quote very soon.",
  e_nombre:"Please enter your name.",e_tel:"Please enter your phone number with the country code.",e_nac:"A date of birth is missing.",e_acepto:"Please tick the privacy box to send it.",e_red:"It couldn't be sent. Check your connection and try again.",e_off:"The form is not active yet. Please message us on WhatsApp.",
  reserva:"Your booking",del:"from",al:"to",
- o:{whatsapp:"WhatsApp",llamada:"Phone call",email:"Email",si:"Yes",no:"No",nose:"Not sure / advise me",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"All of Andorra",aconsejar:"Advise me",
+ o:{forfait:"Ski passes",clases:"Lessons",alquiler:"Equipment rental",comida:"Lunch on the slopes",actividades:"Activities",aconsejar:"Not sure, advise me",whatsapp:"WhatsApp",llamada:"Phone call",email:"Email",si:"Yes",no:"No",nose:"Not sure / advise me",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"All of Andorra",aconsejar:"Advise me",
   completo:"Full day",medio:"Half day",debutante:"Beginner",peaton:"Pedestrian",nocturno:"Night skiing",
   particular:"Private",colectiva:"Group",finde:"Weekend",jardin:"Snow garden",kids:"Kids Program",guarderia:"Nursery",freeride:"Freeride / freestyle",adaptado:"Adaptive skiing",
   esqui:"Ski",snow:"Snowboard",manana:"Morning",tarde:"Afternoon",igual:"No preference",esquis:"Skis",snowboard:"Snowboard",botas:"Boots only",casco:"Helmet",raquetas:"Snowshoes",
   basica:"Basic",media:"Mid-range",alta:"High-end",menu:"Set menu",bufe:"Buffet",
   motos:"Snowmobiles",mushing:"Dog sledding (mushing)",primera:"First snow (kids)",tirolina:"Zip line",trineo:"Sledging / tubing",
   act_esqui:"Ski",act_snow:"Snowboard",act_no:"Not skiing",n_nunca:"Never skied",n_deb:"Beginner",n_int:"Intermediate",n_av:"Advanced",n_exp:"Expert"}},
-fr:{taquilla:"au guichet",titulo:"Vos services de ski",intro:"Dites-nous ce dont vous avez besoin et nous vous préparons un devis sur mesure. Cela prend quelques minutes et tout est facultatif sauf ce qui est marqué *.",s_contacto:"Contact",nombre:"Nom et prénom *",telefono:"Téléphone / WhatsApp *",email:"E-mail",prefiere:"Comment préférez-vous être contacté ?",
+fr:{s_servicios:"Quels services vous intéressent ?",servicios_hint:"Cochez tout ce qui peut vous intéresser. Ensuite, nous vous demanderons seulement le nécessaire.",s_grupo:"Combien êtes-vous ?",grupo_hint:"Nous avons seulement besoin de savoir combien de personnes de chaque âge. C'est l'âge du premier jour de ski qui compte.",c_adultos:"Adultes (18-64)",c_junior:"Juniors (12-17)",c_ninos:"Enfants (6-11)",c_bebes:"Moins de 6 ans",c_senior:"65 ans et plus",cuantos:"Combien de chaque âge ?",cuantos_ff:"Combien ont besoin d'un forfait ?",ff_taquilla:"Les moins de 6 ans et les 65 ans et plus prennent leur forfait au guichet, en personne, avec leur pièce d'identité.",seguro_txt:"Elle couvre les accidents sur les pistes (secours et frais médicaux) et la perte du forfait. Prix : 6,60 € par personne et par jour, avec un maximum de 66 € par personne. C'est le prix de la station, sans majoration. Elle se prend avant le premier jour de ski.",seguro_datos:"Pour l'assurance, nous avons besoin du nom et prénom de chaque personne assurée tels qu'ils figurent sur le passeport ou la pièce d'identité, et de sa date de naissance. Antonella vous demandera ensuite une photo du document pour vérifier.",aseg:"Personne assurée",aseg_nombre:"Nom et prénom (comme sur le passeport)",aseg_nac:"Date de naissance",anadir_aseg:"+ Ajouter une personne assurée",e_servicio:"Cochez au moins un service.",e_grupo:"Indiquez combien vous êtes.",e_aseg:"Il manque le nom ou la date de naissance d'une personne assurée.",notas_cl2:"Autre chose ? (niveau de chacun, objectifs, première fois…)",notas_al2:"Si vous le savez : taille, poids et pointure de chaque personne",taquilla:"au guichet",titulo:"Vos services de ski",intro:"Dites-nous ce dont vous avez besoin et nous vous préparons un devis sur mesure. Cela prend quelques minutes et tout est facultatif sauf ce qui est marqué *.",s_contacto:"Contact",nombre:"Nom et prénom *",telefono:"Téléphone / WhatsApp *",email:"E-mail",prefiere:"Comment préférez-vous être contacté ?",
  s_personas:"Qui vient ?",personas_hint:"Une fiche par personne, y compris celles qui ne skient pas. La date de naissance détermine le prix du forfait : il dépend de l'âge le premier jour de ski.",anadir:"+ Ajouter une personne",
  edades_info:"Âges du forfait (saison 2026-27) : moins de 6 ans, gratuit · 6-11 enfant · 12-17 junior · 18-64 adulte · 65 ans et plus, senior (dès 75 ans, gratuit). Les forfaits gratuits (moins de 6 ans et dès 75 ans) et les forfaits senior (65-74 ans) ne peuvent pas être gérés par nous : ils s'achètent en personne au guichet, avec une pièce d'identité. Les enfants et juniors doivent aussi avoir un justificatif d'âge.",
  persona:"Personne",p_nombre:"Prénom",p_nac:"Date de naissance *",p_act:"Que fera-t-elle ?",p_nivel:"Niveau",quitar:"Retirer",
@@ -253,14 +257,14 @@ fr:{taquilla:"au guichet",titulo:"Vos services de ski",intro:"Dites-nous ce dont
  gracias:"Merci !",gracias_txt:"Nous avons bien reçu vos réponses. Nous vous enverrons le devis très bientôt.",
  e_nombre:"Indiquez votre nom.",e_tel:"Indiquez votre téléphone avec l'indicatif du pays.",e_nac:"Il manque une date de naissance.",e_acepto:"Cochez la case de confidentialité pour envoyer.",e_red:"L'envoi a échoué. Vérifiez votre connexion et réessayez.",e_off:"Le formulaire n'est pas encore actif. Écrivez-nous sur WhatsApp, s'il vous plaît.",
  reserva:"Votre réservation",del:"du",al:"au",
- o:{whatsapp:"WhatsApp",llamada:"Appel",email:"E-mail",si:"Oui",no:"Non",nose:"Je ne sais pas / conseillez-moi",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Toute l'Andorre",aconsejar:"Conseillez-moi",
+ o:{forfait:"Forfaits",clases:"Cours",alquiler:"Location de matériel",comida:"Repas sur les pistes",actividades:"Activités",aconsejar:"Je ne sais pas, conseillez-moi",whatsapp:"WhatsApp",llamada:"Appel",email:"E-mail",si:"Oui",no:"Non",nose:"Je ne sais pas / conseillez-moi",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Toute l'Andorre",aconsejar:"Conseillez-moi",
   completo:"Journée",medio:"Demi-journée",debutante:"Débutant",peaton:"Piéton",nocturno:"Nocturne",
   particular:"Particulier",colectiva:"Collectif",finde:"Week-end",jardin:"Jardin des neiges",kids:"Kids Program",guarderia:"Garderie",freeride:"Freeride / freestyle",adaptado:"Ski adapté",
   esqui:"Ski",snow:"Snowboard",manana:"Matin",tarde:"Après-midi",igual:"Peu importe",esquis:"Skis",snowboard:"Snowboard",botas:"Chaussures seules",casco:"Casque",raquetas:"Raquettes",
   basica:"Basique",media:"Intermédiaire",alta:"Haut de gamme",menu:"Menu",bufe:"Buffet à volonté",
   motos:"Motoneige",mushing:"Chiens de traîneau (mushing)",primera:"Première neige (enfants)",tirolina:"Tyrolienne",trineo:"Luge / tubing",
   act_esqui:"Ski",act_snow:"Snowboard",act_no:"Ne skie pas",n_nunca:"N'a jamais skié",n_deb:"Débutant",n_int:"Intermédiaire",n_av:"Avancé",n_exp:"Expert"}},
-ca:{taquilla:"a taquilla",titulo:"Els teus serveis d'esquí",intro:"Explica'ns què necessiteu i us preparem un pressupost a mida. Són uns minuts i tot és opcional excepte el que està marcat amb *.",s_contacto:"Contacte",nombre:"Nom i cognoms *",telefono:"Telèfon / WhatsApp *",email:"Correu electrònic",prefiere:"Com prefereixes que et contactem?",
+ca:{s_servicios:"Quins serveis us interessen?",servicios_hint:"Marca tot el que us pugui interessar. Després et preguntarem només el necessari.",s_grupo:"Quants sou?",grupo_hint:"Només necessitem saber quants n'hi ha de cada edat. Compta l'edat del primer dia d'esquí.",c_adultos:"Adults (18-64)",c_junior:"Júniors (12-17)",c_ninos:"Nens (6-11)",c_bebes:"Menors de 6",c_senior:"65 o més",cuantos:"Quants de cada edat?",cuantos_ff:"Quants necessiten forfet?",ff_taquilla:"Els menors de 6 anys i els de 65 o més treuen el forfet a taquilla, en persona i amb el document d'identitat.",seguro_txt:"Cobreix els accidents a pista (rescat i despeses mèdiques) i la pèrdua del forfet. Preu: 6,60 € per persona i dia, amb un màxim de 66 € per persona. És el preu de l'estació, sense recàrrec. Es contracta abans del primer dia d'esquí.",seguro_datos:"Per a l'assegurança necessitem el nom i cognoms tal com surten al passaport o document d'identitat, i la data de naixement de cada persona assegurada. L'Antonella després et demanarà una foto del document per comprovar-ho.",aseg:"Persona assegurada",aseg_nombre:"Nom i cognoms (com al passaport)",aseg_nac:"Data de naixement",anadir_aseg:"+ Afegir una altra persona assegurada",e_servicio:"Marca almenys un servei.",e_grupo:"Indica quants sou.",e_aseg:"Falta el nom o la data de naixement d'alguna persona assegurada.",notas_cl2:"Alguna cosa més? (nivell de cadascú, objectius, si és la primera vegada…)",notas_al2:"Si ja ho saps: alçada, pes i número de peu de cada persona",taquilla:"a taquilla",titulo:"Els teus serveis d'esquí",intro:"Explica'ns què necessiteu i us preparem un pressupost a mida. Són uns minuts i tot és opcional excepte el que està marcat amb *.",s_contacto:"Contacte",nombre:"Nom i cognoms *",telefono:"Telèfon / WhatsApp *",email:"Correu electrònic",prefiere:"Com prefereixes que et contactem?",
  s_personas:"Qui sou?",personas_hint:"Una fitxa per persona, també qui no esquia. La data de naixement serveix per al preu del forfet: va per edat el primer dia d'esquí.",anadir:"+ Afegir una altra persona",
  edades_info:"Edats del forfet (temporada 2026-27): menors de 6 anys, gratis · 6-11 infantil · 12-17 júnior · 18-64 adult · 65 o més, sènior (des dels 75, gratis). Els forfets gratuïts (menors de 6 anys i des dels 75) i els de sènior (65-74) no els podem gestionar nosaltres: es treuen a taquilla, en persona, amb el document d'identitat. Els nens i júniors també han de portar un document que acrediti l'edat.",
  persona:"Persona",p_nombre:"Nom",p_nac:"Data de naixement *",p_act:"Què farà?",p_nivel:"Nivell",quitar:"Treure",
@@ -279,14 +283,14 @@ ca:{taquilla:"a taquilla",titulo:"Els teus serveis d'esquí",intro:"Explica'ns q
  gracias:"Gràcies!",gracias_txt:"Hem rebut les teves respostes. Aviat t'escriurem amb el pressupost.",
  e_nombre:"Escriu el teu nom.",e_tel:"Escriu el teu telèfon amb el prefix del país.",e_nac:"Falta la data de naixement d'alguna persona.",e_acepto:"Marca la casella de privacitat per poder enviar-ho.",e_red:"No s'ha pogut enviar. Revisa la connexió i torna-ho a provar.",e_off:"El formulari encara no està actiu. Escriu-nos per WhatsApp, si us plau.",
  reserva:"La teva reserva",del:"del",al:"al",
- o:{whatsapp:"WhatsApp",llamada:"Trucada",email:"Correu",si:"Sí",no:"No",nose:"No ho sé / aconselleu-me",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Tot Andorra",aconsejar:"Aconselleu-me",
+ o:{forfait:"Forfets",clases:"Classes",alquiler:"Lloguer de material",comida:"Menjar a pistes",actividades:"Activitats",aconsejar:"No ho sé, aconselleu-me",whatsapp:"WhatsApp",llamada:"Trucada",email:"Correu",si:"Sí",no:"No",nose:"No ho sé / aconselleu-me",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Tot Andorra",aconsejar:"Aconselleu-me",
   completo:"Dia sencer",medio:"Mig dia",debutante:"Debutant",peaton:"Vianant",nocturno:"Nocturn",
   particular:"Particular",colectiva:"Col·lectiva",finde:"Cap de setmana",jardin:"Jardí de neu",kids:"Kids Program",guarderia:"Guarderia",freeride:"Freeride / freestyle",adaptado:"Esquí adaptat",
   esqui:"Esquí",snow:"Snowboard",manana:"Matí",tarde:"Tarda",igual:"M'és igual",esquis:"Esquís",snowboard:"Snowboard",botas:"Només botes",casco:"Casc",raquetas:"Raquetes",
   basica:"Bàsica",media:"Mitjana",alta:"Alta",menu:"Menú",bufe:"Bufet lliure",
   motos:"Motos de neu",mushing:"Trineu amb gossos (mushing)",primera:"Primera neu (nens)",tirolina:"Tirolina",trineo:"Trineu / tubing",
   act_esqui:"Esquí",act_snow:"Snowboard",act_no:"No esquia",n_nunca:"No ha esquiat mai",n_deb:"Debutant",n_int:"Intermedi",n_av:"Avançat",n_exp:"Expert"}},
-pt:{taquilla:"na bilheteira",titulo:"Os teus serviços de esqui",intro:"Diz-nos o que precisam e preparamos um orçamento à medida. São poucos minutos e tudo é opcional, exceto o que está marcado com *.",s_contacto:"Contacto",nombre:"Nome e apelido *",telefono:"Telefone / WhatsApp *",email:"Email",prefiere:"Como preferes que te contactemos?",
+pt:{s_servicios:"Que serviços vos interessam?",servicios_hint:"Marca tudo o que vos possa interessar. Depois perguntamos só o necessário.",s_grupo:"Quantos são?",grupo_hint:"Só precisamos de saber quantas pessoas há de cada idade. Conta a idade do primeiro dia de esqui.",c_adultos:"Adultos (18-64)",c_junior:"Júniores (12-17)",c_ninos:"Crianças (6-11)",c_bebes:"Menos de 6",c_senior:"65 ou mais",cuantos:"Quantos de cada idade?",cuantos_ff:"Quantos precisam de forfait?",ff_taquilla:"As crianças com menos de 6 anos e as pessoas com 65 ou mais tiram o forfait na bilheteira, pessoalmente e com o documento de identificação.",seguro_txt:"Cobre os acidentes nas pistas (resgate e despesas médicas) e a perda do forfait. Preço: 6,60 € por pessoa e por dia, com um máximo de 66 € por pessoa. É o preço da estância, sem acréscimo. Contrata-se antes do primeiro dia de esqui.",seguro_datos:"Para o seguro precisamos do nome e apelidos tal como aparecem no passaporte ou documento de identificação, e da data de nascimento de cada pessoa segurada. Depois a Antonella vai pedir-te uma foto do documento para confirmar.",aseg:"Pessoa segurada",aseg_nombre:"Nome e apelidos (como no passaporte)",aseg_nac:"Data de nascimento",anadir_aseg:"+ Adicionar outra pessoa segurada",e_servicio:"Marca pelo menos um serviço.",e_grupo:"Indica quantos são.",e_aseg:"Falta o nome ou a data de nascimento de alguma pessoa segurada.",notas_cl2:"Mais alguma coisa? (nível de cada um, objetivos, se é a primeira vez…)",notas_al2:"Se já souberes: altura, peso e número de pé de cada pessoa",taquilla:"na bilheteira",titulo:"Os teus serviços de esqui",intro:"Diz-nos o que precisam e preparamos um orçamento à medida. São poucos minutos e tudo é opcional, exceto o que está marcado com *.",s_contacto:"Contacto",nombre:"Nome e apelido *",telefono:"Telefone / WhatsApp *",email:"Email",prefiere:"Como preferes que te contactemos?",
  s_personas:"Quem vem?",personas_hint:"Uma ficha por pessoa, também quem não esquia. A data de nascimento define o preço do forfait: depende da idade no primeiro dia de esqui.",anadir:"+ Adicionar outra pessoa",
  edades_info:"Idades do forfait (temporada 2026-27): menos de 6 anos, grátis · 6-11 criança · 12-17 júnior · 18-64 adulto · 65 ou mais, sénior (a partir dos 75, grátis). Os forfaits gratuitos (menos de 6 anos e a partir dos 75) e os de sénior (65-74) não podem ser tratados por nós: compram-se na bilheteira, pessoalmente, com o documento de identificação. Crianças e júniores também têm de levar um documento que comprove a idade.",
  persona:"Pessoa",p_nombre:"Nome",p_nac:"Data de nascimento *",p_act:"O que vai fazer?",p_nivel:"Nível",quitar:"Remover",
@@ -305,14 +309,14 @@ pt:{taquilla:"na bilheteira",titulo:"Os teus serviços de esqui",intro:"Diz-nos 
  gracias:"Obrigado!",gracias_txt:"Recebemos as tuas respostas. Vamos escrever-te com o orçamento muito em breve.",
  e_nombre:"Escreve o teu nome.",e_tel:"Escreve o teu telefone com o indicativo do país.",e_nac:"Falta a data de nascimento de alguma pessoa.",e_acepto:"Marca a caixa de privacidade para poder enviar.",e_red:"Não foi possível enviar. Verifica a ligação e tenta outra vez.",e_off:"O formulário ainda não está ativo. Escreve-nos por WhatsApp, por favor.",
  reserva:"A tua reserva",del:"de",al:"a",
- o:{whatsapp:"WhatsApp",llamada:"Chamada",email:"Email",si:"Sim",no:"Não",nose:"Não sei / aconselhem-me",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Toda Andorra",aconsejar:"Aconselhem-me",
+ o:{forfait:"Forfaits",clases:"Aulas",alquiler:"Aluguer de material",comida:"Refeição nas pistas",actividades:"Atividades",aconsejar:"Não sei, aconselhem-me",whatsapp:"WhatsApp",llamada:"Chamada",email:"Email",si:"Sim",no:"Não",nose:"Não sei / aconselhem-me",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Toda Andorra",aconsejar:"Aconselhem-me",
   completo:"Dia inteiro",medio:"Meio dia",debutante:"Principiante",peaton:"Peão",nocturno:"Noturno",
   particular:"Particular",colectiva:"Coletiva",finde:"Fim de semana",jardin:"Jardim de neve",kids:"Kids Program",guarderia:"Creche",freeride:"Freeride / freestyle",adaptado:"Esqui adaptado",
   esqui:"Esqui",snow:"Snowboard",manana:"Manhã",tarde:"Tarde",igual:"Tanto faz",esquis:"Esquis",snowboard:"Snowboard",botas:"Só botas",casco:"Capacete",raquetas:"Raquetes de neve",
   basica:"Básica",media:"Média",alta:"Alta",menu:"Menu",bufe:"Bufete livre",
   motos:"Motas de neve",mushing:"Trenó com cães (mushing)",primera:"Primeira neve (crianças)",tirolina:"Slide",trineo:"Trenó / tubing",
   act_esqui:"Esqui",act_snow:"Snowboard",act_no:"Não esquia",n_nunca:"Nunca esquiou",n_deb:"Principiante",n_int:"Intermédio",n_av:"Avançado",n_exp:"Experiente"}},
-it:{taquilla:"in biglietteria",titulo:"I tuoi servizi sci",intro:"Raccontaci di cosa avete bisogno e ti prepariamo un preventivo su misura. Bastano pochi minuti e tutto è facoltativo tranne ciò che è segnato con *.",s_contacto:"Contatto",nombre:"Nome e cognome *",telefono:"Telefono / WhatsApp *",email:"Email",prefiere:"Come preferisci essere contattato?",
+it:{s_servicios:"Quali servizi vi interessano?",servicios_hint:"Segna tutto ciò che potrebbe interessarvi. Poi ti chiediamo solo il necessario.",s_grupo:"Quanti siete?",grupo_hint:"Ci basta sapere quante persone ci sono per ogni età. Conta l'età del primo giorno di sci.",c_adultos:"Adulti (18-64)",c_junior:"Junior (12-17)",c_ninos:"Bambini (6-11)",c_bebes:"Sotto i 6 anni",c_senior:"65 e oltre",cuantos:"Quanti per ogni età?",cuantos_ff:"Quanti hanno bisogno dello skipass?",ff_taquilla:"I bambini sotto i 6 anni e chi ha 65 anni o più ritirano lo skipass in biglietteria, di persona e con il documento d'identità.",seguro_txt:"Copre gli incidenti sulle piste (soccorso e spese mediche) e la perdita dello skipass. Prezzo: 6,60 € a persona al giorno, con un massimo di 66 € a persona. È il prezzo della stazione, senza ricarico. Si acquista prima del primo giorno di sci.",seguro_datos:"Per l'assicurazione ci servono nome e cognome di ogni persona assicurata come compaiono sul passaporto o documento d'identità, e la data di nascita. Antonella ti chiederà poi una foto del documento per verificarli.",aseg:"Persona assicurata",aseg_nombre:"Nome e cognome (come sul passaporto)",aseg_nac:"Data di nascita",anadir_aseg:"+ Aggiungi un'altra persona assicurata",e_servicio:"Segna almeno un servizio.",e_grupo:"Indica quanti siete.",e_aseg:"Manca il nome o la data di nascita di una persona assicurata.",notas_cl2:"Altro? (livello di ciascuno, obiettivi, prima volta…)",notas_al2:"Se lo sai già: altezza, peso e numero di scarpe di ogni persona",taquilla:"in biglietteria",titulo:"I tuoi servizi sci",intro:"Raccontaci di cosa avete bisogno e ti prepariamo un preventivo su misura. Bastano pochi minuti e tutto è facoltativo tranne ciò che è segnato con *.",s_contacto:"Contatto",nombre:"Nome e cognome *",telefono:"Telefono / WhatsApp *",email:"Email",prefiere:"Come preferisci essere contattato?",
  s_personas:"Chi viene?",personas_hint:"Una scheda per persona, anche per chi non scia. La data di nascita serve per il prezzo dello skipass: dipende dall'età il primo giorno di sci.",anadir:"+ Aggiungi un'altra persona",
  edades_info:"Età dello skipass (stagione 2026-27): sotto i 6 anni, gratis · 6-11 bambino · 12-17 junior · 18-64 adulto · 65 e oltre, senior (dai 75, gratis). Gli skipass gratuiti (sotto i 6 anni e dai 75) e quelli senior (65-74) non possiamo gestirli noi: si acquistano di persona in biglietteria, con un documento d'identità. Bambini e junior devono comunque portare un documento che attesti l'età.",
  persona:"Persona",p_nombre:"Nome",p_nac:"Data di nascita *",p_act:"Cosa farà?",p_nivel:"Livello",quitar:"Rimuovi",
@@ -331,7 +335,7 @@ it:{taquilla:"in biglietteria",titulo:"I tuoi servizi sci",intro:"Raccontaci di 
  gracias:"Grazie!",gracias_txt:"Abbiamo ricevuto le tue risposte. Ti scriveremo presto con il preventivo.",
  e_nombre:"Scrivi il tuo nome.",e_tel:"Scrivi il tuo telefono con il prefisso del paese.",e_nac:"Manca la data di nascita di qualcuno.",e_acepto:"Spunta la casella della privacy per inviare.",e_red:"Invio non riuscito. Controlla la connessione e riprova.",e_off:"Il modulo non è ancora attivo. Scrivici su WhatsApp, per favore.",
  reserva:"La tua prenotazione",del:"dal",al:"al",
- o:{whatsapp:"WhatsApp",llamada:"Chiamata",email:"Email",si:"Sì",no:"No",nose:"Non lo so / consigliatemi",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Tutta Andorra",aconsejar:"Consigliatemi",
+ o:{forfait:"Skipass",clases:"Lezioni",alquiler:"Noleggio attrezzatura",comida:"Pranzo sulle piste",actividades:"Attività",aconsejar:"Non lo so, consigliatemi",whatsapp:"WhatsApp",llamada:"Chiamata",email:"Email",si:"Sì",no:"No",nose:"Non lo so / consigliatemi",grandvalira:"Grandvalira",pal:"Pal Arinsal",ordino:"Ordino Arcalís",varias:"Tutta Andorra",aconsejar:"Consigliatemi",
   completo:"Giornata intera",medio:"Mezza giornata",debutante:"Principiante",peaton:"Pedone",nocturno:"Notturno",
   particular:"Privata",colectiva:"Collettiva",finde:"Fine settimana",jardin:"Giardino della neve",kids:"Kids Program",guarderia:"Asilo",freeride:"Freeride / freestyle",adaptado:"Sci adattato",
   esqui:"Sci",snow:"Snowboard",manana:"Mattina",tarde:"Pomeriggio",igual:"Indifferente",esquis:"Sci",snowboard:"Snowboard",botas:"Solo scarponi",casco:"Casco",raquetas:"Ciaspole",
@@ -343,64 +347,66 @@ let lg=LGS.includes(P.get("lg"))?P.get("lg"):(LGS.find(l=>(navigator.language||"
 const t=k=>(T[lg]&&T[lg][k])||T.es[k]||k,o=k=>(T[lg].o[k])||T.es.o[k]||k;
 const ref=(P.get("ref")||"").slice(0,80),piso=(P.get("p")||"").slice(0,60),ent=(P.get("e")||"").slice(0,10),sal=(P.get("s")||"").slice(0,10);
 function dm(iso){const p=String(iso).split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:iso}
-/* opciones (radio y casillas): se pintan con el texto del idioma */
+/* opciones (radio y casillas) con el texto del idioma */
 function pintarOps(){document.querySelectorAll("[data-radio],[data-check]").forEach(w=>{const n=w.dataset.radio||w.dataset.check,tipo=w.dataset.radio?"radio":"checkbox",sel=[...w.querySelectorAll("input:checked")].map(i=>i.value);
   w.innerHTML="";w.setAttribute("role",tipo==="radio"?"radiogroup":"group");w.dataset.ops.split(",").forEach(v=>{const l=document.createElement("label"),i=document.createElement("input"),s=document.createElement("span");
-    i.type=tipo;i.name=n;i.value=v;i.checked=sel.includes(v);s.textContent=o(v);l.append(i,s);w.append(l)});
-  if(w.dataset.abre)w.addEventListener("change",()=>abrir(w))})}
-function abrir(w){const v=(w.querySelector("input:checked")||{}).value;$(w.dataset.abre).hidden=!(v==="si"||v==="nose")}
-/* personas */
-let nP=0;
-function persona(){nP++;const d=document.createElement("div");d.className="persona";d.dataset.i=nP;
-  d.innerHTML='<div class="top"><b class="pt"></b><button type="button" class="lnk qt"></button></div><div class="g2"><label class="f"><span class="l1"></span><input name="p_nombre" maxlength="60" autocomplete="off"></label><label class="f"><span class="l2"></span><input name="p_nac" type="date" required max="'+new Date().toISOString().slice(0,10)+'" min="1920-01-01"></label></div><div class="g2"><label class="f"><span class="l3"></span><select name="p_act"></select></label><label class="f"><span class="l4"></span><select name="p_nivel"></select></label></div><span class="cat"></span>';
-  d.querySelector(".qt").onclick=()=>{d.remove();textos();quienes()};
-  d.querySelector('[name=p_nombre]').addEventListener("input",quienes);d.querySelector('[name=p_nac]').addEventListener("change",()=>cat(d));
-  $("personas").append(d);textos();quienes()}
-/* categoría orientativa del forfait según la edad el primer día de esquí */
-function cat(d){const v=d.querySelector('[name=p_nac]').value,c=d.querySelector(".cat");if(!v){c.textContent="";return}
-  const ref=document.querySelector('[name=ff_primer]').value||ent||new Date().toISOString().slice(0,10),a=new Date(ref),b=new Date(v);let e=a.getFullYear()-b.getFullYear();if(a.getMonth()<b.getMonth()||(a.getMonth()===b.getMonth()&&a.getDate()<b.getDate()))e--;
-  c.textContent=isNaN(e)||e<0?"":e+" · "+(e<6?"baby":e<12?"6-11":e<18?"12-17":e<65?"18-64":"65+")+(e<6||e>=65?" · "+t("taquilla"):"")}
-function quienes(){const ps=[...document.querySelectorAll(".persona")];document.querySelectorAll("[data-quienes]").forEach(w=>{const n=w.dataset.quienes,sel=[...w.querySelectorAll("input:checked")].map(i=>i.value);w.innerHTML="";
-  ps.forEach((d,k)=>{const nm=d.querySelector('[name=p_nombre]').value.trim()||t("persona")+" "+(k+1),l=document.createElement("label"),i=document.createElement("input"),s=document.createElement("span");i.type="checkbox";i.name=n;i.value=nm;i.checked=sel.includes(nm);s.textContent=nm;l.append(i,s);w.append(l)})})}
+    i.type=tipo;i.name=n;i.value=v;i.checked=sel.includes(v);s.textContent=o(v);l.append(i,s);w.append(l)})})}
+/* contadores por edad: adultos, júnior, niños, menores de 6 y 65 o más */
+function pintarCnt(){document.querySelectorAll("[data-cnt]").forEach(w=>{const pre=w.dataset.cnt,vals={};w.querySelectorAll("input").forEach(i=>vals[i.name]=i.value);w.innerHTML="";
+  w.dataset.cats.split(",").forEach(c=>{const l=document.createElement("label"),s=document.createElement("span"),i=document.createElement("input");l.className="f cn";s.textContent=t("c_"+c);
+    i.type="number";i.min="0";i.max="40";i.inputMode="numeric";i.name=pre+"_"+c;i.value=vals[i.name]||"";i.placeholder="0";l.append(s,i);w.append(l)})})}
+const ver=id=>{const e=$(id);return e&&!e.hidden};
+function servicios(){return [...document.querySelectorAll('[name=servicios]:checked')].map(i=>i.value)}
+/* cada servicio se abre solo si lo marcan; el seguro sale con forfaits o actividades (Aida, 16 nov 2026) */
+function abrirServicios(){const sv=servicios();["forfait","clases","alquiler","comida","actividades"].forEach(k=>{const e=$("s-"+k),antes=e.hidden;e.hidden=!sv.includes(k);if(antes&&!e.hidden)copiarGrupo(k)});
+  $("s-seguro").hidden=!(sv.includes("forfait")||sv.includes("actividades"))}
+/* al abrir un servicio, se proponen los mismos números del grupo (se pueden cambiar) */
+function copiarGrupo(k){const pre={forfait:"ff",clases:"cl",alquiler:"al"}[k];if(!pre)return;
+  document.querySelectorAll('[data-cnt="'+pre+'"] input').forEach(i=>{if(!i.value){const g=document.querySelector('[name=g_'+i.name.split("_")[1]+']');if(g&&g.value)i.value=g.value}})}
+function abrirSeguro(){const v=(document.querySelector('[name=seguro]:checked')||{}).value;$("sub-seg").hidden=v!=="si";if(v==="si"&&!document.querySelector(".aseg"))asegurado()}
+/* personas aseguradas: solo para el seguro hace falta nombre como en el pasaporte y fecha de nacimiento */
+function asegurado(){const d=document.createElement("div");d.className="persona aseg";
+  d.innerHTML='<div class="top"><b class="pt"></b><button type="button" class="lnk qt"></button></div><div class="g2"><label class="f"><span class="l1"></span><input name="a_nombre" maxlength="120" autocomplete="off"></label><label class="f"><span class="l2"></span><input name="a_nac" type="date" max="'+new Date().toISOString().slice(0,10)+'" min="1920-01-01"></label></div>';
+  d.querySelector(".qt").onclick=()=>{d.remove();textos()};$("asegurados").append(d);textos()}
 function textos(){document.documentElement.lang=lg;document.querySelectorAll("[data-t]").forEach(e=>{e.textContent=t(e.dataset.t)});
-  [...document.querySelectorAll(".persona")].forEach((d,k)=>{d.querySelector(".pt").textContent=t("persona")+" "+(k+1);d.querySelector(".qt").textContent=t("quitar");d.querySelector(".qt").hidden=k===0;
-    d.querySelector(".l1").textContent=t("p_nombre");d.querySelector(".l2").textContent=t("p_nac");d.querySelector(".l3").textContent=t("p_act");d.querySelector(".l4").textContent=t("p_nivel");
-    const sa=d.querySelector('[name=p_act]'),va=sa.value;sa.innerHTML="";["act_esqui","act_snow","act_no"].forEach(v=>{const op=document.createElement("option");op.value=v;op.textContent=o(v);sa.append(op)});if(va)sa.value=va;
-    const sn=d.querySelector('[name=p_nivel]'),vn=sn.value;sn.innerHTML="";["","n_nunca","n_deb","n_int","n_av","n_exp"].forEach(v=>{const op=document.createElement("option");op.value=v;op.textContent=v?o(v):"—";sn.append(op)});if(vn)sn.value=vn;cat(d)});
-  pintarOps();document.querySelectorAll("[data-abre]").forEach(abrir);quienes();
+  [...document.querySelectorAll(".aseg")].forEach((d,k)=>{d.querySelector(".pt").textContent=t("aseg")+" "+(k+1);const q=d.querySelector(".qt");q.textContent=t("quitar");q.hidden=k===0;
+    d.querySelector(".l1").textContent=t("aseg_nombre");d.querySelector(".l2").textContent=t("aseg_nac")});
+  pintarOps();pintarCnt();abrirServicios();abrirSeguro();
   $("langs").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lg===lg)));
   if(piso||ent){const r=$("reserva");r.hidden=false;r.textContent=t("reserva")+": "+[piso,ent?t("del")+" "+dm(ent):"",sal?t("al")+" "+dm(sal):""].filter(Boolean).join(" ")}}
 LGS.forEach(l=>{const b=document.createElement("button");b.type="button";b.dataset.lg=l;b.textContent=l.toUpperCase();b.onclick=()=>{lg=l;textos()};$("langs").append(b)});
-/* sin sector de Grandvalira: no hace falta (Aida, 16 nov 2026) */
-document.addEventListener("change",e=>{if(e.target.name==="ff_primer")document.querySelectorAll(".persona").forEach(cat)});
+document.addEventListener("change",e=>{if(e.target.name==="servicios")abrirServicios();if(e.target.name==="seguro")abrirSeguro()});
+$("add-aseg").onclick=()=>{asegurado();document.querySelector(".aseg:last-child [name=a_nombre]").focus()};
+if(ref)$("s-con").remove();
+textos();
 const fp=document.querySelector('[name=ff_primer]');if(ent){fp.min=ent;fp.value=new Date(new Date(ent).getTime()+864e5).toISOString().slice(0,10)}if(sal)fp.max=sal;
 if(ent&&sal){const n=Math.round((new Date(sal)-new Date(ent))/864e5);if(n>0)document.querySelector('[name=ff_dias]').value=n}
-if(ref)$("s-con").remove();
-const nIni=Math.min(Math.max(parseInt(P.get("n"))||1,1),12);for(let i=0;i<nIni;i++)persona();
-$("add").onclick=()=>{persona();document.querySelector(".persona:last-child [name=p_nombre]").focus()};
-textos();
+{const n=parseInt(P.get("n"));if(n>0)document.querySelector('[name=g_adultos]').value=Math.min(n,40)}
 /* envío */
-const val=n=>{const e=document.querySelector('[name="'+n+'"]:checked')||document.querySelector('[name="'+n+'"]');return e?(e.type==="checkbox"&&!e.matches("[data-check] input,[data-quienes] input")?(e.checked?"si":""):(e.type==="radio"||e.type==="checkbox")?(e.checked?e.value:""):e.value.trim()):""};
-const lista=n=>[...document.querySelectorAll('[name="'+n+'"]:checked')].map(i=>o(i.value)===i.value?i.value:T.es.o[i.value]||i.value);
-$("f").addEventListener("submit",async e=>{e.preventDefault();const er=$("err");er.hidden=true;
+const val=n=>{const e=document.querySelector('[name="'+n+'"]:checked')||document.querySelector('[name="'+n+'"]');return e?((e.type==="radio"||e.type==="checkbox")?(e.checked?e.value:""):e.value.trim()):""};
+const es=v=>T.es.o[v]||v;
+const lista=n=>[...document.querySelectorAll('[name="'+n+'"]:checked')].map(i=>es(i.value));
+const cuenta=pre=>{const r={};document.querySelectorAll('[data-cnt="'+pre+'"] input').forEach(i=>{const n=parseInt(i.value)||0;if(n)r[i.name.split("_")[1]]=n});return r};
+$("f").addEventListener("submit",async ev=>{ev.preventDefault();const er=$("err");er.hidden=true;
   const fallo=m=>{er.textContent=t(m);er.hidden=false;er.scrollIntoView({behavior:"smooth",block:"center"})};
   if(!ref){if(!val("c_nombre"))return fallo("e_nombre");if(val("c_tel").replace(/\D/g,"").length<8)return fallo("e_tel")}
-  const ps=[...document.querySelectorAll(".persona")].map(d=>({nombre:d.querySelector('[name=p_nombre]').value.trim(),nacimiento:d.querySelector('[name=p_nac]').value,actividad:T.es.o[d.querySelector('[name=p_act]').value]||"",nivel:T.es.o[d.querySelector('[name=p_nivel]').value]||""}));
-  if(ps.some(p=>!p.nacimiento))return fallo("e_nac");if(!document.querySelector('[name=acepto]').checked)return fallo("e_acepto");
+  const sv=servicios();if(!sv.length)return fallo("e_servicio");
+  const grupo=cuenta("g");if(!Object.keys(grupo).length)return fallo("e_grupo");
+  const segQ=ver("s-seguro")?val("seguro"):"",aseg=segQ==="si"?[...document.querySelectorAll(".aseg")].map(d=>({nombre:d.querySelector('[name=a_nombre]').value.trim(),nacimiento:d.querySelector('[name=a_nac]').value})):[];
+  if(aseg.some(a=>!a.nombre||!a.nacimiento))return fallo("e_aseg");
+  if(!document.querySelector('[name=acepto]').checked)return fallo("e_acepto");
   if(!ENDPOINT)return fallo("e_off");
-  const es=v=>T.es.o[v]||v;
-  const r={contacto:{nombre:val("c_nombre"),telefono:val("c_tel"),email:val("c_email"),prefiere:es(val("c_prefiere"))},personas:ps,
-    forfait:{quiere:val("ff_quiere"),estacion:es(val("ff_estacion")),sector:val("ff_sector"),primer_dia:val("ff_primer"),dias:val("ff_dias"),consecutivos:val("ff_consec"),tipo:lista("ff_tipo").join(", "),notas:val("ff_notas")},
-    seguro:val("seguro"),
-    clases:{quiere:val("cl_quiere"),tipo:lista("cl_tipo").join(", "),disciplina:es(val("cl_disc")),quienes:[...document.querySelectorAll('[name=cl_quienes]:checked')].map(i=>i.value).join(", "),dias:val("cl_dias"),horario:es(val("cl_horario")),idioma:val("cl_idioma"),notas:val("cl_notas")},
-    alquiler:{quiere:val("al_quiere"),quienes:[...document.querySelectorAll('[name=al_quienes]:checked')].map(i=>i.value).join(", "),material:lista("al_material").join(", "),gama:es(val("al_gama")),casco:document.querySelector('[name=al_material][value=casco]:checked')?"si":"",dias:val("al_dias"),notas:val("al_notas")},
-    comida:{quiere:val("co_quiere"),tipo:es(val("co_tipo")),dias:val("co_dias")},
-    actividades:lista("actividades"),actividades_notas:val("act_notas"),residente_o_discapacidad:document.querySelector('[name=residente]').checked?"si":"",comentarios:val("comentarios")};
-  if(r.forfait.notas||r.forfait.tipo)r.forfait.notas=[r.forfait.tipo,r.forfait.notas].filter(Boolean).join(" · ");
-  if(r.clases.idioma)r.clases.notas=["idioma: "+r.clases.idioma,r.clases.notas].filter(Boolean).join(" · ");
+  const r={servicios:sv.map(es),grupo,
+    forfait:ver("s-forfait")?{quiere:"si",estacion:es(val("ff_estacion")),primer_dia:val("ff_primer"),dias:val("ff_dias"),consecutivos:val("ff_consec"),tipo:lista("ff_tipo").join(", "),cuantos:cuenta("ff"),notas:val("ff_notas")}:{},
+    seguro:{quiere:segQ,asegurados:aseg},
+    clases:ver("s-clases")?{quiere:"si",cuantos:cuenta("cl"),tipo:lista("cl_tipo").join(", "),disciplina:lista("cl_disc").join(", "),dias:val("cl_dias"),horario:es(val("cl_horario")),idioma:val("cl_idioma"),notas:val("cl_notas")}:{},
+    alquiler:ver("s-alquiler")?{quiere:"si",cuantos:cuenta("al"),material:lista("al_material").join(", "),gama:es(val("al_gama")),casco:document.querySelector('[name=al_material][value=casco]:checked')?"si":"",dias:val("al_dias"),notas:val("al_notas")}:{},
+    comida:ver("s-comida")?{quiere:"si",tipo:es(val("co_tipo")),dias:val("co_dias")}:{},
+    actividades:ver("s-actividades")?lista("actividades"):[],actividades_notas:ver("s-actividades")?val("act_notas"):"",
+    residente_o_discapacidad:document.querySelector('[name=residente]').checked?"si":"",comentarios:val("comentarios")};
   if(r.residente_o_discapacidad)r.comentarios=["Residente en Andorra o discapacidad ≥33 %",r.comentarios].filter(Boolean).join(" · ");
   const b=$("enviar");b.disabled=true;b.textContent=t("enviando");
-  try{const res=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({ref,piso,entrada:ent,salida:sal,idioma:lg,nombre:r.contacto.nombre,telefono:r.contacto.telefono,email:r.contacto.email,prueba:P.get("prueba")==="1",web:val("web"),respuestas:r})});
+  try{const res=await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({ref,piso,entrada:ent,salida:sal,idioma:lg,nombre:val("c_nombre"),telefono:val("c_tel"),email:"",prueba:P.get("prueba")==="1",web:val("web"),respuestas:r})});
     const j=await res.json();if(!j.ok)throw 0;$("f").hidden=true;$("ok").hidden=false;window.scrollTo({top:0,behavior:"smooth"})}
   catch(x){b.disabled=false;b.textContent=t("enviar");fallo("e_red")}});
 </script>
