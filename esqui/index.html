@@ -95,8 +95,6 @@ a{color:inherit}
       <div class="sub" id="sub-ff" hidden>
         <div class="q"><b data-t="estacion">¿Dónde queréis esquiar?</b><div class="op" data-radio="ff_estacion" data-ops="grandvalira,pal,ordino,varias,aconsejar"></div></div>
         <p class="info" data-t="estacion_info">Grandvalira es el dominio más grande de Andorra. Pal Arinsal y Ordino Arcalís son más tranquilas. Con forfaits de varios días suele poder esquiarse también en las otras: te lo explicamos en el presupuesto.</p>
-        <label class="f" id="w-sector"><span data-t="sector">Sector preferido de Grandvalira</span>
-          <select name="ff_sector"><option value="" data-t="indiferente">Me da igual</option><option>Pas de la Casa</option><option>Grau Roig</option><option>Soldeu</option><option>El Tarter</option><option>Canillo</option><option>Encamp</option><option>Peretol</option></select></label>
         <div class="g2">
           <label class="f"><span data-t="primer_dia">Primer día de esquí</span><input name="ff_primer" type="date"></label>
           <label class="f"><span data-t="dias">Número de días</span><input name="ff_dias" type="number" min="1" max="20" inputmode="numeric"></label>
@@ -372,8 +370,8 @@ function textos(){document.documentElement.lang=lg;document.querySelectorAll("[d
   $("langs").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lg===lg)));
   if(piso||ent){const r=$("reserva");r.hidden=false;r.textContent=t("reserva")+": "+[piso,ent?t("del")+" "+dm(ent):"",sal?t("al")+" "+dm(sal):""].filter(Boolean).join(" ")}}
 LGS.forEach(l=>{const b=document.createElement("button");b.type="button";b.dataset.lg=l;b.textContent=l.toUpperCase();b.onclick=()=>{lg=l;textos()};$("langs").append(b)});
-/* el sector solo tiene sentido en Grandvalira */
-document.addEventListener("change",e=>{if(e.target.name==="ff_estacion")$("w-sector").hidden=!["grandvalira","varias"].includes(e.target.value);if(e.target.name==="ff_primer")document.querySelectorAll(".persona").forEach(cat)});
+/* sin sector de Grandvalira: no hace falta (Aida, 16 nov 2026) */
+document.addEventListener("change",e=>{if(e.target.name==="ff_primer")document.querySelectorAll(".persona").forEach(cat)});
 const fp=document.querySelector('[name=ff_primer]');if(ent){fp.min=ent;fp.value=new Date(new Date(ent).getTime()+864e5).toISOString().slice(0,10)}if(sal)fp.max=sal;
 if(ent&&sal){const n=Math.round((new Date(sal)-new Date(ent))/864e5);if(n>0)document.querySelector('[name=ff_dias]').value=n}
 const nIni=Math.min(Math.max(parseInt(P.get("n"))||1,1),12);for(let i=0;i<nIni;i++)persona();
