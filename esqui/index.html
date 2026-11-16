@@ -75,7 +75,8 @@ a{color:inherit}
   <form id="f" novalidate>
     <div style="display:grid;gap:18px">
 
-    <section aria-labelledby="h-con">
+    <!-- Contacto: solo si el enlace no lleva la reserva (con ?ref= Antonella ya tiene nombre y teléfono; Aida, 16 nov 2026) -->
+    <section aria-labelledby="h-con" id="s-con">
       <h2 id="h-con" data-t="s_contacto">Contacto</h2>
       <label class="f"><span data-t="nombre">Nombre y apellidos *</span><input name="c_nombre" autocomplete="name" required maxlength="120"></label>
       <label class="f"><span data-t="telefono">Teléfono / WhatsApp *</span><input name="c_tel" type="tel" autocomplete="tel" required maxlength="40" placeholder="+34 600 000 000"></label>
@@ -374,6 +375,7 @@ LGS.forEach(l=>{const b=document.createElement("button");b.type="button";b.datas
 document.addEventListener("change",e=>{if(e.target.name==="ff_primer")document.querySelectorAll(".persona").forEach(cat)});
 const fp=document.querySelector('[name=ff_primer]');if(ent){fp.min=ent;fp.value=new Date(new Date(ent).getTime()+864e5).toISOString().slice(0,10)}if(sal)fp.max=sal;
 if(ent&&sal){const n=Math.round((new Date(sal)-new Date(ent))/864e5);if(n>0)document.querySelector('[name=ff_dias]').value=n}
+if(ref)$("s-con").remove();
 const nIni=Math.min(Math.max(parseInt(P.get("n"))||1,1),12);for(let i=0;i<nIni;i++)persona();
 $("add").onclick=()=>{persona();document.querySelector(".persona:last-child [name=p_nombre]").focus()};
 textos();
@@ -382,7 +384,7 @@ const val=n=>{const e=document.querySelector('[name="'+n+'"]:checked')||document
 const lista=n=>[...document.querySelectorAll('[name="'+n+'"]:checked')].map(i=>o(i.value)===i.value?i.value:T.es.o[i.value]||i.value);
 $("f").addEventListener("submit",async e=>{e.preventDefault();const er=$("err");er.hidden=true;
   const fallo=m=>{er.textContent=t(m);er.hidden=false;er.scrollIntoView({behavior:"smooth",block:"center"})};
-  if(!val("c_nombre"))return fallo("e_nombre");if(val("c_tel").replace(/\D/g,"").length<8)return fallo("e_tel");
+  if(!ref){if(!val("c_nombre"))return fallo("e_nombre");if(val("c_tel").replace(/\D/g,"").length<8)return fallo("e_tel")}
   const ps=[...document.querySelectorAll(".persona")].map(d=>({nombre:d.querySelector('[name=p_nombre]').value.trim(),nacimiento:d.querySelector('[name=p_nac]').value,actividad:T.es.o[d.querySelector('[name=p_act]').value]||"",nivel:T.es.o[d.querySelector('[name=p_nivel]').value]||""}));
   if(ps.some(p=>!p.nacimiento))return fallo("e_nac");if(!document.querySelector('[name=acepto]').checked)return fallo("e_acepto");
   if(!ENDPOINT)return fallo("e_off");
