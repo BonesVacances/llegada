@@ -78,12 +78,7 @@ a{color:inherit}
     <section aria-labelledby="h-con">
       <h2 id="h-con" data-t="s_contacto">Contacto</h2>
       <label class="f"><span data-t="nombre">Nombre y apellidos *</span><input name="c_nombre" autocomplete="name" required maxlength="120"></label>
-      <div class="g2">
-        <label class="f"><span data-t="telefono">Teléfono / WhatsApp *</span><input name="c_tel" type="tel" autocomplete="tel" required maxlength="40" placeholder="+34 600 000 000"></label>
-        <label class="f"><span data-t="email">Email</span><input name="c_email" type="email" autocomplete="email" maxlength="120"></label>
-      </div>
-      <div class="q"><b data-t="prefiere">¿Cómo prefieres que te contactemos?</b>
-        <div class="op" data-radio="c_prefiere" data-ops="whatsapp,llamada,email"></div></div>
+      <label class="f"><span data-t="telefono">Teléfono / WhatsApp *</span><input name="c_tel" type="tel" autocomplete="tel" required maxlength="40" placeholder="+34 600 000 000"></label>
     </section>
 
     <section aria-labelledby="h-per">
@@ -91,7 +86,7 @@ a{color:inherit}
       <p class="hint" data-t="personas_hint">Una ficha por persona, también quien no esquía. La fecha de nacimiento sirve para el precio del forfait: va por edad el primer día de esquí.</p>
       <div id="personas" style="display:grid;gap:10px"></div>
       <button type="button" class="lnk" id="add" data-t="anadir">+ Añadir otra persona</button>
-      <p class="info" data-t="edades_info">Edades del forfait (temporada 2026-27): menores de 6 años, gratis · 6-11 infantil · 12-17 júnior · 18-64 adulto · 65 o más, sénior (desde 75, gratis). Para los niños, júnior y sénior hay que llevar un documento que acredite la edad.</p>
+      <p class="info" data-t="edades_info">Edades del forfait (temporada 2026-27): menores de 6 años, gratis · 6-11 infantil · 12-17 júnior · 18-64 adulto · 65 o más, sénior (desde 75, gratis). Los forfaits gratuitos (menores de 6 años y desde 75) y los de sénior (65-74) no los podemos gestionar nosotros: se sacan en taquilla, en persona, con el documento de identidad. Para los niños y júnior hay que llevar también un documento que acredite la edad.</p>
     </section>
 
     <section aria-labelledby="h-ff">
@@ -188,9 +183,9 @@ a{color:inherit}
 const ENDPOINT="";
 const LGS=["es","en","fr","ca","pt","it"];
 const T={
-es:{titulo:"Tus servicios de esquí",intro:"Cuéntanos qué necesitáis y te preparamos un presupuesto a medida. Son unos minutos y todo es opcional salvo lo marcado con *.",s_contacto:"Contacto",nombre:"Nombre y apellidos *",telefono:"Teléfono / WhatsApp *",email:"Email",prefiere:"¿Cómo prefieres que te contactemos?",
+es:{taquilla:"en taquilla",titulo:"Tus servicios de esquí",intro:"Cuéntanos qué necesitáis y te preparamos un presupuesto a medida. Son unos minutos y todo es opcional salvo lo marcado con *.",s_contacto:"Contacto",nombre:"Nombre y apellidos *",telefono:"Teléfono / WhatsApp *",email:"Email",prefiere:"¿Cómo prefieres que te contactemos?",
  s_personas:"¿Quiénes sois?",personas_hint:"Una ficha por persona, también quien no esquía. La fecha de nacimiento sirve para el precio del forfait: va por edad el primer día de esquí.",anadir:"+ Añadir otra persona",
- edades_info:"Edades del forfait (temporada 2026-27): menores de 6 años, gratis · 6-11 infantil · 12-17 júnior · 18-64 adulto · 65 o más, sénior (desde 75, gratis). Para los niños, júnior y sénior hay que llevar un documento que acredite la edad.",
+ edades_info:"Edades del forfait (temporada 2026-27): menores de 6 años, gratis · 6-11 infantil · 12-17 júnior · 18-64 adulto · 65 o más, sénior (desde 75, gratis). Los forfaits gratuitos (menores de 6 años y desde 75) y los de sénior (65-74) no los podemos gestionar nosotros: se sacan en taquilla, en persona, con el documento de identidad. Para los niños y júnior hay que llevar también un documento que acredite la edad.",
  persona:"Persona",p_nombre:"Nombre",p_nac:"Fecha de nacimiento *",p_act:"¿Qué hará?",p_nivel:"Nivel",quitar:"Quitar",
  s_forfait:"Forfaits",quiere_forfait:"¿Necesitáis forfaits?",estacion:"¿Dónde queréis esquiar?",estacion_info:"Grandvalira es el dominio más grande de Andorra. Pal Arinsal y Ordino Arcalís son más tranquilas. Con forfaits de varios días suele poder esquiarse también en las otras: te lo explicamos en el presupuesto.",
  sector:"Sector preferido de Grandvalira",indiferente:"Me da igual",primer_dia:"Primer día de esquí",dias:"Número de días",consecutivos:"¿Días seguidos?",tipo_forfait:"Tipo de forfait",
@@ -214,9 +209,9 @@ es:{titulo:"Tus servicios de esquí",intro:"Cuéntanos qué necesitáis y te pre
   basica:"Básica",media:"Media",alta:"Alta",menu:"Menú",bufe:"Bufé libre",
   motos:"Motos de nieve",mushing:"Trineo con perros (mushing)",primera:"Primera nieve (niños)",tirolina:"Tirolina",trineo:"Trineo / tubing",
   act_esqui:"Esquí",act_snow:"Snowboard",act_no:"No esquía",n_nunca:"Nunca ha esquiado",n_deb:"Debutante",n_int:"Intermedio",n_av:"Avanzado",n_exp:"Experto"}},
-en:{titulo:"Your ski services",intro:"Tell us what you need and we'll prepare a tailor-made quote. It only takes a few minutes and everything is optional except what is marked *.",s_contacto:"Contact",nombre:"Full name *",telefono:"Phone / WhatsApp *",email:"Email",prefiere:"How would you like us to contact you?",
+en:{taquilla:"at the ticket office",titulo:"Your ski services",intro:"Tell us what you need and we'll prepare a tailor-made quote. It only takes a few minutes and everything is optional except what is marked *.",s_contacto:"Contact",nombre:"Full name *",telefono:"Phone / WhatsApp *",email:"Email",prefiere:"How would you like us to contact you?",
  s_personas:"Who's coming?",personas_hint:"One card per person, including anyone who won't ski. The date of birth sets the ski pass price: it depends on age on the first ski day.",anadir:"+ Add another person",
- edades_info:"Ski pass ages (2026-27 season): under 6, free · 6-11 child · 12-17 junior · 18-64 adult · 65 and over, senior (75+, free). Children, juniors and seniors must carry proof of age.",
+ edades_info:"Ski pass ages (2026-27 season): under 6, free · 6-11 child · 12-17 junior · 18-64 adult · 65 and over, senior (75+, free). Free passes (under 6 and 75+) and senior passes (65-74) cannot be arranged by us: they must be bought in person at the ticket office with an ID document. Children and juniors must also carry proof of age.",
  persona:"Person",p_nombre:"Name",p_nac:"Date of birth *",p_act:"What will they do?",p_nivel:"Level",quitar:"Remove",
  s_forfait:"Ski passes",quiere_forfait:"Do you need ski passes?",estacion:"Where would you like to ski?",estacion_info:"Grandvalira is the largest ski area in Andorra. Pal Arinsal and Ordino Arcalís are quieter. Multi-day passes usually let you ski at the others too: we'll explain in the quote.",
  sector:"Preferred Grandvalira sector",indiferente:"No preference",primer_dia:"First ski day",dias:"Number of days",consecutivos:"Consecutive days?",tipo_forfait:"Type of pass",
@@ -240,9 +235,9 @@ en:{titulo:"Your ski services",intro:"Tell us what you need and we'll prepare a 
   basica:"Basic",media:"Mid-range",alta:"High-end",menu:"Set menu",bufe:"Buffet",
   motos:"Snowmobiles",mushing:"Dog sledding (mushing)",primera:"First snow (kids)",tirolina:"Zip line",trineo:"Sledging / tubing",
   act_esqui:"Ski",act_snow:"Snowboard",act_no:"Not skiing",n_nunca:"Never skied",n_deb:"Beginner",n_int:"Intermediate",n_av:"Advanced",n_exp:"Expert"}},
-fr:{titulo:"Vos services de ski",intro:"Dites-nous ce dont vous avez besoin et nous vous préparons un devis sur mesure. Cela prend quelques minutes et tout est facultatif sauf ce qui est marqué *.",s_contacto:"Contact",nombre:"Nom et prénom *",telefono:"Téléphone / WhatsApp *",email:"E-mail",prefiere:"Comment préférez-vous être contacté ?",
+fr:{taquilla:"au guichet",titulo:"Vos services de ski",intro:"Dites-nous ce dont vous avez besoin et nous vous préparons un devis sur mesure. Cela prend quelques minutes et tout est facultatif sauf ce qui est marqué *.",s_contacto:"Contact",nombre:"Nom et prénom *",telefono:"Téléphone / WhatsApp *",email:"E-mail",prefiere:"Comment préférez-vous être contacté ?",
  s_personas:"Qui vient ?",personas_hint:"Une fiche par personne, y compris celles qui ne skient pas. La date de naissance détermine le prix du forfait : il dépend de l'âge le premier jour de ski.",anadir:"+ Ajouter une personne",
- edades_info:"Âges du forfait (saison 2026-27) : moins de 6 ans, gratuit · 6-11 enfant · 12-17 junior · 18-64 adulte · 65 ans et plus, senior (dès 75 ans, gratuit). Enfants, juniors et seniors doivent avoir un justificatif d'âge.",
+ edades_info:"Âges du forfait (saison 2026-27) : moins de 6 ans, gratuit · 6-11 enfant · 12-17 junior · 18-64 adulte · 65 ans et plus, senior (dès 75 ans, gratuit). Les forfaits gratuits (moins de 6 ans et dès 75 ans) et les forfaits senior (65-74 ans) ne peuvent pas être gérés par nous : ils s'achètent en personne au guichet, avec une pièce d'identité. Les enfants et juniors doivent aussi avoir un justificatif d'âge.",
  persona:"Personne",p_nombre:"Prénom",p_nac:"Date de naissance *",p_act:"Que fera-t-elle ?",p_nivel:"Niveau",quitar:"Retirer",
  s_forfait:"Forfaits",quiere_forfait:"Avez-vous besoin de forfaits ?",estacion:"Où souhaitez-vous skier ?",estacion_info:"Grandvalira est le plus grand domaine d'Andorre. Pal Arinsal et Ordino Arcalís sont plus calmes. Avec un forfait de plusieurs jours, on peut souvent skier aussi dans les autres : nous vous l'expliquerons dans le devis.",
  sector:"Secteur préféré de Grandvalira",indiferente:"Peu importe",primer_dia:"Premier jour de ski",dias:"Nombre de jours",consecutivos:"Jours consécutifs ?",tipo_forfait:"Type de forfait",
@@ -266,9 +261,9 @@ fr:{titulo:"Vos services de ski",intro:"Dites-nous ce dont vous avez besoin et n
   basica:"Basique",media:"Intermédiaire",alta:"Haut de gamme",menu:"Menu",bufe:"Buffet à volonté",
   motos:"Motoneige",mushing:"Chiens de traîneau (mushing)",primera:"Première neige (enfants)",tirolina:"Tyrolienne",trineo:"Luge / tubing",
   act_esqui:"Ski",act_snow:"Snowboard",act_no:"Ne skie pas",n_nunca:"N'a jamais skié",n_deb:"Débutant",n_int:"Intermédiaire",n_av:"Avancé",n_exp:"Expert"}},
-ca:{titulo:"Els teus serveis d'esquí",intro:"Explica'ns què necessiteu i us preparem un pressupost a mida. Són uns minuts i tot és opcional excepte el que està marcat amb *.",s_contacto:"Contacte",nombre:"Nom i cognoms *",telefono:"Telèfon / WhatsApp *",email:"Correu electrònic",prefiere:"Com prefereixes que et contactem?",
+ca:{taquilla:"a taquilla",titulo:"Els teus serveis d'esquí",intro:"Explica'ns què necessiteu i us preparem un pressupost a mida. Són uns minuts i tot és opcional excepte el que està marcat amb *.",s_contacto:"Contacte",nombre:"Nom i cognoms *",telefono:"Telèfon / WhatsApp *",email:"Correu electrònic",prefiere:"Com prefereixes que et contactem?",
  s_personas:"Qui sou?",personas_hint:"Una fitxa per persona, també qui no esquia. La data de naixement serveix per al preu del forfet: va per edat el primer dia d'esquí.",anadir:"+ Afegir una altra persona",
- edades_info:"Edats del forfet (temporada 2026-27): menors de 6 anys, gratis · 6-11 infantil · 12-17 júnior · 18-64 adult · 65 o més, sènior (des dels 75, gratis). Els nens, júniors i sèniors han de portar un document que acrediti l'edat.",
+ edades_info:"Edats del forfet (temporada 2026-27): menors de 6 anys, gratis · 6-11 infantil · 12-17 júnior · 18-64 adult · 65 o més, sènior (des dels 75, gratis). Els forfets gratuïts (menors de 6 anys i des dels 75) i els de sènior (65-74) no els podem gestionar nosaltres: es treuen a taquilla, en persona, amb el document d'identitat. Els nens i júniors també han de portar un document que acrediti l'edat.",
  persona:"Persona",p_nombre:"Nom",p_nac:"Data de naixement *",p_act:"Què farà?",p_nivel:"Nivell",quitar:"Treure",
  s_forfait:"Forfets",quiere_forfait:"Necessiteu forfets?",estacion:"On voleu esquiar?",estacion_info:"Grandvalira és el domini més gran d'Andorra. Pal Arinsal i Ordino Arcalís són més tranquil·les. Amb forfets de diversos dies sovint també es pot esquiar a les altres: t'ho expliquem al pressupost.",
  sector:"Sector preferit de Grandvalira",indiferente:"M'és igual",primer_dia:"Primer dia d'esquí",dias:"Nombre de dies",consecutivos:"Dies seguits?",tipo_forfait:"Tipus de forfet",
@@ -292,9 +287,9 @@ ca:{titulo:"Els teus serveis d'esquí",intro:"Explica'ns què necessiteu i us pr
   basica:"Bàsica",media:"Mitjana",alta:"Alta",menu:"Menú",bufe:"Bufet lliure",
   motos:"Motos de neu",mushing:"Trineu amb gossos (mushing)",primera:"Primera neu (nens)",tirolina:"Tirolina",trineo:"Trineu / tubing",
   act_esqui:"Esquí",act_snow:"Snowboard",act_no:"No esquia",n_nunca:"No ha esquiat mai",n_deb:"Debutant",n_int:"Intermedi",n_av:"Avançat",n_exp:"Expert"}},
-pt:{titulo:"Os teus serviços de esqui",intro:"Diz-nos o que precisam e preparamos um orçamento à medida. São poucos minutos e tudo é opcional, exceto o que está marcado com *.",s_contacto:"Contacto",nombre:"Nome e apelido *",telefono:"Telefone / WhatsApp *",email:"Email",prefiere:"Como preferes que te contactemos?",
+pt:{taquilla:"na bilheteira",titulo:"Os teus serviços de esqui",intro:"Diz-nos o que precisam e preparamos um orçamento à medida. São poucos minutos e tudo é opcional, exceto o que está marcado com *.",s_contacto:"Contacto",nombre:"Nome e apelido *",telefono:"Telefone / WhatsApp *",email:"Email",prefiere:"Como preferes que te contactemos?",
  s_personas:"Quem vem?",personas_hint:"Uma ficha por pessoa, também quem não esquia. A data de nascimento define o preço do forfait: depende da idade no primeiro dia de esqui.",anadir:"+ Adicionar outra pessoa",
- edades_info:"Idades do forfait (temporada 2026-27): menos de 6 anos, grátis · 6-11 criança · 12-17 júnior · 18-64 adulto · 65 ou mais, sénior (a partir dos 75, grátis). Crianças, júniores e séniores têm de levar um documento que comprove a idade.",
+ edades_info:"Idades do forfait (temporada 2026-27): menos de 6 anos, grátis · 6-11 criança · 12-17 júnior · 18-64 adulto · 65 ou mais, sénior (a partir dos 75, grátis). Os forfaits gratuitos (menos de 6 anos e a partir dos 75) e os de sénior (65-74) não podem ser tratados por nós: compram-se na bilheteira, pessoalmente, com o documento de identificação. Crianças e júniores também têm de levar um documento que comprove a idade.",
  persona:"Pessoa",p_nombre:"Nome",p_nac:"Data de nascimento *",p_act:"O que vai fazer?",p_nivel:"Nível",quitar:"Remover",
  s_forfait:"Forfaits",quiere_forfait:"Precisam de forfaits?",estacion:"Onde querem esquiar?",estacion_info:"Grandvalira é a maior estância de Andorra. Pal Arinsal e Ordino Arcalís são mais tranquilas. Com forfaits de vários dias normalmente também se pode esquiar nas outras: explicamos no orçamento.",
  sector:"Setor preferido de Grandvalira",indiferente:"Tanto faz",primer_dia:"Primeiro dia de esqui",dias:"Número de dias",consecutivos:"Dias seguidos?",tipo_forfait:"Tipo de forfait",
@@ -318,9 +313,9 @@ pt:{titulo:"Os teus serviços de esqui",intro:"Diz-nos o que precisam e preparam
   basica:"Básica",media:"Média",alta:"Alta",menu:"Menu",bufe:"Bufete livre",
   motos:"Motas de neve",mushing:"Trenó com cães (mushing)",primera:"Primeira neve (crianças)",tirolina:"Slide",trineo:"Trenó / tubing",
   act_esqui:"Esqui",act_snow:"Snowboard",act_no:"Não esquia",n_nunca:"Nunca esquiou",n_deb:"Principiante",n_int:"Intermédio",n_av:"Avançado",n_exp:"Experiente"}},
-it:{titulo:"I tuoi servizi sci",intro:"Raccontaci di cosa avete bisogno e ti prepariamo un preventivo su misura. Bastano pochi minuti e tutto è facoltativo tranne ciò che è segnato con *.",s_contacto:"Contatto",nombre:"Nome e cognome *",telefono:"Telefono / WhatsApp *",email:"Email",prefiere:"Come preferisci essere contattato?",
+it:{taquilla:"in biglietteria",titulo:"I tuoi servizi sci",intro:"Raccontaci di cosa avete bisogno e ti prepariamo un preventivo su misura. Bastano pochi minuti e tutto è facoltativo tranne ciò che è segnato con *.",s_contacto:"Contatto",nombre:"Nome e cognome *",telefono:"Telefono / WhatsApp *",email:"Email",prefiere:"Come preferisci essere contattato?",
  s_personas:"Chi viene?",personas_hint:"Una scheda per persona, anche per chi non scia. La data di nascita serve per il prezzo dello skipass: dipende dall'età il primo giorno di sci.",anadir:"+ Aggiungi un'altra persona",
- edades_info:"Età dello skipass (stagione 2026-27): sotto i 6 anni, gratis · 6-11 bambino · 12-17 junior · 18-64 adulto · 65 e oltre, senior (dai 75, gratis). Bambini, junior e senior devono portare un documento che attesti l'età.",
+ edades_info:"Età dello skipass (stagione 2026-27): sotto i 6 anni, gratis · 6-11 bambino · 12-17 junior · 18-64 adulto · 65 e oltre, senior (dai 75, gratis). Gli skipass gratuiti (sotto i 6 anni e dai 75) e quelli senior (65-74) non possiamo gestirli noi: si acquistano di persona in biglietteria, con un documento d'identità. Bambini e junior devono comunque portare un documento che attesti l'età.",
  persona:"Persona",p_nombre:"Nome",p_nac:"Data di nascita *",p_act:"Cosa farà?",p_nivel:"Livello",quitar:"Rimuovi",
  s_forfait:"Skipass",quiere_forfait:"Vi servono gli skipass?",estacion:"Dove volete sciare?",estacion_info:"Grandvalira è il comprensorio più grande di Andorra. Pal Arinsal e Ordino Arcalís sono più tranquille. Con skipass di più giorni di solito si può sciare anche nelle altre: te lo spieghiamo nel preventivo.",
  sector:"Settore preferito di Grandvalira",indiferente:"Indifferente",primer_dia:"Primo giorno di sci",dias:"Numero di giorni",consecutivos:"Giorni consecutivi?",tipo_forfait:"Tipo di skipass",
@@ -365,14 +360,14 @@ function persona(){nP++;const d=document.createElement("div");d.className="perso
 /* categoría orientativa del forfait según la edad el primer día de esquí */
 function cat(d){const v=d.querySelector('[name=p_nac]').value,c=d.querySelector(".cat");if(!v){c.textContent="";return}
   const ref=document.querySelector('[name=ff_primer]').value||ent||new Date().toISOString().slice(0,10),a=new Date(ref),b=new Date(v);let e=a.getFullYear()-b.getFullYear();if(a.getMonth()<b.getMonth()||(a.getMonth()===b.getMonth()&&a.getDate()<b.getDate()))e--;
-  c.textContent=isNaN(e)||e<0?"":e+" · "+(e<6?"baby":e<12?"6-11":e<18?"12-17":e<65?"18-64":"65+")}
+  c.textContent=isNaN(e)||e<0?"":e+" · "+(e<6?"baby":e<12?"6-11":e<18?"12-17":e<65?"18-64":"65+")+(e<6||e>=65?" · "+t("taquilla"):"")}
 function quienes(){const ps=[...document.querySelectorAll(".persona")];document.querySelectorAll("[data-quienes]").forEach(w=>{const n=w.dataset.quienes,sel=[...w.querySelectorAll("input:checked")].map(i=>i.value);w.innerHTML="";
   ps.forEach((d,k)=>{const nm=d.querySelector('[name=p_nombre]').value.trim()||t("persona")+" "+(k+1),l=document.createElement("label"),i=document.createElement("input"),s=document.createElement("span");i.type="checkbox";i.name=n;i.value=nm;i.checked=sel.includes(nm);s.textContent=nm;l.append(i,s);w.append(l)})})}
 function textos(){document.documentElement.lang=lg;document.querySelectorAll("[data-t]").forEach(e=>{e.textContent=t(e.dataset.t)});
   [...document.querySelectorAll(".persona")].forEach((d,k)=>{d.querySelector(".pt").textContent=t("persona")+" "+(k+1);d.querySelector(".qt").textContent=t("quitar");d.querySelector(".qt").hidden=k===0;
     d.querySelector(".l1").textContent=t("p_nombre");d.querySelector(".l2").textContent=t("p_nac");d.querySelector(".l3").textContent=t("p_act");d.querySelector(".l4").textContent=t("p_nivel");
     const sa=d.querySelector('[name=p_act]'),va=sa.value;sa.innerHTML="";["act_esqui","act_snow","act_no"].forEach(v=>{const op=document.createElement("option");op.value=v;op.textContent=o(v);sa.append(op)});if(va)sa.value=va;
-    const sn=d.querySelector('[name=p_nivel]'),vn=sn.value;sn.innerHTML="";["","n_nunca","n_deb","n_int","n_av","n_exp"].forEach(v=>{const op=document.createElement("option");op.value=v;op.textContent=v?o(v):"—";sn.append(op)});if(vn)sn.value=vn});
+    const sn=d.querySelector('[name=p_nivel]'),vn=sn.value;sn.innerHTML="";["","n_nunca","n_deb","n_int","n_av","n_exp"].forEach(v=>{const op=document.createElement("option");op.value=v;op.textContent=v?o(v):"—";sn.append(op)});if(vn)sn.value=vn;cat(d)});
   pintarOps();document.querySelectorAll("[data-abre]").forEach(abrir);quienes();
   $("langs").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lg===lg)));
   if(piso||ent){const r=$("reserva");r.hidden=false;r.textContent=t("reserva")+": "+[piso,ent?t("del")+" "+dm(ent):"",sal?t("al")+" "+dm(sal):""].filter(Boolean).join(" ")}}
