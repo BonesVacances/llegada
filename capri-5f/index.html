@@ -51,6 +51,9 @@ body {
   padding-block: 32px 48px;
 }
 .wrap { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+.picker { display: flex; justify-content: center; gap: 6px; margin-bottom: -8px; }
+.picker button { font: inherit; font-size: .78rem; font-weight: 500; letter-spacing: .12em; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.picker button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 header { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .logo { width: 76px; height: 76px; color: var(--fg); }
 .brand { font-family: var(--display); font-weight: 500; font-size: 1.35rem; letter-spacing: .18em; line-height: 1.1; }
@@ -62,12 +65,22 @@ h1 { font-family: var(--title); font-weight: 300; font-size: 2.1rem; line-height
 
 .langs { display: flex; flex-direction: column; gap: 10px; }
 .lang-main {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  background: var(--accent); color: var(--on-accent);
-  text-decoration: none; border-radius: 999px;
-  padding: 16px 22px; font-weight: 500; font-size: 1.05rem;
+  display: block; text-decoration: none; color: var(--on-accent);
+  background: var(--accent); border-radius: 22px; overflow: hidden;
+  box-shadow: 0 10px 28px -12px rgba(40,44,40,.55);
 }
-.lang-main svg { width: 22px; height: 22px; flex: none; }
+.thumb { position: relative; display: block; aspect-ratio: 3 / 2; background: #2b2f2c; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dur { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 5px; background: rgba(20,22,20,.72); color: #fff; font-size: .8rem; font-weight: 500; border-radius: 999px; padding: 4px 10px 4px 8px; font-variant-numeric: tabular-nums; }
+.dur svg { width: 12px; height: 12px; }
+.cta { display: flex; align-items: center; gap: 14px; padding: 16px 20px; font-weight: 500; font-size: 1.05rem; }
+.play { width: 44px; height: 44px; flex: none; border-radius: 50%; background: var(--on-accent); color: var(--accent); display: grid; place-items: center; position: relative; }
+.play svg { width: 22px; height: 22px; }
+@media (prefers-reduced-motion: no-preference) {
+  .play::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--on-accent); opacity: 0; animation: pulso 2.4s ease-out infinite; }
+  @keyframes pulso { 0% { transform: scale(.9); opacity: .7; } 70%,100% { transform: scale(1.35); opacity: 0; } }
+}
+.others-k { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); text-align: center; margin-top: 8px; }
 .lang-others { display: flex; gap: 8px; flex-wrap: wrap; }
 .lang-alt {
   flex: 1 1 0; min-width: 0; text-align: center; text-decoration: none;
@@ -110,6 +123,7 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
 <body>
 
 <div class="wrap">
+  <nav class="picker" id="picker" aria-label="Idioma / Language"></nav>
   <header>
     <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
       <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -127,9 +141,10 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
 
   <section class="langs" aria-label="Idioma del vídeo">
     <a class="lang-main" id="lang-main" href="https://youtube.com/shorts/plmp4un7D2k" target="_blank" rel="noopener">
-      <span id="lang-main-label">Ver el vídeo en español</span>
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+      <span class="thumb"><img src="videos/portada.jpg" alt="" width="880" height="587"><span class="dur"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>2:04</span></span>
+      <span class="cta"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.5v13l10.5-6.5z"/></svg></span><span id="lang-main-label">Ver el vídeo en español</span></span>
     </a>
+    <div class="others-k" data-t="others">¿Prefieres el vídeo en otro idioma?</div>
     <div class="lang-others" id="lang-others"></div>
   </section>
 
@@ -168,22 +183,22 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
 </div>
 
 <script>
-// Un enlace por idioma. Cuando estén los vídeos nuevos, solo se cambian estas tres líneas.
+// Vídeos actuales de Capri 5F (YouTube) y su descarga desde Drive. Sin vídeo en catalán: abre el de español.
 const VIDEOS = {
   es: "https://youtube.com/shorts/plmp4un7D2k",
   en: "https://youtube.com/shorts/xYuZlTiC3eA",
   fr: "https://youtube.com/shorts/TVHkAsgnIng"
 };
-// Descarga directa del vídeo (carpeta pública de Drive de Capri 5F), por idioma
 const DOWNLOADS = {
   es: "https://drive.usercontent.google.com/download?id=16mhygDot46gzwHQ-OUoTgRMuWDfkgpgF&export=download",
   en: "https://drive.usercontent.google.com/download?id=1pbl0wLk_mer0b_V5o99n-GOTeBiE6z01&export=download",
   fr: "https://drive.usercontent.google.com/download?id=19C7hMU35v6jXafNNu2Pyw-3gObEjGO0Y&export=download"
 };
 const T = {
-  es: { name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en dos minutos verás la entrada, el parking y cómo funciona la cerradura.", address: "Dirección", password: "Contraseña", maps: "Abrir en Google Maps", times: "Desde las 16:00 · Hasta las 11:00", offline: "Para verlo sin cobertura", download: "Descargar el vídeo (10 MB)", demo: "Ejemplo: de momento los tres idiomas abren el vídeo actual. Cuando estén grabados, cada botón abrirá su vídeo.", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva o tu nombre y sabremos al momento quién eres.", waLabel: "Número de reserva o nombre", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy huésped de Capri 5F. Reserva o nombre: {r}.", waMsgNo: "Hola, soy huésped de Capri 5F." },
-  en: { name: "English", watch: "Watch the video in English", eyebrow: "Your arrival", intro: "Watch the video before you arrive: in two minutes you'll see the entrance, the car park and how the lock works.", address: "Address", password: "Password", maps: "Open in Google Maps", times: "From 16:00 · Until 11:00", offline: "To watch it offline", download: "Download the video (10 MB)", demo: "Example: for now all three languages open the current video. Once recorded, each button will open its own video.", hours: "Times", cin: "Check-in: from 16:00", cout: "Check-out: by 11:00", waTitle: "Need help?", waText: "Message us on WhatsApp. Add your booking number or your name and we will know straight away who you are.", waLabel: "Booking number or name", waBtn: "Open WhatsApp", waMsg: "Hi, I am a guest at Capri 5F. Booking or name: {r}.", waMsgNo: "Hi, I am a guest at Capri 5F." },
-  fr: { name: "Français", watch: "Voir la vidéo en français", eyebrow: "Votre arrivée", intro: "Regardez la vidéo avant d'arriver : en deux minutes, vous verrez l'entrée, le parking et le fonctionnement de la serrure.", address: "Adresse", password: "Mot de passe", maps: "Ouvrir dans Google Maps", times: "À partir de 16h00 · Jusqu'à 11h00", offline: "Pour la voir sans réseau", download: "Télécharger la vidéo (10 Mo)", demo: "Exemple : pour l'instant, les trois langues ouvrent la vidéo actuelle. Une fois enregistrées, chaque bouton ouvrira sa vidéo.", hours: "Horaires", cin: "Check-in : à partir de 16h00", cout: "Check-out : jusqu'à 11h00", waTitle: "Besoin d'aide ?", waText: "Écrivez-nous sur WhatsApp. Indiquez votre numéro de réservation ou votre nom et nous saurons tout de suite qui vous êtes.", waLabel: "Numéro de réservation ou nom", waBtn: "Ouvrir WhatsApp", waMsg: "Bonjour, je suis client de Capri 5F. Réservation ou nom : {r}.", waMsgNo: "Bonjour, je suis client de Capri 5F." }
+  es: { others: "¿Prefieres el vídeo en otro idioma?", name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en dos minutos verás la entrada, el parking y cómo funciona la cerradura.", address: "Dirección", password: "Contraseña", maps: "Abrir en Google Maps", offline: "Para verlo sin cobertura", download: "Descargar el vídeo", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva o tu nombre y sabremos al momento quién eres.", waLabel: "Número de reserva o nombre", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy huésped de Capri 5F. Reserva o nombre: {r}.", waMsgNo: "Hola, soy huésped de Capri 5F." },
+  ca: { others: "Prefereixes el vídeo en un altre idioma?", name: "Català", watch: "Mira el vídeo en català", watchEs: "Mira el vídeo (en castellà)", eyebrow: "La teva arribada", intro: "Mira el vídeo abans d'arribar: en dos minuts veuràs l'entrada, el pàrquing i com funciona el pany.", address: "Adreça", password: "Contrasenya", maps: "Obrir a Google Maps", offline: "Per veure'l sense cobertura", download: "Descarrega el vídeo", hours: "Horari", cin: "Check-in: a partir de les 16:00", cout: "Check-out: fins a les 11:00", waTitle: "Necessites ajuda?", waText: "Escriu-nos per WhatsApp. Posa el teu número de reserva o el teu nom i sabrem de seguida qui ets.", waLabel: "Número de reserva o nom", waBtn: "Obrir WhatsApp", waMsg: "Hola, soc hoste de Capri 5F. Reserva o nom: {r}.", waMsgNo: "Hola, soc hoste de Capri 5F." },
+  en: { others: "Prefer the video in another language?", name: "English", watch: "Watch the video in English", eyebrow: "Your arrival", intro: "Watch the video before you arrive: in two minutes you'll see the entrance, the car park and how the lock works.", address: "Address", password: "Password", maps: "Open in Google Maps", offline: "To watch it offline", download: "Download the video", hours: "Times", cin: "Check-in: from 16:00", cout: "Check-out: by 11:00", waTitle: "Need help?", waText: "Message us on WhatsApp. Add your booking number or your name and we will know straight away who you are.", waLabel: "Booking number or name", waBtn: "Open WhatsApp", waMsg: "Hi, I am a guest at Capri 5F. Booking or name: {r}.", waMsgNo: "Hi, I am a guest at Capri 5F." },
+  fr: { others: "Vous préférez la vidéo dans une autre langue ?", name: "Français", watch: "Voir la vidéo en français", eyebrow: "Votre arrivée", intro: "Regardez la vidéo avant d'arriver : en deux minutes, vous verrez l'entrée, le parking et le fonctionnement de la serrure.", address: "Adresse", password: "Mot de passe", maps: "Ouvrir dans Google Maps", offline: "Pour la voir sans réseau", download: "Télécharger la vidéo", hours: "Horaires", cin: "Check-in : à partir de 16h00", cout: "Check-out : jusqu'à 11h00", waTitle: "Besoin d'aide ?", waText: "Écrivez-nous sur WhatsApp. Indiquez votre numéro de réservation ou votre nom et nous saurons tout de suite qui vous êtes.", waLabel: "Numéro de réservation ou nom", waBtn: "Ouvrir WhatsApp", waMsg: "Bonjour, je suis client de Capri 5F. Réservation ou nom : {r}.", waMsgNo: "Bonjour, je suis client de Capri 5F." }
 };
 function detect() {
   const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "es"];
@@ -196,17 +211,26 @@ function render(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-t]").forEach(el => { const k = el.dataset.t; if (t[k]) el.textContent = t[k]; });
   const main = document.getElementById("lang-main");
-  main.href = VIDEOS[lang];
-  document.getElementById("dl-link").href = DOWNLOADS[lang];
-  document.getElementById("lang-main-label").textContent = t.watch;
+  main.href = VIDEOS[lang] || VIDEOS.es;
+  document.getElementById("dl-link").href = DOWNLOADS[lang] || DOWNLOADS.es;
+  document.getElementById("lang-main-label").textContent = VIDEOS[lang] ? t.watch : (t.watchEs || t.watch);
   const others = document.getElementById("lang-others");
   others.textContent = "";
-  Object.keys(T).filter(c => c !== lang).forEach(c => {
+  Object.keys(T).filter(c => c !== lang && VIDEOS[c]).forEach(c => {
     const a = document.createElement("a");
     a.className = "lang-alt"; a.href = VIDEOS[c]; a.target = "_blank"; a.rel = "noopener";
     a.textContent = T[c].name;
     a.addEventListener("click", () => render(c));
     others.appendChild(a);
+  });
+  const picker = document.getElementById("picker");
+  picker.textContent = "";
+  Object.keys(T).forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = c.toUpperCase(); b.title = T[c].name; b.lang = c;
+    b.setAttribute("aria-pressed", c === lang ? "true" : "false");
+    b.addEventListener("click", () => render(c));
+    picker.appendChild(b);
   });
   updateWa();
 }
