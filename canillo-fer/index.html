@@ -126,7 +126,7 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
   </section>
 
   <section class="langs" aria-label="Idioma del vídeo">
-    <a class="lang-main" id="lang-main" href="https://drive.google.com/file/d/1hne5YFtjWFQMMqGpfCQ317LxTEp5OrXz/view" target="_blank" rel="noopener">
+    <a class="lang-main" id="lang-main" href="videos/canillo-es.mp4" target="_blank" rel="noopener">
       <span id="lang-main-label">Ver el vídeo en español</span>
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
     </a>
@@ -156,7 +156,7 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
     </div>
     <div class="row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
-      <div><div class="k" data-t="offline">Para verlo sin cobertura</div><a id="dl-link" href="https://drive.usercontent.google.com/download?id=1hne5YFtjWFQMMqGpfCQ317LxTEp5OrXz&export=download" target="_blank" rel="noopener" data-t="download">Descarga el vídeo antes de salir</a></div>
+      <div><div class="k" data-t="offline">Para verlo sin cobertura</div><a id="dl-link" href="videos/canillo-es.mp4" download="Canillo-llegada.mp4" data-t="download">Descarga el vídeo antes de salir</a></div>
     </div>
   </section>
 
@@ -177,20 +177,10 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
 </div>
 
 <script>
-// Un enlace por idioma: vídeo nuevo de Canillo (24 nov 2026). De momento se ve en Drive; cuando esté en YouTube, se cambian estas líneas.
-const VIDEOS = {
-  es: "https://drive.google.com/file/d/1hne5YFtjWFQMMqGpfCQ317LxTEp5OrXz/view",
-  ca: "https://drive.google.com/file/d/17EpGLDzrk5a0-XfV4XVbL4BYAKlmxRr-/view",
-  en: "https://drive.google.com/file/d/10Httn4NMdlNE2ZUdDHo9__YTqwStrTvu/view",
-  fr: "https://drive.google.com/file/d/1ky38PRQM32kIxNYL6WeCqUXLt2SKJHjm/view"
-};
-// Descarga directa del vídeo de cada idioma (carpeta pública «Vídeos check-in/Canillo» de Drive)
-const DOWNLOADS = {
-  es: "https://drive.usercontent.google.com/download?id=1hne5YFtjWFQMMqGpfCQ317LxTEp5OrXz&export=download",
-  ca: "https://drive.usercontent.google.com/download?id=17EpGLDzrk5a0-XfV4XVbL4BYAKlmxRr-&export=download",
-  en: "https://drive.usercontent.google.com/download?id=10Httn4NMdlNE2ZUdDHo9__YTqwStrTvu&export=download",
-  fr: "https://drive.usercontent.google.com/download?id=1ky38PRQM32kIxNYL6WeCqUXLt2SKJHjm&export=download"
-};
+// Un vídeo por idioma, guardado en esta misma web (videos/): se abre al tocar el enlace, sin cuenta de Google ni app (24 nov 2026).
+const VIDEOS = { es: "videos/canillo-es.mp4", ca: "videos/canillo-ca.mp4", en: "videos/canillo-en.mp4", fr: "videos/canillo-fr.mp4" };
+// La descarga es el mismo archivo
+const DOWNLOADS = VIDEOS;
 const T = {
   es: { name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en dos minutos y medio verás cómo llegar, el portal, la cerradura, el parking y qué hacer antes de irte.", parking: "Parking", space: "Plaza n.º 18", address: "Dirección", portal: "Código del portal", password: "Contraseña", maps: "Abrir en Google Maps", times: "Desde las 16:00 · Hasta las 11:00", offline: "Para verlo sin cobertura", download: "Descargar el vídeo", demo: "Ejemplo: de momento los tres idiomas abren el vídeo actual. Cuando estén grabados, cada botón abrirá su vídeo.", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva o tu nombre y sabremos al momento quién eres.", waLabel: "Número de reserva o nombre", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy huésped de Canillo Fer. Reserva o nombre: {r}.", waMsgNo: "Hola, soy huésped de Canillo Fer." },
   ca: { name: "Català", watch: "Mira el vídeo en català", eyebrow: "La teva arribada", intro: "Mira el vídeo abans d'arribar: en dos minuts i mig veuràs com arribar-hi, el portal, el pany, el pàrquing i què has de fer abans de marxar.", parking: "Pàrquing", space: "Plaça núm. 18", address: "Adreça", portal: "Codi del portal", password: "Contrasenya", maps: "Obrir a Google Maps", offline: "Per veure'l sense cobertura", download: "Descarrega el vídeo", hours: "Horari", cin: "Check-in: a partir de les 16:00", cout: "Check-out: fins a les 11:00", waTitle: "Necessites ajuda?", waText: "Escriu-nos per WhatsApp. Posa el teu número de reserva o el teu nom i sabrem de seguida qui ets.", waLabel: "Número de reserva o nom", waBtn: "Obrir WhatsApp", waMsg: "Hola, soc hoste de Canillo Fer. Reserva o nom: {r}.", waMsgNo: "Hola, soc hoste de Canillo Fer." },
