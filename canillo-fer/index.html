@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Canillo Fer · Llegada</title>
+<title>Els Prats de Canillo · Llegada</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Allura&family=Outfit:wght@300;400;500;600&display=swap">
@@ -57,17 +57,27 @@ header { display: flex; flex-direction: column; align-items: center; gap: 14px; 
 .brand small { display: block; font-family: var(--body); font-weight: 400; font-size: .62rem; letter-spacing: .5em; margin-top: 6px; color: var(--muted); }
 .place { border-top: 1px solid var(--line); padding-top: 22px; display: flex; flex-direction: column; gap: 4px; }
 .eyebrow { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
-h1 { font-family: var(--title); font-weight: 300; font-size: 2.1rem; line-height: 1.1; text-transform: uppercase; letter-spacing: .14em; margin: 0; text-wrap: balance; }
+h1 .sub { display: block; font-size: .5em; letter-spacing: .3em; margin-top: 8px; color: var(--muted); }
+h1 { font-family: var(--title); font-weight: 300; font-size: 2.3rem; line-height: 1.1; text-transform: uppercase; letter-spacing: .14em; margin: 0; text-wrap: balance; }
 .intro { margin: 0; color: var(--muted); }
 
 .langs { display: flex; flex-direction: column; gap: 10px; }
 .lang-main {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  background: var(--accent); color: var(--on-accent);
-  text-decoration: none; border-radius: 999px;
-  padding: 16px 22px; font-weight: 500; font-size: 1.05rem;
+  display: block; text-decoration: none; color: var(--on-accent);
+  background: var(--accent); border-radius: 22px; overflow: hidden;
+  box-shadow: 0 10px 28px -12px rgba(40,44,40,.55);
 }
-.lang-main svg { width: 22px; height: 22px; flex: none; }
+.thumb { position: relative; display: block; aspect-ratio: 3 / 2; background: #2b2f2c; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dur { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 5px; background: rgba(20,22,20,.72); color: #fff; font-size: .8rem; font-weight: 500; border-radius: 999px; padding: 4px 10px 4px 8px; font-variant-numeric: tabular-nums; }
+.dur svg { width: 12px; height: 12px; }
+.cta { display: flex; align-items: center; gap: 14px; padding: 16px 20px; font-weight: 600; font-size: 1.12rem; }
+.play { width: 44px; height: 44px; flex: none; border-radius: 50%; background: var(--on-accent); color: var(--accent); display: grid; place-items: center; position: relative; }
+.play svg { width: 22px; height: 22px; }
+@media (prefers-reduced-motion: no-preference) {
+  .play::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--on-accent); opacity: 0; animation: pulso 2.4s ease-out infinite; }
+  @keyframes pulso { 0% { transform: scale(.9); opacity: .7; } 70%,100% { transform: scale(1.35); opacity: 0; } }
+}
 .lang-others { display: flex; gap: 8px; flex-wrap: wrap; }
 .lang-alt {
   flex: 1 1 0; min-width: 0; text-align: center; text-decoration: none;
@@ -121,14 +131,14 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
 
   <section class="place">
     <span class="eyebrow" data-t="eyebrow">Tu llegada</span>
-    <h1>Canillo Fer</h1>
+    <h1>Els Prats<span class="sub">de Canillo</span></h1>
     <p class="intro" data-t="intro">Mira el vídeo antes de llegar: en dos minutos y medio verás cómo llegar, el portal, la cerradura, el parking y qué hacer antes de irte.</p>
   </section>
 
   <section class="langs" aria-label="Idioma del vídeo">
     <a class="lang-main" id="lang-main" href="videos/canillo-es.mp4" target="_blank" rel="noopener">
-      <span id="lang-main-label">Ver el vídeo en español</span>
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+      <span class="thumb"><img src="videos/portada.jpg" alt="" width="880" height="587"><span class="dur"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>2:37</span></span>
+      <span class="cta"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.5v13l10.5-6.5z"/></svg></span><span id="lang-main-label">Ver el vídeo en español</span></span>
     </a>
     <div class="lang-others" id="lang-others"></div>
   </section>
@@ -182,10 +192,10 @@ const VIDEOS = { es: "videos/canillo-es.mp4", ca: "videos/canillo-ca.mp4", en: "
 // La descarga es el mismo archivo
 const DOWNLOADS = VIDEOS;
 const T = {
-  es: { name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en dos minutos y medio verás cómo llegar, el portal, la cerradura, el parking y qué hacer antes de irte.", parking: "Parking", space: "Plaza n.º 18", address: "Dirección", portal: "Código del portal", password: "Contraseña", maps: "Abrir en Google Maps", times: "Desde las 16:00 · Hasta las 11:00", offline: "Para verlo sin cobertura", download: "Descargar el vídeo", demo: "Ejemplo: de momento los tres idiomas abren el vídeo actual. Cuando estén grabados, cada botón abrirá su vídeo.", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva o tu nombre y sabremos al momento quién eres.", waLabel: "Número de reserva o nombre", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy huésped de Canillo Fer. Reserva o nombre: {r}.", waMsgNo: "Hola, soy huésped de Canillo Fer." },
-  ca: { name: "Català", watch: "Mira el vídeo en català", eyebrow: "La teva arribada", intro: "Mira el vídeo abans d'arribar: en dos minuts i mig veuràs com arribar-hi, el portal, el pany, el pàrquing i què has de fer abans de marxar.", parking: "Pàrquing", space: "Plaça núm. 18", address: "Adreça", portal: "Codi del portal", password: "Contrasenya", maps: "Obrir a Google Maps", offline: "Per veure'l sense cobertura", download: "Descarrega el vídeo", hours: "Horari", cin: "Check-in: a partir de les 16:00", cout: "Check-out: fins a les 11:00", waTitle: "Necessites ajuda?", waText: "Escriu-nos per WhatsApp. Posa el teu número de reserva o el teu nom i sabrem de seguida qui ets.", waLabel: "Número de reserva o nom", waBtn: "Obrir WhatsApp", waMsg: "Hola, soc hoste de Canillo Fer. Reserva o nom: {r}.", waMsgNo: "Hola, soc hoste de Canillo Fer." },
-  en: { name: "English", watch: "Watch the video in English", watchEs: "Watch the video (in Spanish)", eyebrow: "Your arrival", intro: "Watch the video before you arrive: in two and a half minutes you'll see how to get there, the entrance, the lock, the car park and what to do before you leave.", parking: "Parking", space: "Space no. 18", address: "Address", portal: "Building door code", password: "Password", maps: "Open in Google Maps", times: "From 16:00 · Until 11:00", offline: "To watch it offline", download: "Download the video", demo: "Example: for now all three languages open the current video. Once recorded, each button will open its own video.", hours: "Times", cin: "Check-in: from 16:00", cout: "Check-out: by 11:00", waTitle: "Need help?", waText: "Message us on WhatsApp. Add your booking number or your name and we will know straight away who you are.", waLabel: "Booking number or name", waBtn: "Open WhatsApp", waMsg: "Hi, I am a guest at Canillo Fer. Booking or name: {r}.", waMsgNo: "Hi, I am a guest at Canillo Fer." },
-  fr: { name: "Français", watch: "Voir la vidéo en français", watchEs: "Voir la vidéo (en espagnol)", eyebrow: "Votre arrivée", intro: "Regardez la vidéo avant d'arriver : en deux minutes et demie, vous verrez comment arriver, l'entrée, la serrure, le parking et quoi faire avant de partir.", parking: "Parking", space: "Place n° 18", address: "Adresse", portal: "Code de la porte d'entrée", password: "Mot de passe", maps: "Ouvrir dans Google Maps", times: "À partir de 16h00 · Jusqu'à 11h00", offline: "Pour la voir sans réseau", download: "Télécharger la vidéo", demo: "Exemple : pour l'instant, les trois langues ouvrent la vidéo actuelle. Une fois enregistrées, chaque bouton ouvrira sa vidéo.", hours: "Horaires", cin: "Check-in : à partir de 16h00", cout: "Check-out : jusqu'à 11h00", waTitle: "Besoin d'aide ?", waText: "Écrivez-nous sur WhatsApp. Indiquez votre numéro de réservation ou votre nom et nous saurons tout de suite qui vous êtes.", waLabel: "Numéro de réservation ou nom", waBtn: "Ouvrir WhatsApp", waMsg: "Bonjour, je suis client de Canillo Fer. Réservation ou nom : {r}.", waMsgNo: "Bonjour, je suis client de Canillo Fer." }
+  es: { name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en dos minutos y medio verás cómo llegar, el portal, la cerradura, el parking y qué hacer antes de irte.", parking: "Parking", space: "Plaza n.º 18", address: "Dirección", portal: "Código del portal", password: "Contraseña", maps: "Abrir en Google Maps", times: "Desde las 16:00 · Hasta las 11:00", offline: "Para verlo sin cobertura", download: "Descargar el vídeo", demo: "Ejemplo: de momento los tres idiomas abren el vídeo actual. Cuando estén grabados, cada botón abrirá su vídeo.", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva o tu nombre y sabremos al momento quién eres.", waLabel: "Número de reserva o nombre", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy huésped de Els Prats (Canillo). Reserva o nombre: {r}.", waMsgNo: "Hola, soy huésped de Els Prats (Canillo)." },
+  ca: { name: "Català", watch: "Mira el vídeo en català", eyebrow: "La teva arribada", intro: "Mira el vídeo abans d'arribar: en dos minuts i mig veuràs com arribar-hi, el portal, el pany, el pàrquing i què has de fer abans de marxar.", parking: "Pàrquing", space: "Plaça núm. 18", address: "Adreça", portal: "Codi del portal", password: "Contrasenya", maps: "Obrir a Google Maps", offline: "Per veure'l sense cobertura", download: "Descarrega el vídeo", hours: "Horari", cin: "Check-in: a partir de les 16:00", cout: "Check-out: fins a les 11:00", waTitle: "Necessites ajuda?", waText: "Escriu-nos per WhatsApp. Posa el teu número de reserva o el teu nom i sabrem de seguida qui ets.", waLabel: "Número de reserva o nom", waBtn: "Obrir WhatsApp", waMsg: "Hola, soc hoste de Els Prats (Canillo). Reserva o nom: {r}.", waMsgNo: "Hola, soc hoste de Els Prats (Canillo)." },
+  en: { name: "English", watch: "Watch the video in English", watchEs: "Watch the video (in Spanish)", eyebrow: "Your arrival", intro: "Watch the video before you arrive: in two and a half minutes you'll see how to get there, the entrance, the lock, the car park and what to do before you leave.", parking: "Parking", space: "Space no. 18", address: "Address", portal: "Building door code", password: "Password", maps: "Open in Google Maps", times: "From 16:00 · Until 11:00", offline: "To watch it offline", download: "Download the video", demo: "Example: for now all three languages open the current video. Once recorded, each button will open its own video.", hours: "Times", cin: "Check-in: from 16:00", cout: "Check-out: by 11:00", waTitle: "Need help?", waText: "Message us on WhatsApp. Add your booking number or your name and we will know straight away who you are.", waLabel: "Booking number or name", waBtn: "Open WhatsApp", waMsg: "Hi, I am a guest at Els Prats (Canillo). Booking or name: {r}.", waMsgNo: "Hi, I am a guest at Els Prats (Canillo)." },
+  fr: { name: "Français", watch: "Voir la vidéo en français", watchEs: "Voir la vidéo (en espagnol)", eyebrow: "Votre arrivée", intro: "Regardez la vidéo avant d'arriver : en deux minutes et demie, vous verrez comment arriver, l'entrée, la serrure, le parking et quoi faire avant de partir.", parking: "Parking", space: "Place n° 18", address: "Adresse", portal: "Code de la porte d'entrée", password: "Mot de passe", maps: "Ouvrir dans Google Maps", times: "À partir de 16h00 · Jusqu'à 11h00", offline: "Pour la voir sans réseau", download: "Télécharger la vidéo", demo: "Exemple : pour l'instant, les trois langues ouvrent la vidéo actuelle. Une fois enregistrées, chaque bouton ouvrira sa vidéo.", hours: "Horaires", cin: "Check-in : à partir de 16h00", cout: "Check-out : jusqu'à 11h00", waTitle: "Besoin d'aide ?", waText: "Écrivez-nous sur WhatsApp. Indiquez votre numéro de réservation ou votre nom et nous saurons tout de suite qui vous êtes.", waLabel: "Numéro de réservation ou nom", waBtn: "Ouvrir WhatsApp", waMsg: "Bonjour, je suis client de Els Prats (Canillo). Réservation ou nom : {r}.", waMsgNo: "Bonjour, je suis client de Els Prats (Canillo)." }
 };
 function detect() {
   const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "es"];
