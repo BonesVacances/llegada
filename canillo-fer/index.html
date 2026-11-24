@@ -51,6 +51,9 @@ body {
   padding-block: 32px 48px;
 }
 .wrap { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+.picker { display: flex; justify-content: center; gap: 6px; margin-bottom: -8px; }
+.picker button { font: inherit; font-size: .78rem; font-weight: 500; letter-spacing: .12em; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.picker button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 header { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .logo { width: 76px; height: 76px; color: var(--fg); }
 .brand { font-family: var(--display); font-weight: 500; font-size: 1.35rem; letter-spacing: .18em; line-height: 1.1; }
@@ -120,6 +123,7 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
 <body>
 
 <div class="wrap">
+  <nav class="picker" id="picker" aria-label="Idioma / Language"></nav>
   <header>
     <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
       <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -220,6 +224,15 @@ function render(lang) {
     a.textContent = T[c].name;
     a.addEventListener("click", () => render(c));
     others.appendChild(a);
+  });
+  const picker = document.getElementById("picker");
+  picker.textContent = "";
+  Object.keys(T).forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = c.toUpperCase(); b.title = T[c].name; b.lang = c;
+    b.setAttribute("aria-pressed", c === lang ? "true" : "false");
+    b.addEventListener("click", () => render(c));
+    picker.appendChild(b);
   });
   updateWa();
 }
