@@ -7,7 +7,7 @@
 <title>Chalet Encamp · Llegada</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Allura&family=Outfit:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Outfit:wght@300;400;500;600&display=swap">
 <style>
 /* Layout: una sola columna estrecha, pensada para el móvil del huésped que llega en coche. Logo arriba, idioma, vídeo y datos de llegada. */
 /* Colores y tipografías del brandbook de Bones Vacances (provisional, a la espera de la versión definitiva de la agencia). */
@@ -51,6 +51,9 @@ body {
   padding-block: 32px 48px;
 }
 .wrap { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+.picker { display: flex; justify-content: center; gap: 6px; margin-bottom: -8px; }
+.picker button { font: inherit; font-size: .78rem; font-weight: 500; letter-spacing: .12em; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.picker button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 header { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .logo { width: 76px; height: 76px; color: var(--fg); }
 .brand { font-family: var(--display); font-weight: 500; font-size: 1.35rem; letter-spacing: .18em; line-height: 1.1; }
@@ -62,12 +65,22 @@ h1 { font-family: var(--title); font-weight: 300; font-size: 2.1rem; line-height
 
 .langs { display: flex; flex-direction: column; gap: 10px; }
 .lang-main {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  background: var(--accent); color: var(--on-accent);
-  text-decoration: none; border-radius: 999px;
-  padding: 16px 22px; font-weight: 500; font-size: 1.05rem;
+  display: block; text-decoration: none; color: var(--on-accent);
+  background: var(--accent); border-radius: 22px; overflow: hidden;
+  box-shadow: 0 10px 28px -12px rgba(40,44,40,.55);
 }
-.lang-main svg { width: 22px; height: 22px; flex: none; }
+.thumb { position: relative; display: block; aspect-ratio: 3 / 2; background: #2b2f2c; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dur { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 5px; background: rgba(20,22,20,.72); color: #fff; font-size: .8rem; font-weight: 500; border-radius: 999px; padding: 4px 10px 4px 8px; font-variant-numeric: tabular-nums; }
+.dur svg { width: 12px; height: 12px; }
+.cta { display: flex; align-items: center; gap: 14px; padding: 16px 20px; font-weight: 500; font-size: 1.05rem; }
+.play { width: 44px; height: 44px; flex: none; border-radius: 50%; background: var(--on-accent); color: var(--accent); display: grid; place-items: center; position: relative; }
+.play svg { width: 22px; height: 22px; }
+@media (prefers-reduced-motion: no-preference) {
+  .play::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--on-accent); opacity: 0; animation: pulso 2.4s ease-out infinite; }
+  @keyframes pulso { 0% { transform: scale(.9); opacity: .7; } 70%,100% { transform: scale(1.35); opacity: 0; } }
+}
+.others-k { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); text-align: center; margin-top: 8px; }
 .lang-others { display: flex; gap: 8px; flex-wrap: wrap; }
 .lang-alt {
   flex: 1 1 0; min-width: 0; text-align: center; text-decoration: none;
@@ -110,6 +123,7 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
 <body>
 
 <div class="wrap">
+  <nav class="picker" id="picker" aria-label="Idioma / Language"></nav>
   <header>
     <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
       <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1.2"/>
@@ -122,14 +136,15 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
   <section class="place">
     <span class="eyebrow" data-t="eyebrow">Tu llegada</span>
     <h1>Chalet Encamp</h1>
-    <p class="intro" data-t="intro">Mira el vídeo antes de llegar: en un minuto verás el camino, la entrada y cómo funciona la cerradura.</p>
+    <p class="intro" data-t="intro">Mira el vídeo antes de llegar: en dos minutos verás cómo llegar, la cerradura, el parking, la casa y qué hacer antes de irte.</p>
   </section>
 
   <section class="langs" aria-label="Idioma del vídeo">
-    <a class="lang-main" id="lang-main" href="https://youtube.com/shorts/LNqHe5LC76I" target="_blank" rel="noopener">
-      <span id="lang-main-label">Ver el vídeo en español</span>
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+    <a class="lang-main" id="lang-main" href="videos/chalet-es.mp4" target="_blank" rel="noopener">
+      <span class="thumb"><img src="videos/portada.jpg" alt="" width="880" height="587"><span class="dur"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>2:13</span></span>
+      <span class="cta"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.5v13l10.5-6.5z"/></svg></span><span id="lang-main-label">Ver el vídeo en español</span></span>
     </a>
+    <div class="others-k" data-t="others">¿Prefieres el vídeo en otro idioma?</div>
     <div class="lang-others" id="lang-others"></div>
   </section>
 
@@ -137,6 +152,10 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
     <div class="row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
       <div><div class="k" data-t="address">Dirección</div><div class="v">Carrer Ciutat Pubilla de la Sardana, 31<br>AD200 Encamp, Andorra</div><a href="https://goo.gl/maps/qT8tafBSZWnztFVm8" target="_blank" rel="noopener" data-t="maps">Abrir en Google Maps</a></div>
+    </div>
+    <div class="row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M10 16.5v-9h3a2.6 2.6 0 0 1 0 5.2h-3"/></svg>
+      <div><div class="k" data-t="parking">Parking</div><div class="v" data-t="space">Dos plazas: la exterior y la del garaje</div></div>
     </div>
     <div class="row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
@@ -148,7 +167,7 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
     </div>
     <div class="row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
-      <div><div class="k" data-t="offline">Para verlo sin cobertura</div><a id="dl-link" href="https://drive.usercontent.google.com/download?id=1NVj3Sz6qC9Xi3uiWPZEcgwaoTqClstEM&export=download" target="_blank" rel="noopener" data-t="download">Descarga el vídeo antes de salir</a></div>
+      <div><div class="k" data-t="offline">Para verlo sin cobertura</div><a id="dl-link" href="videos/chalet-es.mp4" download="Encamp-llegada.mp4" data-t="download">Descarga el vídeo antes de salir</a></div>
     </div>
   </section>
 
@@ -163,28 +182,18 @@ footer { text-align: center; display: flex; flex-direction: column; gap: 6px; }
     </a>
   </section>
 
-  <footer>
-    <span class="tagline">More than a stay, a place to belong</span>
-  </footer>
 </div>
 
 <script>
-// Un enlace por idioma. Cuando estén los vídeos nuevos, solo se cambian estas tres líneas.
-const VIDEOS = {
-  es: "https://youtube.com/shorts/LNqHe5LC76I",
-  en: "https://youtube.com/shorts/KrZFKBZvO9I",
-  fr: "https://youtube.com/shorts/9svnEkWmwbk"
-};
-// Descarga directa del vídeo (carpeta pública de Drive del Chalet), por idioma
-const DOWNLOADS = {
-  es: "https://drive.usercontent.google.com/download?id=1NVj3Sz6qC9Xi3uiWPZEcgwaoTqClstEM&export=download",
-  en: "https://drive.usercontent.google.com/download?id=1T5SWKC8aHVB9YPy5Nm1kYfIWQ_4xpdmv&export=download",
-  fr: "https://drive.usercontent.google.com/download?id=1mNwJaeks5E8HaI9LmD6yPBNm_XJy2P91&export=download"
-};
+// Un vídeo por idioma, guardado en esta misma web (videos/): se abre al tocar el enlace, sin cuenta de Google ni app (24 nov 2026).
+const VIDEOS = { es: "videos/chalet-es.mp4", en: "videos/chalet-en.mp4", fr: "videos/chalet-fr.mp4" };
+// La descarga es el mismo archivo
+const DOWNLOADS = VIDEOS;
 const T = {
-  es: { name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en un minuto verás el camino, la entrada y cómo funciona la cerradura.", address: "Dirección", password: "Contraseña", maps: "Abrir en Google Maps", times: "Desde las 16:00 · Hasta las 11:00", offline: "Para verlo sin cobertura", download: "Descargar el vídeo (9,7 MB)", demo: "Ejemplo: de momento los tres idiomas abren el vídeo actual. Cuando estén grabados, cada botón abrirá su vídeo.", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva o tu nombre y sabremos al momento quién eres.", waLabel: "Número de reserva o nombre", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy huésped del Chalet Encamp. Reserva o nombre: {r}.", waMsgNo: "Hola, soy huésped del Chalet Encamp." },
-  en: { name: "English", watch: "Watch the video in English", eyebrow: "Your arrival", intro: "Watch the video before you arrive: in one minute you'll see the way in, the entrance and how the lock works.", address: "Address", password: "Password", maps: "Open in Google Maps", times: "From 16:00 · Until 11:00", offline: "To watch it offline", download: "Download the video (9.7 MB)", demo: "Example: for now all three languages open the current video. Once recorded, each button will open its own video.", hours: "Times", cin: "Check-in: from 16:00", cout: "Check-out: by 11:00", waTitle: "Need help?", waText: "Message us on WhatsApp. Add your booking number or your name and we will know straight away who you are.", waLabel: "Booking number or name", waBtn: "Open WhatsApp", waMsg: "Hi, I am a guest at Chalet Encamp. Booking or name: {r}.", waMsgNo: "Hi, I am a guest at Chalet Encamp." },
-  fr: { name: "Français", watch: "Voir la vidéo en français", eyebrow: "Votre arrivée", intro: "Regardez la vidéo avant d'arriver : en une minute, vous verrez le chemin, l'entrée et le fonctionnement de la serrure.", address: "Adresse", password: "Mot de passe", maps: "Ouvrir dans Google Maps", times: "À partir de 16h00 · Jusqu'à 11h00", offline: "Pour la voir sans réseau", download: "Télécharger la vidéo (9,7 Mo)", demo: "Exemple : pour l'instant, les trois langues ouvrent la vidéo actuelle. Une fois enregistrées, chaque bouton ouvrira sa vidéo.", hours: "Horaires", cin: "Check-in : à partir de 16h00", cout: "Check-out : jusqu'à 11h00", waTitle: "Besoin d'aide ?", waText: "Écrivez-nous sur WhatsApp. Indiquez votre numéro de réservation ou votre nom et nous saurons tout de suite qui vous êtes.", waLabel: "Numéro de réservation ou nom", waBtn: "Ouvrir WhatsApp", waMsg: "Bonjour, je suis client du Chalet Encamp. Réservation ou nom : {r}.", waMsgNo: "Bonjour, je suis client du Chalet Encamp." }
+  es: { others: "¿Prefieres el vídeo en otro idioma?", name: "Español", watch: "Ver el vídeo en español", eyebrow: "Tu llegada", intro: "Mira el vídeo antes de llegar: en dos minutos verás cómo llegar, la cerradura, el parking, la casa y qué hacer antes de irte.", parking: "Parking", space: "Dos plazas: la exterior y la del garaje", address: "Dirección", portal: "Código del portal", password: "Contraseña", maps: "Abrir en Google Maps", times: "Desde las 16:00 · Hasta las 11:00", offline: "Para verlo sin cobertura", download: "Descargar el vídeo", demo: "Ejemplo: de momento los tres idiomas abren el vídeo actual. Cuando estén grabados, cada botón abrirá su vídeo.", hours: "Horario", cin: "Check-in: desde las 16:00", cout: "Check-out: hasta las 11:00", waTitle: "¿Necesitas ayuda?", waText: "Escríbenos por WhatsApp. Pon tu número de reserva o tu nombre y sabremos al momento quién eres.", waLabel: "Número de reserva o nombre", waBtn: "Abrir WhatsApp", waMsg: "Hola, soy huésped del Chalet Encamp. Reserva o nombre: {r}.", waMsgNo: "Hola, soy huésped del Chalet Encamp." },
+  ca: { others: "Prefereixes el vídeo en un altre idioma?", name: "Català", watch: "Mira el vídeo en català", watchEs: "Mira el vídeo (en castellà)", eyebrow: "La teva arribada", intro: "Mira el vídeo abans d'arribar: en dos minuts veuràs com arribar-hi, el pany, el pàrquing, la casa i què has de fer abans de marxar.", parking: "Pàrquing", space: "Dues places: l'exterior i la del garatge", address: "Adreça", portal: "Codi del portal", password: "Contrasenya", maps: "Obrir a Google Maps", offline: "Per veure'l sense cobertura", download: "Descarrega el vídeo", hours: "Horari", cin: "Check-in: a partir de les 16:00", cout: "Check-out: fins a les 11:00", waTitle: "Necessites ajuda?", waText: "Escriu-nos per WhatsApp. Posa el teu número de reserva o el teu nom i sabrem de seguida qui ets.", waLabel: "Número de reserva o nom", waBtn: "Obrir WhatsApp", waMsg: "Hola, soc hoste del Chalet Encamp. Reserva o nom: {r}.", waMsgNo: "Hola, soc hoste del Chalet Encamp." },
+  en: { others: "Prefer the video in another language?", name: "English", watch: "Watch the video in English", watchEs: "Watch the video (in Spanish)", eyebrow: "Your arrival", intro: "Watch the video before you arrive: in two minutes you'll see how to get there, the lock, the parking, the house and what to do before you leave.", parking: "Parking", space: "Two spaces: the outdoor one and the garage", address: "Address", portal: "Building door code", password: "Password", maps: "Open in Google Maps", times: "From 16:00 · Until 11:00", offline: "To watch it offline", download: "Download the video", demo: "Example: for now all three languages open the current video. Once recorded, each button will open its own video.", hours: "Times", cin: "Check-in: from 16:00", cout: "Check-out: by 11:00", waTitle: "Need help?", waText: "Message us on WhatsApp. Add your booking number or your name and we will know straight away who you are.", waLabel: "Booking number or name", waBtn: "Open WhatsApp", waMsg: "Hi, I am a guest at Chalet Encamp. Booking or name: {r}.", waMsgNo: "Hi, I am a guest at Chalet Encamp." },
+  fr: { others: "Vous préférez la vidéo dans une autre langue ?", name: "Français", watch: "Voir la vidéo en français", watchEs: "Voir la vidéo (en espagnol)", eyebrow: "Votre arrivée", intro: "Regardez la vidéo avant d'arriver : en deux minutes, vous verrez comment arriver, la serrure, le parking, la maison et quoi faire avant de partir.", parking: "Parking", space: "Deux places : l'extérieure et celle du garage", address: "Adresse", portal: "Code de la porte d'entrée", password: "Mot de passe", maps: "Ouvrir dans Google Maps", times: "À partir de 16h00 · Jusqu'à 11h00", offline: "Pour la voir sans réseau", download: "Télécharger la vidéo", demo: "Exemple : pour l'instant, les trois langues ouvrent la vidéo actuelle. Une fois enregistrées, chaque bouton ouvrira sa vidéo.", hours: "Horaires", cin: "Check-in : à partir de 16h00", cout: "Check-out : jusqu'à 11h00", waTitle: "Besoin d'aide ?", waText: "Écrivez-nous sur WhatsApp. Indiquez votre numéro de réservation ou votre nom et nous saurons tout de suite qui vous êtes.", waLabel: "Numéro de réservation ou nom", waBtn: "Ouvrir WhatsApp", waMsg: "Bonjour, je suis client du Chalet Encamp. Réservation ou nom : {r}.", waMsgNo: "Bonjour, je suis client du Chalet Encamp." }
 };
 function detect() {
   const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "es"];
@@ -197,17 +206,26 @@ function render(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-t]").forEach(el => { const k = el.dataset.t; if (t[k]) el.textContent = t[k]; });
   const main = document.getElementById("lang-main");
-  main.href = VIDEOS[lang];
+  main.href = VIDEOS[lang] || VIDEOS.es;
   document.getElementById("dl-link").href = DOWNLOADS[lang];
-  document.getElementById("lang-main-label").textContent = t.watch;
+  document.getElementById("lang-main-label").textContent = VIDEOS[lang] ? t.watch : (t.watchEs || t.watch);
   const others = document.getElementById("lang-others");
   others.textContent = "";
-  Object.keys(T).filter(c => c !== lang).forEach(c => {
+  Object.keys(T).filter(c => c !== lang && VIDEOS[c]).forEach(c => {
     const a = document.createElement("a");
     a.className = "lang-alt"; a.href = VIDEOS[c]; a.target = "_blank"; a.rel = "noopener";
     a.textContent = T[c].name;
     a.addEventListener("click", () => render(c));
     others.appendChild(a);
+  });
+  const picker = document.getElementById("picker");
+  picker.textContent = "";
+  Object.keys(T).forEach(c => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = c.toUpperCase(); b.title = T[c].name; b.lang = c;
+    b.setAttribute("aria-pressed", c === lang ? "true" : "false");
+    b.addEventListener("click", () => render(c));
+    picker.appendChild(b);
   });
   updateWa();
 }
